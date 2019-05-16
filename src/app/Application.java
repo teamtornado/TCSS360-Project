@@ -58,6 +58,11 @@ public class Application extends JFrame {
 	private static final String STUPID_CONTENT_PANEL_MESSAGE = "Nothing here yet except for that toolbar!";
 
 	/**
+	 * The text display the main title.
+	 */
+	private static final String MAIN_TITLE = "TCSS360 Project";
+	
+	/**
 	 * The text name for the dialog panel.
 	 */
 	private static final String DIALOG_PANEL_NAME = "About";
@@ -85,6 +90,7 @@ public class Application extends JFrame {
 		stupidMessage.setText(STUPID_CONTENT_PANEL_MESSAGE);
 		stupidMessage.setEditable(false);
 		mainFrame.add(stupidMessage);
+		mainFrame.setTitle(MAIN_TITLE);
 		mainFrame.setupJFrameIcon();
 
 		// Setup the JMenu
