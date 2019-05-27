@@ -35,12 +35,12 @@ public class Application extends JFrame {
 	/**
 	 * Minimum width of the main window
 	 */
-	private static final int MIN_FRAME_WIDTH = 800;
+	private static final int MIN_FRAME_WIDTH = 300;
 
 	/**
 	 * Minimum height of the main window
 	 */
-	private static final int MIN_FRAME_HEIGHT = 500;
+	private static final int MIN_FRAME_HEIGHT = 200;
 
 	/**
 	 * The fraction constant to provide relative calculations to the main window.
@@ -76,10 +76,6 @@ public class Application extends JFrame {
 	 * The text name for the dialog panel.
 	 */
 	private static final String DIALOG_PANEL_NAME = "About";
-	
-	private static int newHeight;
-	
-	private static int newWidth;
 
 	/**
 	 * Runs the application - currently does mostly simple setup.
@@ -132,8 +128,9 @@ public class Application extends JFrame {
 		changeSize.setText("Set frame size");
 		changeSize.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				newHeight = Integer.parseInt(JOptionPane.showInputDialog("input new height"));
-				newWidth = Integer.parseInt(JOptionPane.showInputDialog("input new width"));
+				int width = Integer.parseInt(JOptionPane.showInputDialog("input new height"));
+				int height = Integer.parseInt(JOptionPane.showInputDialog("input new width"));
+				mainFrame.setSize(new Dimension(width, height));
 			}
 		});
 		
@@ -143,11 +140,10 @@ public class Application extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					PrintStream output = new PrintStream("FRAME_SIZE.txt");
-					output.println("Height: " + newHeight);
-					output.println("Width: " + newWidth);
+					output.println("Height: " + mainFrame.getWidth());
+					output.println("Width: " + mainFrame.getWidth());
 					output.close();
 				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
