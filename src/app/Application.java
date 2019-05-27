@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import utilities.About;
-import utilities.fileParser;
+import utilities.FileParser;
 
 public class Application extends JFrame {
 	/**
@@ -51,7 +51,7 @@ public class Application extends JFrame {
 	 * The text displayed on the 'help' JMenu button.
 	 */
 	private static final String HELP_MENU_TEXT = "Help";
-	
+
 	/**
 	 * The text displayed on the setting JMenu button.
 	 */
@@ -71,7 +71,7 @@ public class Application extends JFrame {
 	 * The text display the main title.
 	 */
 	private static final String MAIN_TITLE = "TCSS360 Project";
-	
+
 	/**
 	 * The text name for the dialog panel.
 	 */
@@ -82,19 +82,21 @@ public class Application extends JFrame {
 	 * 
 	 * @param theArgs
 	 *            The console arguments. These are not used within the code.
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 */
-	public static void main(String[] theArgs) throws FileNotFoundException {
+	public static void main(String[] theArgs)
+			throws FileNotFoundException {
 		// Initialize fileParser for Jframe dimensions
-		final fileParser parser = new fileParser(new File("FRAME_SIZE.txt"));
-		
+
 		// Setup the main window
 		final Application mainFrame = new Application();
 		mainFrame.setMinimumSize(
 				new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
 		mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		mainFrame.setPreferredSize(new Dimension(parser.getWidth(), parser.getHeight()));
-		
+		final Dimension savedDimensions = FileParser
+				.parse(new File("FRAME_SIZE.txt"));
+		mainFrame.setPreferredSize(savedDimensions);
+
 		// Setup content Panel
 		final JPanel contentPanel = new JPanel();
 		contentPanel
@@ -113,7 +115,7 @@ public class Application extends JFrame {
 		helpMenu.setText(HELP_MENU_TEXT);
 		final JMenu settingMenu = new JMenu();
 		settingMenu.setText(SETTING_MENU_TEXT);
-		
+
 		final JMenuItem aboutPage = new JMenuItem();
 		aboutPage.setText(ABOUT_MENU_TEXT);
 		aboutPage.addActionListener(new ActionListener() {
@@ -123,17 +125,27 @@ public class Application extends JFrame {
 				mainFrame.setupDialogPanel(aboutDialog);
 			}
 		});
-		
+
 		final JMenuItem changeSize = new JMenuItem();
 		changeSize.setText("Set frame size");
 		changeSize.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int width = Integer.parseInt(JOptionPane.showInputDialog("input new height"));
-				int height = Integer.parseInt(JOptionPane.showInputDialog("input new width"));
+			public void actionPerformed(final ActionEvent theException) {
+				final String arg1 = JOptionPane
+						.showInputDialog("input new height");
+				if (arg1 == null) {
+					return;
+				}
+				final int width = Integer.parseInt(arg1);
+				final String arg2 = JOptionPane
+						.showInputDialog("input new width");
+				if (arg2 == null) {
+					return;
+				}
+				final int height = Integer.parseInt(arg2);
 				mainFrame.setSize(new Dimension(width, height));
 			}
 		});
-		
+
 		final JMenuItem export = new JMenuItem();
 		export.setText("Export frame dimensions");
 		export.addActionListener(new ActionListener() {
