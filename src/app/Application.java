@@ -9,6 +9,9 @@ package app;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -16,10 +19,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import utilities.About;
+import utilities.fileParser;
 
 public class Application extends JFrame {
 	/**
@@ -71,21 +76,29 @@ public class Application extends JFrame {
 	 * The text name for the dialog panel.
 	 */
 	private static final String DIALOG_PANEL_NAME = "About";
+	
+	private static int newHeight;
+	
+	private static int newWidth;
 
 	/**
 	 * Runs the application - currently does mostly simple setup.
 	 * 
 	 * @param theArgs
 	 *            The console arguments. These are not used within the code.
+	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] theArgs) {
-
+	public static void main(String[] theArgs) throws FileNotFoundException {
+		// Initialize fileParser for Jframe dimensions
+		final fileParser parser = new fileParser(new File("FRAME_SIZE.txt"));
+		
 		// Setup the main window
 		final Application mainFrame = new Application();
 		mainFrame.setMinimumSize(
 				new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
 		mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+		mainFrame.setPreferredSize(new Dimension(parser.getWidth(), parser.getHeight()));
+		
 		// Setup content Panel
 		final JPanel contentPanel = new JPanel();
 		contentPanel
@@ -117,10 +130,33 @@ public class Application extends JFrame {
 		
 		final JMenuItem changeSize = new JMenuItem();
 		changeSize.setText("Set frame size");
+		changeSize.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				newHeight = Integer.parseInt(JOptionPane.showInputDialog("input new height"));
+				newWidth = Integer.parseInt(JOptionPane.showInputDialog("input new width"));
+			}
+		});
+		
+		final JMenuItem export = new JMenuItem();
+		export.setText("Export frame dimensions");
+		export.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					PrintStream output = new PrintStream("FRAME_SIZE.txt");
+					output.println("Height: " + newHeight);
+					output.println("Width: " + newWidth);
+					output.close();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		// Hook the menus together
 		helpMenu.add(aboutPage);
 		settingMenu.add(changeSize);
+		settingMenu.add(export);
 		menuBar.add(helpMenu);
 		menuBar.add(settingMenu);
 		mainFrame.setJMenuBar(menuBar);
