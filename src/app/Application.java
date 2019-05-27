@@ -46,6 +46,11 @@ public class Application extends JFrame {
 	 * The text displayed on the 'help' JMenu button.
 	 */
 	private static final String HELP_MENU_TEXT = "Help";
+	
+	/**
+	 * The text displayed on the setting JMenu button.
+	 */
+	private static final String SETTING_MENU_TEXT = "Setting";
 
 	/**
 	 * The text displayed on the 'about' JMenu button.
@@ -97,6 +102,9 @@ public class Application extends JFrame {
 		final JMenuBar menuBar = new JMenuBar();
 		final JMenu helpMenu = new JMenu();
 		helpMenu.setText(HELP_MENU_TEXT);
+		final JMenu settingMenu = new JMenu();
+		settingMenu.setText(SETTING_MENU_TEXT);
+		
 		final JMenuItem aboutPage = new JMenuItem();
 		aboutPage.setText(ABOUT_MENU_TEXT);
 		aboutPage.addActionListener(new ActionListener() {
@@ -106,10 +114,15 @@ public class Application extends JFrame {
 				mainFrame.setupDialogPanel(aboutDialog);
 			}
 		});
+		
+		final JMenuItem changeSize = new JMenuItem();
+		changeSize.setText("Set frame size");
 
 		// Hook the menus together
 		helpMenu.add(aboutPage);
+		settingMenu.add(changeSize);
 		menuBar.add(helpMenu);
+		menuBar.add(settingMenu);
 		mainFrame.setJMenuBar(menuBar);
 
 		// Final preparation
