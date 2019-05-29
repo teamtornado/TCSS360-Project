@@ -1,2 +1,0 @@
-Height: 600
-Width: 600

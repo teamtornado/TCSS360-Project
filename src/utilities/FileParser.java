@@ -21,14 +21,16 @@ public class FileParser {
 		while (input.hasNextLine()) {
 			String[] line = input.nextLine().split(" ");
 
-			if (line[0].equals("Height:")) {
-				height = Integer.parseInt(line[1]);
-			} else if (line[0].equals("Width:")) {
+			if (line[0].equals("Width:")) {
 				width = Integer.parseInt(line[1]);
+			} else if (line[0].equals("Height:")) {
+				height = Integer.parseInt(line[1]);
 			} else {
+				input.close();
 				throw new IllegalArgumentException();
 			}
 		}
+		
 		input.close();
 
 		return new Dimension(width, height);

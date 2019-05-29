@@ -86,7 +86,7 @@ public class Application extends JFrame {
 	 */
 	public static void main(String[] theArgs)
 			throws FileNotFoundException {
-		// Initialize fileParser for Jframe dimensions
+		// Initialize fileParser for JFrame dimensions
 
 		// Setup the main window
 		final Application mainFrame = new Application();
@@ -94,7 +94,7 @@ public class Application extends JFrame {
 				new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
 		mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		final Dimension savedDimensions = FileParser
-				.parse(new File("FRAME_SIZE.txt"));
+				.parse(new File("USER_SETTINGS.txt"));
 		mainFrame.setPreferredSize(savedDimensions);
 
 		// Setup content Panel
@@ -131,18 +131,18 @@ public class Application extends JFrame {
 		changeSize.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent theException) {
 				final String arg1 = JOptionPane
-						.showInputDialog("input new height");
+						.showInputDialog("input new width");
 				if (arg1 == null) {
 					return;
 				}
 				final int width = Integer.parseInt(arg1);
 				final String arg2 = JOptionPane
-						.showInputDialog("input new width");
+						.showInputDialog("input new height");
 				if (arg2 == null) {
 					return;
 				}
 				final int height = Integer.parseInt(arg2);
-				mainFrame.setSize(new Dimension(width, height));
+				mainFrame.setSize(new Dimension(height, width));
 			}
 		});
 
@@ -151,10 +151,11 @@ public class Application extends JFrame {
 		export.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					PrintStream output = new PrintStream("FRAME_SIZE.txt");
-					output.println("Height: " + mainFrame.getWidth());
+					PrintStream output = new PrintStream("USER_SETTINGS.txt");
 					output.println("Width: " + mainFrame.getWidth());
+					output.println("Height: " + mainFrame.getHeight());
 					output.close();
+					JOptionPane.showMessageDialog(mainFrame, "Setting exported.");
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
