@@ -107,7 +107,8 @@ public class MainFrame extends JFrame {
 		aboutPage.setText(ABOUT_MENU_TEXT);
 		aboutPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				final JDialog aboutDialog = new JDialog(thisFrame, DIALOG_PANEL_NAME, true);
+				final JDialog aboutDialog = new JDialog(thisFrame, DIALOG_PANEL_NAME,
+						true);
 				thisFrame.setupDialogPanel(aboutDialog);
 			}
 		});

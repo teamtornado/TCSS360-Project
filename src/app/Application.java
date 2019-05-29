@@ -1,5 +1,9 @@
 package app;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+
 /**
  * @author Eric, Minh, Sharajit, Curran
  * 
@@ -10,9 +14,7 @@ import java.io.FileNotFoundException;
 
 import gui.MainFrame;
 
-
 public class Application {
-
 
 	/**
 	 * Runs the application - currently does mostly simple setup.
@@ -21,12 +23,14 @@ public class Application {
 	 *            The console arguments. These are not used within the code.
 	 * @throws FileNotFoundException
 	 */
-	public static void main(String[] theArgs)
-			throws FileNotFoundException {
-
+	public static void main(String[] theArgs) throws FileNotFoundException {
+		try {
+			UIManager.setLookAndFeel(new MetalLookAndFeel());
+		} catch (final UnsupportedLookAndFeelException theException) {
+			theException.printStackTrace();
+		}
 		final MainFrame guiMain = new MainFrame();
-		
-	}
 
+	}
 
 }
