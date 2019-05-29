@@ -156,6 +156,7 @@ public class Application extends JFrame {
 					output.println("Height: " + mainFrame.getHeight());
 					output.close();
 					JOptionPane.showMessageDialog(mainFrame, "Setting exported.");
+					System.out.println("haha");
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
