@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -58,11 +59,7 @@ public class MainFrame extends JFrame {
 	 */
 	private static final String ABOUT_MENU_TEXT = "About";
 
-	/**
-	 * Stupid message that will be deleted very soon.
-	 */
-	private static final String STUPID_CONTENT_PANEL_MESSAGE = "Nothing here yet except for that toolbar!";
-
+	
 	/**
 	 * The text display the main title.
 	 */
@@ -87,10 +84,7 @@ public class MainFrame extends JFrame {
 		final JPanel contentPanel = new JPanel();
 		contentPanel.setSize(new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
 		this.setContentPane(contentPanel);
-		final JTextArea stupidMessage = new JTextArea();
-		stupidMessage.setText(STUPID_CONTENT_PANEL_MESSAGE);
-		stupidMessage.setEditable(false);
-		this.add(stupidMessage);
+		
 		this.setTitle(MAIN_TITLE);
 		this.setupJFrameIcon();
 
@@ -148,6 +142,14 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
+		
+		
+		JButton openButton = new JButton("Open Project");
+		contentPanel.add(openButton);
+		
+		JButton creatButton = new JButton("Creat Project");
+		contentPanel.add(creatButton);
+		
 
 		// Hook the menus together
 		helpMenu.add(aboutPage);
