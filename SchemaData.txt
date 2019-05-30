@@ -1,0 +1,18 @@
+Fields:
+Name:BTU,Description:Heating Unit,Value:-
+Name:BRAND,Description:Brand of the product,Value:String
+Name:LUMINS
+Name:VOLTAGE
+Name:AVERAGE_USE
+Name:DAILY_USE
+Name:ENERGY_USE
+Name:VOLUME_CAPACITY
+Name:BURNER_COUNT
+NAME:GAS_INLET_SIZE
+// '*' is a required flag, '-' is a no answer flag
+Items:
+ID:1,Type:APPLIANCE,isA:-,Fields:{-}
+ID:2,Type:STOVE,isA:1,Fields:{*BTU,BRAND,BURNER_COUNT}
+ID:3,Type:WOK,isA:2,Fields:{*GAS_INLET_SIZE}
+ID:4,Type:HEATING,isA:-,Fields:{BTU}
+ID:5,Type:FURNACE,isA:4,Fields:{BRAND}
