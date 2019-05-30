@@ -12,6 +12,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
  */
 import java.io.FileNotFoundException;
 
+import gui.CreatePanel;
 import gui.MainFrame;
 
 public class Application {
@@ -30,7 +31,7 @@ public class Application {
 			theException.printStackTrace();
 		}
 		final MainFrame guiMain = new MainFrame();
-
+		final CreatePanel xd = new CreatePanel();
 	}
 
 }

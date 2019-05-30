@@ -78,16 +78,18 @@ public class MainFrame extends JFrame {
 		final JPanel contentPanel = new JPanel();
 		contentPanel
 				.setSize(new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
-		this.setContentPane(contentPanel);
+//		this.setContentPane(contentPanel);
+		
+		this.setContentPane(new CreatePanel());
 
 		// Setup the JMenu
 		setupMenuBar();
 
-		JButton openButton = new JButton("Open Project");
-		contentPanel.add(openButton);
-
-		JButton createButton = new JButton("Create Project");
-		contentPanel.add(createButton);
+//		JButton openButton = new JButton("Open Project");
+//		contentPanel.add(openButton);
+//
+//		JButton createButton = new JButton("Create Project");
+//		contentPanel.add(createButton);
 
 		finalSetupAndVisible();
 
