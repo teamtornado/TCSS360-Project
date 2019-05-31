@@ -39,7 +39,8 @@ public class MainFrame extends JFrame {
 	private static final int MIN_FRAME_HEIGHT = 200;
 
 	/**
-	 * The fraction constant to provide relative calculations to the main window.
+	 * The fraction constant to provide relative calculations to the main
+	 * window.
 	 */
 	private static final float FRACTION_OF_MAIN_WINDOW = 0.5f;
 
@@ -68,6 +69,8 @@ public class MainFrame extends JFrame {
 	 */
 	private static final String DIALOG_PANEL_NAME = "About";
 
+	private CreatePanel cp = new CreatePanel();
+
 	public MainFrame() throws FileNotFoundException {
 		// Initialize fileParser for JFrame dimensions
 
@@ -76,20 +79,27 @@ public class MainFrame extends JFrame {
 
 		// Setup content Panel
 		final JPanel contentPanel = new JPanel();
-		contentPanel
-				.setSize(new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
-//		this.setContentPane(contentPanel);
-		
-		this.setContentPane(new CreatePanel());
+		contentPanel.setSize(new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
+		// this.setContentPane(contentPanel);
+
+		this.setContentPane(contentPanel);
 
 		// Setup the JMenu
 		setupMenuBar();
 
-//		JButton openButton = new JButton("Open Project");
-//		contentPanel.add(openButton);
-//
-//		JButton createButton = new JButton("Create Project");
-//		contentPanel.add(createButton);
+		JButton openButton = new JButton("Open Project");
+		contentPanel.add(openButton);
+
+		final MainFrame thisFrame = this;
+		JButton createButton = new JButton("Create Project");
+		createButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				thisFrame.setContentPane(cp);
+				thisFrame.pack();
+			}
+		});
+		contentPanel.add(createButton);
 
 		finalSetupAndVisible();
 
@@ -111,15 +121,12 @@ public class MainFrame extends JFrame {
 	 * file.
 	 */
 	private void setupFrameDimensions() {
-		this.setMinimumSize(
-				new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
+		this.setMinimumSize(new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
 		Dimension savedDimensions = null;
 		try {
-			savedDimensions = FileParser
-					.parse(new File("USER_SETTINGS.txt"));
+			savedDimensions = FileParser.parse(new File("USER_SETTINGS.txt"));
 		} catch (final FileNotFoundException theException) {
-			System.out
-					.println("File Parser: could not find settings file");
+			System.out.println("File Parser: could not find settings file");
 			theException.printStackTrace();
 		}
 		this.setPreferredSize(savedDimensions);
@@ -160,8 +167,8 @@ public class MainFrame extends JFrame {
 		aboutPage.setText(ABOUT_MENU_TEXT);
 		aboutPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				final JDialog aboutDialog = new JDialog(thisFrame,
-						DIALOG_PANEL_NAME, true);
+				final JDialog aboutDialog = new JDialog(thisFrame, DIALOG_PANEL_NAME,
+						true);
 				thisFrame.setupDialogPanel(aboutDialog);
 			}
 		});
@@ -180,14 +187,12 @@ public class MainFrame extends JFrame {
 		changeSize.setText("Set Frame Size");
 		changeSize.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent theException) {
-				final String arg1 = JOptionPane
-						.showInputDialog("Input new width");
+				final String arg1 = JOptionPane.showInputDialog("Input new width");
 				if (arg1 == null) {
 					return;
 				}
 				final int width = Integer.parseInt(arg1);
-				final String arg2 = JOptionPane
-						.showInputDialog("Input new height");
+				final String arg2 = JOptionPane.showInputDialog("Input new height");
 				if (arg2 == null) {
 					return;
 				}
@@ -211,13 +216,11 @@ public class MainFrame extends JFrame {
 		export.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent theEvent) {
 				try {
-					PrintStream output = new PrintStream(
-							"USER_SETTINGS.txt");
+					PrintStream output = new PrintStream("USER_SETTINGS.txt");
 					output.println("Width: " + thisFrame.getWidth());
 					output.println("Height: " + thisFrame.getHeight());
 					output.close();
-					JOptionPane.showMessageDialog(thisFrame,
-							"Settings exported");
+					JOptionPane.showMessageDialog(thisFrame, "Settings exported");
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
@@ -246,9 +249,9 @@ public class MainFrame extends JFrame {
 		theAboutMessage.add(aboutMessage);
 
 		// Make the dialog a fraction of the size of the main window.
-		theAboutMessage.setMinimumSize(new Dimension(
-				(int) (this.getWidth() * FRACTION_OF_MAIN_WINDOW),
-				(int) (this.getHeight() * FRACTION_OF_MAIN_WINDOW)));
+		theAboutMessage.setMinimumSize(
+				new Dimension((int) (this.getWidth() * FRACTION_OF_MAIN_WINDOW),
+						(int) (this.getHeight() * FRACTION_OF_MAIN_WINDOW)));
 
 		theAboutMessage.setVisible(true);
 	}
