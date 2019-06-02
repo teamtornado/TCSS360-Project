@@ -3,7 +3,7 @@ package model;
 import java.util.Currency;
 import java.util.List;
 
-public class ProjectInfo {
+public class Project {
 
 	private String myName;
 	private String myProjectDescription;
@@ -11,35 +11,35 @@ public class ProjectInfo {
 	private String myLocation;
 	private List<Item> myItems; // No getter and setter for this
 
-	public String getMyName() {
+	public String getName() {
 		return myName;
 	}
 
-	public void setMyName(String myName) {
+	public void setName(String myName) {
 		this.myName = myName;
 	}
 
-	public String getMyProjectDescription() {
+	public String getProjectDescription() {
 		return myProjectDescription;
 	}
 
-	public void setMyProjectDescription(String myProjectDescription) {
+	public void setProjectDescription(String myProjectDescription) {
 		this.myProjectDescription = myProjectDescription;
 	}
 
-	public Currency getMyBudget() {
+	public Currency getBudget() {
 		return myBudget;
 	}
 
-	public void setMyBudget(Currency myBudget) {
+	public void setBudget(Currency myBudget) {
 		this.myBudget = myBudget;
 	}
 
-	public String getMyLocation() {
+	public String getLocation() {
 		return myLocation;
 	}
 
-	public void setMyLocation(String myLocation) {
+	public void setLocation(String myLocation) {
 		this.myLocation = myLocation;
 	}
 }

@@ -1,6 +1,6 @@
 package controller;
 
-import model.ProjectInfo;
+import model.Project;
 
 /**
  * This class will manage the data going in and out of the project info class.
@@ -11,10 +11,10 @@ import model.ProjectInfo;
  */
 public class ProjectDataController {
 	
-	private ProjectInfo myProject;
+	private Project myProject;
 	
 	public ProjectDataController() {
-		this.myProject = new ProjectInfo();
+		this.myProject = new Project();
 	}
 
 }

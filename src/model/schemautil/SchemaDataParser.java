@@ -10,7 +10,7 @@ import model.SchemaField;
 import model.SchemaItem;
 
 /**
- * Parses a given schema database.
+ * Parses a given schema database and returns a list of SchemaItem.
  * 
  * @author Eric
  *
@@ -59,7 +59,7 @@ public class SchemaDataParser {
 	 * @return all the fields used within the schema database.
 	 * @author Eric
 	 */
-	private static List<SchemaField> parseFields(
+	public static List<SchemaField> parseFields(
 			final Scanner theSchemaScan) {
 
 		// Create the list
@@ -172,7 +172,5 @@ public class SchemaDataParser {
 		} while (theSchemaScan.hasNextLine() && line.startsWith("ID:"));
 
 		return schemaItemList;
-
 	}
-
 }
