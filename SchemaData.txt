@@ -1,18 +1,20 @@
 Fields:
-Name:BTU,Description:Heating Unit,Value:-
-Name:BRAND,Description:Brand of the product,Value:String
-Name:LUMINS
-Name:VOLTAGE
-Name:AVERAGE_USE
-Name:DAILY_USE
-Name:ENERGY_USE
-Name:VOLUME_CAPACITY
-Name:BURNER_COUNT
-NAME:GAS_INLET_SIZE
-// '*' is a required flag, '-' is a no answer flag
+Name:BTU,Description:Heating Unit,Value:Number
+Name:Brand,Description:Brand of the product,Value:String
+Name:Lumens,Description:Amount of light emitted,Value:Number
+Name:Voltage,Description:Potential difference,Value:Number
+Name:Average use,Description:Average use of a product or feature,Value:String
+Name:Volume capacity,Description:Volume of space in liters,Value:Number
+Name:Burner count,Description:Number of burners for the stove,Value:Number
+Name:User notes,Description:User written field,Value:String
+Name:Gas inlet size,Description:Size for the injection of gas into the stove,Value:Number
+// '*' is a required flag
+// '-' is a no answer flag
+// ID of 0 means parent item - all items will have parent fields
 Items:
-ID:1,Type:APPLIANCE,isA:-,Fields:{-}
-ID:2,Type:STOVE,isA:1,Fields:{*BTU,BRAND,BURNER_COUNT}
-ID:3,Type:WOK,isA:2,Fields:{*GAS_INLET_SIZE}
-ID:4,Type:HEATING,isA:-,Fields:{BTU}
-ID:5,Type:FURNACE,isA:4,Fields:{BRAND}
+ID:0,Type:PROJECT,isA:0,Fields:{*User notes}
+ID:1,Type:APPLIANCE,isA:0,Fields:{-}
+ID:2,Type:STOVE,isA:1,Fields:{*BTU,Burner count}
+ID:3,Type:WOK,isA:2,Fields:{*Gas inlet size}
+ID:4,Type:HEATING,isA:0,Fields:{BTU}
+ID:5,Type:FURNACE,isA:4,Fields:{Brand}

@@ -42,7 +42,4 @@ public class ProjectInfo {
 	public void setMyLocation(String myLocation) {
 		this.myLocation = myLocation;
 	}
-
-	// Need a way to get specific items, or batches of items
-
 }
