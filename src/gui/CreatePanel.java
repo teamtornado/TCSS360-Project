@@ -9,13 +9,56 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
+import controller.ProjectEditController;
+import controller.ProjectViewController;
+import controller.SchemaController;
+
+/**
+ * 
+ * An instance of this panel will allow the user to create a project.
+ * 
+ * @author Minh, Curran
+ *
+ */
 public class CreatePanel extends JPanel {
 	/**
-	 * 
+	 * Auto-generated serial.
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public CreatePanel() {
+	/**
+	 * Allows for editing the user's project.
+	 */
+	final ProjectEditController myEditor;
+
+	/**
+	 * Allows for viewing the user's project contents.
+	 */
+	final ProjectViewController myViewer;
+
+	/**
+	 * Holds the rules of the schema database. Holds item-type hierarchy and what
+	 * each item-type has as fields. Does NOT hold user entered information.
+	 */
+	final SchemaController myRules;
+
+	/**
+	 * Constructs a create panel which will allow the user to assemble a project.
+	 * 
+	 * @param theEditor
+	 *            the editor of the project.
+	 * @param theViewer
+	 *            the viewer of the project.
+	 * @param theRules
+	 *            the schema rules of the schema database. Describes possible fields
+	 *            and item-types.
+	 */
+	public CreatePanel(final ProjectEditController theEditor, final ProjectViewController theViewer,
+			final SchemaController theRules) {
+		myEditor = theEditor;
+		myViewer = theViewer;
+		myRules = theRules;
+
 		// the info stuffs
 		this.setLayout(new BorderLayout());
 		JPanel infoPanel = new JPanel();
@@ -28,8 +71,8 @@ public class CreatePanel extends JPanel {
 		budget.add(new JTextField(5));
 		infoPanel.add(name);
 		infoPanel.add(budget);
-		
-		//progress panel stuffs
+
+		// progress panel stuffs
 		JPanel progressPanel = new JPanel();
 		progressPanel.setLayout(new BoxLayout(progressPanel, BoxLayout.Y_AXIS));
 		JSlider progressBar = new JSlider(JSlider.HORIZONTAL, 1, 3, 1);
@@ -45,7 +88,7 @@ public class CreatePanel extends JPanel {
 		labelPanel.add(panel, BorderLayout.CENTER);
 		labelPanel.add(new JLabel("Project information"), BorderLayout.EAST);
 		progressPanel.add(labelPanel);
-		
+
 		// adding stuffs together
 		this.add(progressPanel, BorderLayout.NORTH);
 		this.add(infoPanel, BorderLayout.CENTER);

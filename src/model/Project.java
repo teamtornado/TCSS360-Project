@@ -398,4 +398,13 @@ public class Project {
 			}
 		}
 	}
+
+	/**
+	 * Clears all items from list.
+	 * 
+	 * @author Eric
+	 */
+	public void clearAllItems() {
+		this.myItems.clear();
+	}
 }

@@ -7,15 +7,25 @@ package app;
  * for the various GUI elements current operable.
  */
 import java.io.FileNotFoundException;
+import java.util.Currency;
+import java.util.Locale;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
+import controller.ProjectEditController;
+import controller.ProjectLoadController;
+import controller.ProjectViewController;
+import controller.SchemaController;
 import gui.CreatePanel;
 import gui.MainFrame;
+import gui.ProjectViewer;
+import model.Project;
 
 public class Application {
+
+	public static final String SCHEMA_DATABASE_LOCATION = "SchemaData.txt";
 
 	/**
 	 * Runs the application - currently does mostly simple setup.
@@ -23,6 +33,7 @@ public class Application {
 	 * @param theArgs
 	 *            The console arguments. These are not used within the code.
 	 * @throws FileNotFoundException
+	 * @author My dog
 	 */
 	public static void main(String[] theArgs) throws FileNotFoundException {
 		try {
@@ -30,8 +41,20 @@ public class Application {
 		} catch (final UnsupportedLookAndFeelException theException) {
 			theException.printStackTrace();
 		}
-		final MainFrame guiMain = new MainFrame();
-		final CreatePanel xd = new CreatePanel();
+
+		// This dummy project will get overwritten either when the user chooses to view
+		// a project, or when they choose to create a new project.
+		final Project dummyProject = new Project("Dummy", "Dummy Description",
+				Currency.getInstance(Locale.US), "Dummy Value");
+
+		// Dole out the controllers to whoever needs them.
+		final ProjectEditController editor = new ProjectEditController(dummyProject);
+		final ProjectViewController viewer = new ProjectViewController(dummyProject);
+		final ProjectLoadController loader = new ProjectLoadController(editor, viewer);
+		final SchemaController rules = new SchemaController(SCHEMA_DATABASE_LOCATION);
+		final CreatePanel createPanel = new CreatePanel(editor, viewer, rules);
+		final ProjectViewer viewerPanel = new ProjectViewer(viewer, loader);
+		final MainFrame guiMain = new MainFrame(createPanel, viewerPanel, loader);
 	}
 
 }

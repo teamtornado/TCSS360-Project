@@ -9,18 +9,18 @@ import java.util.Locale;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-import controller.ProjectDataEditController;
-import controller.ProjectDataViewController;
-import controller.ProjectLoadAndSaveController;
+import controller.ProjectEditController;
+import controller.ProjectViewController;
+import controller.ProjectLoadController;
 import model.ItemField;
 import model.Project;
 import model.SchemaTypes;
 
 class ProjectTest {
 
-	private ProjectDataEditController myEditor;
-	private ProjectDataViewController myViewer;
-	private ProjectLoadAndSaveController myImportExport;
+	private ProjectEditController myEditor;
+	private ProjectViewController myViewer;
+	private ProjectLoadController myLoader;
 
 	@BeforeEach
 	void setup() {
@@ -29,9 +29,9 @@ class ProjectTest {
 				Currency.getInstance(Locale.US),
 				"The United Empire of Doggos");
 
-		myEditor = new ProjectDataEditController(project);
-		myViewer = new ProjectDataViewController(project);
-		myImportExport = new ProjectLoadAndSaveController(myEditor,
+		myEditor = new ProjectEditController(project);
+		myViewer = new ProjectViewController(project);
+		myLoader = new ProjectLoadController(myEditor,
 				myViewer);
 	}
 
@@ -87,8 +87,12 @@ class ProjectTest {
 				SchemaTypes.APPLIANCE, powerUsageFieldName);
 		final String fieldName = field.getFieldName();
 		assertTrue(fieldName.equals(powerUsageFieldName));
-		
-		// What is the name of this project
+
+		// What is the name of this project?
+		final String projectName = myViewer.getName();
+
+		// What is the location?
+		final String projectLocation = myViewer.getLocation();
 
 		// Now I'm just debugging, show me the whole project in the console
 		myViewer.printToConsole();

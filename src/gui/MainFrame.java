@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import controller.ProjectLoadController;
 import utilities.About;
 import utilities.FileParser;
 
@@ -39,8 +40,7 @@ public class MainFrame extends JFrame {
 	private static final int MIN_FRAME_HEIGHT = 200;
 
 	/**
-	 * The fraction constant to provide relative calculations to the main
-	 * window.
+	 * The fraction constant to provide relative calculations to the main window.
 	 */
 	private static final float FRACTION_OF_MAIN_WINDOW = 0.5f;
 
@@ -69,10 +69,26 @@ public class MainFrame extends JFrame {
 	 */
 	private static final String DIALOG_PANEL_NAME = "About";
 
-	private CreatePanel cp = new CreatePanel();
+	/**
+	 * Allows the user to create new projects.
+	 */
+	private final CreatePanel myCreatePanel;
 
-	public MainFrame() throws FileNotFoundException {
-		// Initialize fileParser for JFrame dimensions
+	/**
+	 * Allows users to view old projects.
+	 */
+	private final ProjectViewer myViewerPanel;
+
+	/**
+	 * Allows for loading, saving, and creating new projects.
+	 */
+	private final ProjectLoadController myLoader;
+
+	public MainFrame(final CreatePanel theCreatePanel, final ProjectViewer theViewerPanel,
+			final ProjectLoadController theLoader) throws FileNotFoundException {
+		myCreatePanel = theCreatePanel;
+		myViewerPanel = theViewerPanel;
+		myLoader = theLoader;
 
 		// Setup the main window
 		setupFrameDimensions();
@@ -90,19 +106,19 @@ public class MainFrame extends JFrame {
 		JButton openButton = new JButton("Open Project");
 		contentPanel.add(openButton);
 
+		// We should really move this action listener to some sort of controller if we
+		// want to keep to the MVC pattern.
 		final MainFrame thisFrame = this;
 		JButton createButton = new JButton("Create Project");
 		createButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				thisFrame.setContentPane(cp);
+				thisFrame.setContentPane(thisFrame.myCreatePanel);
 				thisFrame.pack();
 			}
 		});
 		contentPanel.add(createButton);
-
 		finalSetupAndVisible();
-
 	}
 
 	/**
@@ -167,8 +183,7 @@ public class MainFrame extends JFrame {
 		aboutPage.setText(ABOUT_MENU_TEXT);
 		aboutPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				final JDialog aboutDialog = new JDialog(thisFrame, DIALOG_PANEL_NAME,
-						true);
+				final JDialog aboutDialog = new JDialog(thisFrame, DIALOG_PANEL_NAME, true);
 				thisFrame.setupDialogPanel(aboutDialog);
 			}
 		});
@@ -227,7 +242,6 @@ public class MainFrame extends JFrame {
 			}
 		});
 		return export;
-
 	}
 
 	/**
@@ -249,8 +263,8 @@ public class MainFrame extends JFrame {
 		theAboutMessage.add(aboutMessage);
 
 		// Make the dialog a fraction of the size of the main window.
-		theAboutMessage.setMinimumSize(
-				new Dimension((int) (this.getWidth() * FRACTION_OF_MAIN_WINDOW),
+		theAboutMessage
+				.setMinimumSize(new Dimension((int) (this.getWidth() * FRACTION_OF_MAIN_WINDOW),
 						(int) (this.getHeight() * FRACTION_OF_MAIN_WINDOW)));
 
 		theAboutMessage.setVisible(true);

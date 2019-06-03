@@ -10,7 +10,7 @@ import model.Project;
  * @author Eric
  *
  */
-public class ProjectDataEditController {
+public class ProjectEditController {
 	/**
 	 * The project information. Includes the fields and the general info.
 	 */
@@ -22,7 +22,7 @@ public class ProjectDataEditController {
 	 * @param theProject
 	 *            the project to create a controller for.
 	 */
-	public ProjectDataEditController(final Project theProject) {
+	public ProjectEditController(final Project theProject) {
 		this.myProject = theProject;
 	}
 
@@ -148,5 +148,14 @@ public class ProjectDataEditController {
 	public void removeFieldFromItem(final String theItemType,
 			final String theFieldName) {
 		this.myProject.removeFieldFromItem(theItemType, theFieldName);
+	}
+	
+	/**
+	 * Clears all items from list.
+	 * 
+	 * @author Eric
+	 */
+	public void clearAllItems() {
+		this.myProject.clearAllItems();
 	}
 }

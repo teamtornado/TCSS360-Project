@@ -11,8 +11,8 @@ Name:Gas inlet size,Description:Size for the injection of gas into the stove,Val
 // '*' is a required flag
 // isA of 0 means global parent item - all children items have access to parent items
 Items:
-ID:1,Type:APPLIANCE,isA:0,Fields:{User notes}
-ID:2,Type:STOVE,isA:1,Fields:{*BTU,Burner count}
-ID:3,Type:WOK,isA:2,Fields:{*Gas inlet size}
-ID:4,Type:HEATING,isA:0,Fields:{BTU,User notes}
-ID:5,Type:FURNACE,isA:4,Fields:{Brand}
+ID:1,Type:Appliance,isA:0,Fields:{User notes}
+ID:2,Type:Stove,isA:1,Fields:{*BTU,Burner count}
+ID:3,Type:Wok stove,isA:2,Fields:{*Gas inlet size}
+ID:4,Type:Heating,isA:0,Fields:{BTU,User notes}
+ID:5,Type:Furnace,isA:4,Fields:{Brand}

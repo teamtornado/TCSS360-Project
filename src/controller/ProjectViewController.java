@@ -13,7 +13,7 @@ import model.Project;
  * @author Eric
  *
  */
-public class ProjectDataViewController {
+public class ProjectViewController {
 
 	/**
 	 * The project information. Includes the fields and the general info.
@@ -26,7 +26,7 @@ public class ProjectDataViewController {
 	 * @param theProject
 	 *            the project to create a controller for.
 	 */
-	public ProjectDataViewController(final Project theProject) {
+	public ProjectViewController(final Project theProject) {
 		this.myProject = theProject;
 	}
 
