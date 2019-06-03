@@ -1,9 +1,5 @@
 package app;
 
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-
 /**
  * @author Eric, Minh, Sharajit, Curran
  * 
@@ -12,6 +8,11 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
  */
 import java.io.FileNotFoundException;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+
+import controller.SchemaController;
 import gui.CreatePanel;
 import gui.MainFrame;
 

@@ -97,4 +97,21 @@ public class SchemaItem {
 		return newListOfFields;
 	}
 
+	/**
+	 * Returns a string representation of this SchemaItem. Does not output the
+	 * contents of the fields list, only the number of fields contained.
+	 */
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append(myID);
+		builder.append(", IsA: ");
+		builder.append(myIsA);
+		builder.append(", Type: ");
+		builder.append(myItemType);
+		builder.append(", Num of fields: ");
+		builder.append(myFields.size());
+		return builder.toString();
+	}
+
 }

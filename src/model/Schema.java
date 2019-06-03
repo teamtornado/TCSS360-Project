@@ -70,6 +70,9 @@ public class Schema {
 		for (SchemaItem item : mySchemaItems) {
 			newSchemaList.add(item);
 		}
+		if (!newSchemaList.iterator().hasNext()) {
+			System.out.println("agh!!!!!!!!!!!!!!");
+		}
 		return newSchemaList;
 	}
 
@@ -85,9 +88,7 @@ public class Schema {
 
 		for (SchemaItem item : mySchemaItems) {
 
-			// id != 0 since we don't want the general parent type defining stuff like the
-			// user notes.
-			if (item.getID() != 0 && item.getIsA() == 0) {
+			if (item.getIsA() == 0) {
 				parentItemTypes.add(item.getItemType());
 			}
 		}
@@ -105,12 +106,7 @@ public class Schema {
 		final List<String> allItemTypes = new LinkedList<>();
 
 		for (SchemaItem item : mySchemaItems) {
-
-			// id != 0 since we don't want the general parent type defining stuff like the
-			// user notes.
-			if (item.getID() != 0) {
-				allItemTypes.add(item.getItemType());
-			}
+			allItemTypes.add(item.getItemType());
 		}
 
 		return allItemTypes;
@@ -171,7 +167,8 @@ public class Schema {
 	 *             if there was no match with a SchemaItem
 	 * @author Eric
 	 */
-	public List<SchemaField> getSchemaFields(final String theItemType) {
+	public List<SchemaField> getSchemaFieldsFromItem(
+			final String theItemType) {
 		final List<SchemaField> fieldsFromItemType = new LinkedList<>();
 
 		// Get all the fields from the matching item-type
@@ -218,5 +215,28 @@ public class Schema {
 		throw new IllegalArgumentException(
 				"Error: given schemaFieldName does not have a match with any"
 						+ "known SchemaField within Schema");
+	}
+
+	/**
+	 * Gets a Schema Item that matches with the given SchemaItemType.
+	 * 
+	 * @param theSchemaItemType
+	 *            an item-type that has a match within the schema database.
+	 * @return the matching SchemaItem with the same SchemItemType given.
+	 * @author Eric
+	 */
+	public SchemaItem getSchemaItem(final String theSchemaItemType) {
+		for (SchemaItem item : mySchemaItems) {
+			if (item.getItemType().equals(theSchemaItemType)) {
+				// SchemaItems are immutable, so okay to return since this is a copy of its own
+				// internal list.
+				return item;
+			}
+		}
+
+		// Oh no! No matching SchemaItem!
+		throw new IllegalArgumentException(
+				"Error: there was no match with itemType within the"
+						+ " list of SchemaItems");
 	}
 }
