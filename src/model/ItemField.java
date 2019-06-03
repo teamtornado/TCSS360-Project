@@ -1,8 +1,7 @@
 package model;
 
 /**
- * Immutable. This class will directly hold all the information within each
- * project.
+ * Immutable. This class will hold a single piece of information within an Item.
  * 
  * @author Eric
  *
@@ -90,5 +89,24 @@ public class ItemField {
 	 */
 	public String getValue() {
 		return myValue;
+	}
+
+	/**
+	 * Returns a string representing the data held within this field.
+	 * 
+	 * @return a string representing the data held within this field.
+	 * @author Eric
+	 */
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append(this.myfieldName);
+		builder.append("\tDescription: ");
+		builder.append(this.myDescription);
+		builder.append("\tValueType: ");
+		builder.append(this.myValueType);
+		builder.append("\tValue: ");
+		builder.append(this.myValue);
+		return builder.toString();
 	}
 }

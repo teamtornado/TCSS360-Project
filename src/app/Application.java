@@ -12,7 +12,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
-import controller.SchemaController;
 import gui.CreatePanel;
 import gui.MainFrame;
 

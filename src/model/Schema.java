@@ -70,9 +70,6 @@ public class Schema {
 		for (SchemaItem item : mySchemaItems) {
 			newSchemaList.add(item);
 		}
-		if (!newSchemaList.iterator().hasNext()) {
-			System.out.println("agh!!!!!!!!!!!!!!");
-		}
 		return newSchemaList;
 	}
 
