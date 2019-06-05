@@ -4,7 +4,6 @@ package controller;
  * This class allows the front end to alter the model.
  * 
  * @author Eric
- *
  */
 public class ProjectEditController {
 	/**

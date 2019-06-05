@@ -23,6 +23,7 @@ import javax.swing.WindowConstants;
 import gui.CreatePanel;
 import gui.ProjectViewer;
 import gui.createpanels.BasicInfoPanel;
+import gui.createpanels.ItemInputPanel;
 import utilities.About;
 import utilities.FileParser;
 
@@ -133,7 +134,8 @@ public class GUIController {
 		myState = 1;
 		mainPanel = makeMainPanel();
 		basicInfoPanel = makeCreatePanel();
-		itemPanel = makeItemPanel();
+		itemPanel = new ItemInputPanel();
+		// makeItemPanel();
 		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
 		setupJFrameIcon();
@@ -179,7 +181,6 @@ public class GUIController {
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
 				myLoader.createNewProject();
-				myLoader.saveProject(myWindow);
 				myWindow.setContentPane(basicInfoPanel);
 				myWindow.pack();
 			}
@@ -217,6 +218,11 @@ public class GUIController {
 		JButton nextButton = new JButton("Next");
 		nextButton.addActionListener(new ActionListener() {
 
+			/**
+			 * Does a bunch of stuff that Minh should have left comments for.
+			 * 
+			 * @author Minh, Eric
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (myState == 1) {
@@ -226,8 +232,21 @@ public class GUIController {
 					createPanel.revalidate();
 					createPanel.repaint();
 					// myWindow.pack();
-				}
+				} else if (myState == 2) {
+					// I think this is resetting it... ?? Minh, stop making magic numbers!!
+					// Constants would help - especially for stuff like states.
+					myState = 1;
+					myLoader.saveProject(myWindow);
 
+					// Don't know if I need to reset all this stuff for the next time around.
+					createPanel.remove(itemPanel);
+					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
+					createPanel.revalidate();
+					createPanel.repaint();
+
+					// Back to the main menu!
+					myWindow.setContentPane(mainPanel);
+				}
 			}
 		});
 		createPanel.add(nextButton, BorderLayout.EAST);
@@ -239,10 +258,19 @@ public class GUIController {
 			/**
 			 * Back button to move to the previous state or panel of the application flow.
 			 * 
-			 * @author Minh Pham
+			 * @author Minh
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// Oh my goodness, Minh -> add some freaking comments!
+				// Also, 'x' is a pretty shit variable name.
+
+				// There's also a bug in here and its like 4 in the morning now.
+				// Go to the last panel of the create Project thing, hit next one last
+				// time, the click cancel when the filechooser comes up.
+
+				// It should stay on that last create panel instead of going back to the
+				// main menu.
 				if (myState == 1) {
 					String[] optionStrings = { "Yes", "No" };
 					int x = JOptionPane.showOptionDialog(null,
