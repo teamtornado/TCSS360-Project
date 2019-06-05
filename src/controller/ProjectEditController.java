@@ -14,7 +14,7 @@ public class ProjectEditController {
 	/**
 	 * The project information. Includes the fields and the general info.
 	 */
-	protected Project myProject;
+	private ProjectLoadController myLoader;
 
 	/**
 	 * Creates a controller for the given project.
@@ -22,8 +22,8 @@ public class ProjectEditController {
 	 * @param theProject
 	 *            the project to create a controller for.
 	 */
-	public ProjectEditController(final Project theProject) {
-		this.myProject = theProject;
+	public ProjectEditController(final ProjectLoadController theLoader) {
+		this.myLoader = theLoader;
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class ProjectEditController {
 	 * @author Eric
 	 */
 	public void setName(final String theName) {
-		myProject.setName(theName);
+		myLoader.myProject.setName(theName);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class ProjectEditController {
 	 * @author Eric
 	 */
 	public void setProjectDescription(String theProjectDescription) {
-		myProject.setProjectDescription(theProjectDescription);
+		myLoader.myProject.setProjectDescription(theProjectDescription);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class ProjectEditController {
 	 * @author Eric
 	 */
 	public void setBudget(final Currency theBudget) {
-		myProject.setBudget(theBudget);
+		myLoader.myProject.setBudget(theBudget);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class ProjectEditController {
 	 * @author Eric
 	 */
 	public void setLocation(final String theLocation) {
-		myProject.setLocation(theLocation);
+		myLoader.myProject.setLocation(theLocation);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class ProjectEditController {
 	 * @author Eric
 	 */
 	public void addItem(final String theItemType) {
-		this.myProject.addItem(theItemType);
+		myLoader.myProject.addItem(theItemType);
 	}
 
 	/**
@@ -112,11 +112,10 @@ public class ProjectEditController {
 	 *             if the given item-type did not have a match.
 	 * @author Eric
 	 */
-	public void addFieldToItem(final String theItemDestination,
-			final String theFieldName, final String theDescription,
-			final String theValueType, final String theValue) {
-		myProject.addFieldToItem(theItemDestination, theFieldName,
-				theDescription, theValueType, theValue);
+	public void addFieldToItem(final String theItemDestination, final String theFieldName,
+			final String theDescription, final String theValueType, final String theValue) {
+		myLoader.myProject.addFieldToItem(theItemDestination, theFieldName, theDescription,
+				theValueType, theValue);
 	}
 
 	/**
@@ -131,7 +130,7 @@ public class ProjectEditController {
 	 * @author Eric
 	 */
 	public void removeItem(final String theItemType) {
-		myProject.removeItem(theItemType);
+		myLoader.myProject.removeItem(theItemType);
 	}
 
 	/**
@@ -145,17 +144,16 @@ public class ProjectEditController {
 	 *             if the item-type could not be found.
 	 * @author Eric
 	 */
-	public void removeFieldFromItem(final String theItemType,
-			final String theFieldName) {
-		this.myProject.removeFieldFromItem(theItemType, theFieldName);
+	public void removeFieldFromItem(final String theItemType, final String theFieldName) {
+		this.myLoader.myProject.removeFieldFromItem(theItemType, theFieldName);
 	}
-	
+
 	/**
 	 * Clears all items from list.
 	 * 
 	 * @author Eric
 	 */
 	public void clearAllItems() {
-		this.myProject.clearAllItems();
+		this.myLoader.myProject.clearAllItems();
 	}
 }

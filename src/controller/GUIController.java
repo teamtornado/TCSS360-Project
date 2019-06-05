@@ -11,7 +11,6 @@ import java.io.PrintStream;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -21,18 +20,20 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
+import gui.CreatePanel;
+import gui.ProjectViewer;
 import gui.createpanels.BasicInfoPanel;
 import utilities.About;
 import utilities.FileParser;
 
 /**
+ * Controls the flow of the application.
  * 
- * 
- * @author Minh Pham
+ * @author Minh Pham, Curran, Sharanjit, Eric
  */
 
 public class GUIController {
-	
+
 	/**
 	 * The text displayed on the 'help' JMenu button.
 	 */
@@ -57,7 +58,7 @@ public class GUIController {
 	 * The text name for the dialog panel.
 	 */
 	private static final String DIALOG_PANEL_NAME = "About";
-	
+
 	/**
 	 * Minimum width of the main window
 	 */
@@ -67,45 +68,59 @@ public class GUIController {
 	 * Minimum height of the main window
 	 */
 	private static final int MIN_FRAME_HEIGHT = 200;
-	
+
 	/**
 	 * The fraction constant to provide relative calculations to the main window.
 	 */
 	private static final float FRACTION_OF_MAIN_WINDOW = 0.5f;
-	
+
 	/**
-	 * 
-	 */
-	private JFileChooser myFileChooser;
-	
-	/**
-	 * 
+	 * Allows the user to enter basic information when creating a new project.
 	 */
 	private JPanel basicInfoPanel;
-	
+
 	/**
-	 * 
+	 * A magical panel that does something.
 	 */
 	private JPanel itemPanel;
-	
+
 	/**
-	 * 
+	 * The main menu panel for the application.
 	 */
 	private JPanel mainPanel;
-	
+
 	/**
-	 * 
+	 * The Frame of the application.
 	 */
 	private JFrame myWindow;
-	
+
 	/**
-	 * 
+	 * The project creation panel for adding items and features to projects.
+	 */
+	private CreatePanel myCreatePanel;
+
+	/**
+	 * Allows the user to view projects that have already been created.
+	 */
+	private ProjectViewer myProjectViewer;
+
+	/**
+	 * The state of the creation panel.
 	 */
 	private int state;
-	
-	public GUIController() {
+
+	/**
+	 * Constructs a controller that handles input from the user interface and
+	 * maintains flow of UI.
+	 * 
+	 * @author Eric, Minh, Curran, Sharanjit
+	 */
+	public GUIController(final ProjectEditController theEditor,
+			final ProjectViewController theViewer, final ProjectLoadController theLoader,
+			final SchemaController theRules) {
+		myCreatePanel = new CreatePanel(theEditor, theViewer, theRules);
+		myProjectViewer = new ProjectViewer(theViewer, theLoader);
 		myWindow = new JFrame();
-		myFileChooser = new JFileChooser();
 		state = 1;
 		mainPanel = makeMainPanel();
 		basicInfoPanel = makeCreatePanel();
@@ -115,7 +130,13 @@ public class GUIController {
 		setupJFrameIcon();
 		setupMenuBar();
 	}
-	
+
+	/**
+	 * Creates the main menu for the opening of the application.
+	 * 
+	 * @return the main menu panel for the application.
+	 * @author Minh
+	 */
 	private JPanel makeMainPanel() {
 		JPanel contentPanel = new JPanel();
 		JButton openButton = new JButton("Open Project");
@@ -123,7 +144,7 @@ public class GUIController {
 		JButton createButton = new JButton("Create Project");
 		createButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent theEvent) {
 				myWindow.setContentPane(basicInfoPanel);
 				myWindow.pack();
 			}
@@ -131,25 +152,36 @@ public class GUIController {
 		contentPanel.add(createButton);
 		return contentPanel;
 	}
-	
+
+	/**
+	 * Magical code that does something great.
+	 * 
+	 * @return from the dead.
+	 * @author Unknown
+	 */
 	private JPanel makeItemPanel() {
 		JPanel itemPanel = new JPanel();
-		
 		return itemPanel;
 	}
-	
+
+	/**
+	 * Creates the project creation panel and returns it.
+	 * 
+	 * @return the project creation panel.
+	 * @author Minh, Curran, Sharanjit
+	 */
 	private JPanel makeCreatePanel() {
 		JPanel createPanel = new JPanel();
 		createPanel.setLayout(new BorderLayout());
 		// the info stuffs
-		
+
 		BasicInfoPanel basicInfoPanel = new BasicInfoPanel();
-		
+
 		// adding stuffs together
 		createPanel.add(basicInfoPanel, BorderLayout.CENTER);
 		JButton nextButton = new JButton("Next");
 		nextButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (state == 1) {
@@ -158,25 +190,31 @@ public class GUIController {
 					createPanel.add(itemPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
 					createPanel.repaint();
-//					myWindow.pack();
+					// myWindow.pack();
 				}
-				
+
 			}
 		});
 		createPanel.add(nextButton, BorderLayout.EAST);
-		
+
 		JButton backButton = new JButton("Back");
-		
+
 		backButton.addActionListener(new ActionListener() {
-				
+
+			/**
+			 * Back button to move to the previous state or panel of the application flow.
+			 * 
+			 * @author Minh Pham
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (state == 1) {
-					String[] optionStrings = {"Yes" , "No"};
-					int x = JOptionPane.showOptionDialog(null, "You will lose all progress if you back out. Proceed?",
-													 "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-													 optionStrings, optionStrings[0]);
-						
+					String[] optionStrings = { "Yes", "No" };
+					int x = JOptionPane.showOptionDialog(null,
+							"You will lose all progress if you back out. Proceed?", "Warning",
+							JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+							optionStrings, optionStrings[0]);
+
 					if (x == 0) {
 						myWindow.setContentPane(mainPanel);
 						myWindow.pack();
@@ -187,21 +225,21 @@ public class GUIController {
 					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
 					createPanel.repaint();
-//					myWindow.pack();
+					// myWindow.pack();
 				}
-					
+
 			}
 		});
-		
+
 		createPanel.add(backButton, BorderLayout.WEST);
-		
+
 		return createPanel;
 	}
 
-	
-	
 	/**
 	 * Final setup including packing and setting the frame to visible.
+	 * 
+	 * @author Minh
 	 */
 	public void start() {
 		myWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -209,7 +247,13 @@ public class GUIController {
 		myWindow.pack();
 		myWindow.setVisible(true);
 	}
-	
+
+	/**
+	 * Sets up the header menu bar of the application. Includes the about and
+	 * settings options.
+	 * 
+	 * @author Minh, Curran, Sharanjit
+	 */
 	private void setupMenuBar() {
 		// Setup the JMenu
 		final JMenuBar menuBar = new JMenuBar();
@@ -230,7 +274,13 @@ public class GUIController {
 		menuBar.add(settingMenu);
 		myWindow.setJMenuBar(menuBar);
 	}
-	
+
+	/**
+	 * Creates the dimensions of the main window and sets minimum sizes. Will also
+	 * take user preference for window size.
+	 * 
+	 * @author Minh, Curran
+	 */
 	private void setupFrameDimensions() {
 		myWindow.setMinimumSize(new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
 		Dimension savedDimensions = null;
@@ -242,11 +292,13 @@ public class GUIController {
 		}
 		myWindow.setPreferredSize(savedDimensions);
 	}
-	
+
 	/**
 	 * Creates the change size item for the menu bar
 	 * 
 	 * @return the change size item for the menu bar
+	 * 
+	 * @author Minh, Curran, Sharanjit
 	 */
 	private JMenuItem createChangeSizeItem() {
 		final JMenuItem changeSize = new JMenuItem();
@@ -269,11 +321,13 @@ public class GUIController {
 
 		return changeSize;
 	}
-	
+
 	/**
 	 * Creates the about page item to access about dialog
 	 * 
 	 * @return the about page item
+	 * 
+	 * @author Minh, Curran, Sharanjit
 	 */
 	private JMenuItem createAboutPageItem() {
 		final JMenuItem aboutPage = new JMenuItem();
@@ -288,15 +342,16 @@ public class GUIController {
 
 		return aboutPage;
 	}
-	
+
 	/**
-	 * Sets the dialog panel up.
+	 * Sets the 'about project' dialogue panel up.
 	 * 
 	 * @param theAboutMessage
 	 *            The dialog panel itself to be setup.
+	 * @author Curran, Sharanjit
 	 */
 	private void setupDialogPanel(final JDialog theAboutMessage) {
-//		theAboutMessage.setLocationRelativeTo(this);
+		// theAboutMessage.setLocationRelativeTo(this);
 		final JTextArea aboutMessage = new JTextArea();
 		String message = new About().getAbout();
 
@@ -314,11 +369,14 @@ public class GUIController {
 
 		theAboutMessage.setVisible(true);
 	}
-	
+
 	/**
-	 * Creates the export menu bar item
+	 * Creates the export menu bar item. Allows user to export the current frame
+	 * size.
 	 * 
 	 * @return the export menu bar item
+	 * 
+	 * @author Curran, Sharanjit
 	 */
 	private JMenuItem createExportItem() {
 		final JMenuItem export = new JMenuItem();
@@ -338,9 +396,11 @@ public class GUIController {
 		});
 		return export;
 	}
-	
+
 	/**
 	 * Setup the icon for the JFrame.
+	 * 
+	 * @author Eric
 	 */
 	private void setupJFrameIcon() {
 		final ImageIcon img = new ImageIcon("tornadoIcon.png");

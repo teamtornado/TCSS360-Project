@@ -8,6 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import controller.ProjectEditController;
+import controller.ProjectLoadController;
+import controller.ProjectViewController;
+import controller.SchemaController;
 import gui.createpanels.BasicInfoPanel;
 
 /**
@@ -26,19 +30,19 @@ public class CreatePanel extends JPanel {
 	/**
 	 * Allows for editing the user's project.
 	 */
-//	private final ProjectEditController myEditor;
+	private final ProjectEditController myEditor;
 
 	/**
 	 * Allows for viewing the user's project contents.
 	 */
-//	private final ProjectViewController myViewer;
+	private final ProjectViewController myViewer;
 
 	/**
 	 * Holds the rules of the schema database. Holds item-type hierarchy and what
 	 * each item-type has as fields. Does NOT hold user entered information.
 	 */
-//	private final SchemaController myRules;
-	
+	private final SchemaController myRules;
+
 	private int state;
 
 	/**
@@ -52,12 +56,15 @@ public class CreatePanel extends JPanel {
 	 *            the schema rules of the schema database. Describes possible fields
 	 *            and item-types.
 	 */
-	public CreatePanel() {
+	public CreatePanel(final ProjectEditController theEditor, final ProjectViewController theViewer,
+			final SchemaController theRules) {
+		this.myEditor = theEditor;
+		this.myViewer = theViewer;
+		this.myRules = theRules;
 		state = 1;
 		this.setLayout(new BorderLayout());
 		// the info stuffs
 		BasicInfoPanel basicInfoPanel = new BasicInfoPanel();
-
 
 		// adding stuffs together
 		this.add(basicInfoPanel, BorderLayout.CENTER);
@@ -66,14 +73,15 @@ public class CreatePanel extends JPanel {
 		JButton backButton = new JButton("Back");
 		if (state == 1) {
 			backButton.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					String[] optionStrings = {"Yes" , "No"};
-					int x = JOptionPane.showOptionDialog(null, "You will lose all progress if you back out. Proceed?",
-												 "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-												 optionStrings, optionStrings[0]);
-					
+					String[] optionStrings = { "Yes", "No" };
+					int x = JOptionPane.showOptionDialog(null,
+							"You will lose all progress if you back out. Proceed?", "Warning",
+							JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+							optionStrings, optionStrings[0]);
+
 					System.out.println(x);
 				}
 			});

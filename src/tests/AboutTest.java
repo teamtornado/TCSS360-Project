@@ -21,6 +21,9 @@ class AboutTest {
 	private static final String CORRECT_DIALOG_MESSAGE = "Team Name: Team Tornado\nVersion: 0.0.0.1\n"
 			+ "\nEric Hoover\nMinh Pham\nSharanjit Singh\nCurran Seam";
 
+	/**
+	 * Hold the information required for the about dialog.
+	 */
 	private About aboutTest = new About();
 
 	/**

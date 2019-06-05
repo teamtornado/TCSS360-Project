@@ -21,8 +21,17 @@ import controller.ProjectViewController;
 import controller.SchemaController;
 import model.Project;
 
+/**
+ * Entry point for the UI. Sets up the controllers and starts the app.
+ * 
+ * @author Everyone, including Unkown
+ *
+ */
 public class Application {
 
+	/**
+	 * The location for the rules of the database.
+	 */
 	public static final String SCHEMA_DATABASE_LOCATION = "SchemaData.txt";
 
 	/**
@@ -31,7 +40,8 @@ public class Application {
 	 * @param theArgs
 	 *            The console arguments. These are not used within the code.
 	 * @throws FileNotFoundException
-	 * @author My dog
+	 *             if the schema database is not found.
+	 * @author Also everyone
 	 */
 	public static void main(String[] theArgs) throws FileNotFoundException {
 		try {
@@ -46,14 +56,14 @@ public class Application {
 				Currency.getInstance(Locale.US), "Dummy Value");
 
 		// Dole out the controllers to whoever needs them.
-		final ProjectEditController editor = new ProjectEditController(dummyProject);
-		final ProjectViewController viewer = new ProjectViewController(dummyProject);
-		final ProjectLoadController loader = new ProjectLoadController(editor, viewer);
+		final ProjectLoadController loader = new ProjectLoadController(dummyProject);
+		final ProjectEditController editor = new ProjectEditController(loader);
+		final ProjectViewController viewer = new ProjectViewController(loader);
 		final SchemaController rules = new SchemaController(SCHEMA_DATABASE_LOCATION);
-//		final CreatePanel createPanel = new CreatePanel(editor, viewer, rules);
-//		final ProjectViewer viewerPanel = new ProjectViewer(viewer, loader);
-//		final MainFrame guiMain = new MainFrame(createPanel, viewerPanel, loader);
-		final GUIController applicationGuiController = new GUIController();
+		final GUIController applicationGuiController = new GUIController(editor, viewer, loader,
+				rules);
+
+		// Enable the app!
 		applicationGuiController.start();
 	}
 

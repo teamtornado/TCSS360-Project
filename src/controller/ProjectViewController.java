@@ -18,7 +18,7 @@ public class ProjectViewController {
 	/**
 	 * The project information. Includes the fields and the general info.
 	 */
-	protected Project myProject;
+	private ProjectLoadController myLoader;
 
 	/**
 	 * Creates a controller for the given project.
@@ -26,8 +26,8 @@ public class ProjectViewController {
 	 * @param theProject
 	 *            the project to create a controller for.
 	 */
-	public ProjectViewController(final Project theProject) {
-		this.myProject = theProject;
+	public ProjectViewController(final ProjectLoadController theLoader) {
+		this.myLoader = theLoader;
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class ProjectViewController {
 	 * @author Eric
 	 */
 	public String getName() {
-		return myProject.getName();
+		return myLoader.myProject.getName();
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class ProjectViewController {
 	 * @author Eric
 	 */
 	public String getProjectDescription() {
-		return myProject.getProjectDescription();
+		return myLoader.myProject.getProjectDescription();
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class ProjectViewController {
 	 * @author Eric
 	 */
 	public Currency getBudget() {
-		return myProject.getBudget();
+		return myLoader.myProject.getBudget();
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class ProjectViewController {
 	 * @author Eric
 	 */
 	public String getLocation() {
-		return myProject.getLocation();
+		return myLoader.myProject.getLocation();
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class ProjectViewController {
 	 * @author Eric
 	 */
 	public List<String> getAllItemTypes() {
-		return myProject.getAllItemTypes();
+		return myLoader.myProject.getAllItemTypes();
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class ProjectViewController {
 	 */
 	public List<ItemField> getAllItemFieldsFromItem(
 			final String theItemType) {
-		return myProject.getAllItemFieldsFromItem(theItemType);
+		return myLoader.myProject.getAllItemFieldsFromItem(theItemType);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class ProjectViewController {
 	 */
 	public ItemField getFieldFromItem(final String theItemType,
 			final String theItemFieldName) {
-		return myProject.getFieldFromItem(theItemType, theItemFieldName);
+		return myLoader.myProject.getFieldFromItem(theItemType, theItemFieldName);
 	}
 
 	/**
@@ -116,6 +116,6 @@ public class ProjectViewController {
 	 * @author Eric
 	 */
 	public void printToConsole() {
-		myProject.printToConsole();
+		myLoader.myProject.printToConsole();
 	}
 }

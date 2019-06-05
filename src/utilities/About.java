@@ -1,11 +1,9 @@
 package utilities;
 
 /**
+ * Holds information for the about dialog menu.
  * 
  * @author Minh Pham
- * 
- *         Holds information for the about dialog menu.
- *
  */
 public class About {
 	private String teamName;
@@ -25,6 +23,7 @@ public class About {
 	 * Gets the printout for the about dialog menu.
 	 * 
 	 * @return the printout for the dialog menu.
+	 * @author Minh
 	 */
 	public String getAbout() {
 		StringBuilder result = new StringBuilder();

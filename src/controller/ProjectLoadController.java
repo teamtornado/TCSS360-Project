@@ -7,23 +7,18 @@ import model.Project;
 
 public class ProjectLoadController {
 
-	private ProjectEditController myEditor;
-	private ProjectViewController myViewer;
+	protected Project myProject;
 
-	public ProjectLoadController(final ProjectEditController theEditor,
-			final ProjectViewController theViewer) {
-		this.myEditor = theEditor;
-		this.myViewer = theViewer;
+	public ProjectLoadController(final Project theProject) {
+		this.myProject = theProject;
 	}
 
 	public void loadProject(final String theFileLocation) {
-		myEditor.myProject = null; // set it to something else!
-		myViewer.myProject = null;
+		// filechooser, find serialized instance, load.
 	}
 
 	public void saveProjectToLocation(final String theSaveLocation) {
-		@SuppressWarnings("unused")
-		final Project project = myEditor.myProject;
+		// export file as serialized to path
 	}
 
 	public void createNewProject() {
@@ -31,7 +26,6 @@ public class ProjectLoadController {
 		// controller.
 		final Project blankProject = new Project("...", "...", Currency.getInstance(Locale.US),
 				"...");
-		myEditor.myProject = blankProject;
-		myViewer.myProject = blankProject;
+		this.myProject = blankProject;
 	}
 }

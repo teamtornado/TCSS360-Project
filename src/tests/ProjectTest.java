@@ -24,15 +24,11 @@ class ProjectTest {
 
 	@BeforeEach
 	void setup() {
-		final Project project = new Project("WoofProject",
-				"This Project is all about dogs",
-				Currency.getInstance(Locale.US),
-				"The United Empire of Doggos");
-
-		myEditor = new ProjectEditController(project);
-		myViewer = new ProjectViewController(project);
-		myLoader = new ProjectLoadController(myEditor,
-				myViewer);
+		final Project project = new Project("WoofProject", "This Project is all about dogs",
+				Currency.getInstance(Locale.US), "The United Empire of Doggos");
+		myLoader = new ProjectLoadController(project);
+		myEditor = new ProjectEditController(myLoader);
+		myViewer = new ProjectViewController(myLoader);
 	}
 
 	@Test
@@ -46,16 +42,14 @@ class ProjectTest {
 		final String userNotesFieldName = "User notes";
 		myEditor.addFieldToItem(SchemaTypes.APPLIANCE, powerUsageFieldName,
 				"How much power the appliance uses", "Number", "1000");
-		myEditor.addFieldToItem(SchemaTypes.APPLIANCE, userNotesFieldName,
-				"User created notes", "String",
-				"I think I might change my mind about this appliance");
+		myEditor.addFieldToItem(SchemaTypes.APPLIANCE, userNotesFieldName, "User created notes",
+				"String", "I think I might change my mind about this appliance");
 
 		// Actually, I changed my mind. I won't want a lighting item anymore
 		myEditor.removeItem(SchemaTypes.LIGHTING);
 
 		// I also don't want user notes in my appliance item
-		myEditor.removeFieldFromItem(SchemaTypes.APPLIANCE,
-				userNotesFieldName);
+		myEditor.removeFieldFromItem(SchemaTypes.APPLIANCE, userNotesFieldName);
 	}
 
 	@Test
@@ -68,13 +62,11 @@ class ProjectTest {
 		final String userNotesFieldName = "User notes";
 		myEditor.addFieldToItem(SchemaTypes.APPLIANCE, powerUsageFieldName,
 				"How much power the appliance uses", "Number", "1000");
-		myEditor.addFieldToItem(SchemaTypes.APPLIANCE, userNotesFieldName,
-				"User created notes", "String",
-				"I think I might change my mind about this appliance");
+		myEditor.addFieldToItem(SchemaTypes.APPLIANCE, userNotesFieldName, "User created notes",
+				"String", "I think I might change my mind about this appliance");
 
 		myEditor.removeItem(SchemaTypes.LIGHTING);
-		myEditor.removeFieldFromItem(SchemaTypes.APPLIANCE,
-				userNotesFieldName);
+		myEditor.removeFieldFromItem(SchemaTypes.APPLIANCE, userNotesFieldName);
 
 		// Now onto some viewer stuff
 
@@ -83,8 +75,8 @@ class ProjectTest {
 		assertTrue(allItems.get(0).equals(SchemaTypes.APPLIANCE));
 
 		// I want a specific field from a specific item now
-		final ItemField field = myViewer.getFieldFromItem(
-				SchemaTypes.APPLIANCE, powerUsageFieldName);
+		final ItemField field = myViewer.getFieldFromItem(SchemaTypes.APPLIANCE,
+				powerUsageFieldName);
 		final String fieldName = field.getFieldName();
 		assertTrue(fieldName.equals(powerUsageFieldName));
 
