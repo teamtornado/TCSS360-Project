@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
 import gui.CreatePanel;
+import gui.createpanels.BasicInfoPanel;
 import utilities.About;
 import utilities.FileParser;
 
@@ -92,18 +94,24 @@ public class GUIController {
 	 */
 	private JFrame myWindow;
 	
+	/**
+	 * 
+	 */
+	private int state;
+	
 	public GUIController() {
 		myWindow = new JFrame();
 		myFileChooser = new JFileChooser();
-		mainPanel = makeContentPanel();
-		createPanel = new CreatePanel();
+		state = 1;
+		mainPanel = makeMainPanel();
+		createPanel = makeCreatePanel();
 		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
 		setupJFrameIcon();
 		setupMenuBar();
 	}
 	
-	private JPanel makeContentPanel() {
+	private JPanel makeMainPanel() {
 		JPanel contentPanel = new JPanel();
 		JButton openButton = new JButton("Open Project");
 		contentPanel.add(openButton);
@@ -118,6 +126,41 @@ public class GUIController {
 		contentPanel.add(createButton);
 		return contentPanel;
 	}
+	
+	private JPanel makeCreatePanel() {
+		JPanel createPanel = new JPanel();
+		createPanel.setLayout(new BorderLayout());
+		// the info stuffs
+		BasicInfoPanel basicInfoPanel = new BasicInfoPanel();
+
+		// adding stuffs together
+		createPanel.add(basicInfoPanel, BorderLayout.CENTER);
+		JButton nextButton = new JButton("Next");
+		createPanel.add(nextButton, BorderLayout.EAST);
+		JButton backButton = new JButton("Back");
+		if (state == 1) {
+			backButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String[] optionStrings = {"Yes" , "No"};
+					int x = JOptionPane.showOptionDialog(null, "You will lose all progress if you back out. Proceed?",
+												 "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+												 optionStrings, optionStrings[0]);
+					
+					if (x == 0) {
+						myWindow.setContentPane(mainPanel);
+						myWindow.pack();
+					}
+				}
+			});
+		}
+		createPanel.add(backButton, BorderLayout.WEST);
+		
+		return createPanel;
+	}
+
+
 	
 	/**
 	 * Final setup including packing and setting the frame to visible.

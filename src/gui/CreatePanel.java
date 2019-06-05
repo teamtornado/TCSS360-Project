@@ -61,7 +61,6 @@ public class CreatePanel extends JPanel {
 	 *            and item-types.
 	 */
 	public CreatePanel() {
-		//myMainFrame = theMainFrame;
 		state = 1;
 		this.setLayout(new BorderLayout());
 		// the info stuffs
@@ -83,7 +82,7 @@ public class CreatePanel extends JPanel {
 												 "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 												 optionStrings, optionStrings[0]);
 					
-					
+					System.out.println(x);
 				}
 			});
 		}
