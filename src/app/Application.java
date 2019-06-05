@@ -14,13 +14,11 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
+import controller.GUIController;
 import controller.ProjectEditController;
 import controller.ProjectLoadController;
 import controller.ProjectViewController;
 import controller.SchemaController;
-import gui.CreatePanel;
-import gui.MainFrame;
-import gui.ProjectViewer;
 import model.Project;
 
 public class Application {
@@ -52,9 +50,11 @@ public class Application {
 		final ProjectViewController viewer = new ProjectViewController(dummyProject);
 		final ProjectLoadController loader = new ProjectLoadController(editor, viewer);
 		final SchemaController rules = new SchemaController(SCHEMA_DATABASE_LOCATION);
-		final CreatePanel createPanel = new CreatePanel(editor, viewer, rules);
-		final ProjectViewer viewerPanel = new ProjectViewer(viewer, loader);
-		final MainFrame guiMain = new MainFrame(createPanel, viewerPanel, loader);
+//		final CreatePanel createPanel = new CreatePanel(editor, viewer, rules);
+//		final ProjectViewer viewerPanel = new ProjectViewer(viewer, loader);
+//		final MainFrame guiMain = new MainFrame(createPanel, viewerPanel, loader);
+		final GUIController applicationGuiController = new GUIController();
+		applicationGuiController.start();
 	}
 
 }

@@ -2,9 +2,13 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -30,18 +34,18 @@ public class CreatePanel extends JPanel {
 	/**
 	 * Allows for editing the user's project.
 	 */
-	final ProjectEditController myEditor;
+//	private final ProjectEditController myEditor;
 
 	/**
 	 * Allows for viewing the user's project contents.
 	 */
-	final ProjectViewController myViewer;
+//	private final ProjectViewController myViewer;
 
 	/**
 	 * Holds the rules of the schema database. Holds item-type hierarchy and what
 	 * each item-type has as fields. Does NOT hold user entered information.
 	 */
-	final SchemaController myRules;
+//	private final SchemaController myRules;
 	
 	private int state;
 
@@ -56,11 +60,8 @@ public class CreatePanel extends JPanel {
 	 *            the schema rules of the schema database. Describes possible fields
 	 *            and item-types.
 	 */
-	public CreatePanel(final ProjectEditController theEditor, final ProjectViewController theViewer,
-			final SchemaController theRules) {
-		myEditor = theEditor;
-		myViewer = theViewer;
-		myRules = theRules;
+	public CreatePanel() {
+		//myMainFrame = theMainFrame;
 		state = 1;
 		this.setLayout(new BorderLayout());
 		// the info stuffs
@@ -72,6 +73,20 @@ public class CreatePanel extends JPanel {
 		JButton nextButton = new JButton("Next");
 		this.add(nextButton, BorderLayout.EAST);
 		JButton backButton = new JButton("Back");
+		if (state == 1) {
+			backButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String[] optionStrings = {"Yes" , "No"};
+					int x = JOptionPane.showOptionDialog(null, "You will lose all progress if you back out. Proceed?",
+												 "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+												 optionStrings, optionStrings[0]);
+					
+					
+				}
+			});
+		}
 		this.add(backButton, BorderLayout.WEST);
 	}
 }
