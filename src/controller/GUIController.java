@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
+import gui.createpanels.BasicInfoPanel;
 import utilities.About;
 import utilities.FileParser;
 
@@ -141,6 +142,8 @@ public class GUIController {
 		JPanel createPanel = new JPanel();
 		createPanel.setLayout(new BorderLayout());
 		// the info stuffs
+		
+		BasicInfoPanel basicInfoPanel = new BasicInfoPanel();
 		
 		// adding stuffs together
 		createPanel.add(basicInfoPanel, BorderLayout.CENTER);
