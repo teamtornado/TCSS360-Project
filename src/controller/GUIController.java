@@ -76,6 +76,16 @@ public class GUIController {
 	/**
 	 * 
 	 */
+	private static final int FIRST_PANEL = 1;
+	
+	/**
+	 * 
+	 */
+	private static final int SECOND_PANEL = 2;
+	
+	/**
+	 * 
+	 */
 	private JFileChooser myFileChooser;
 	
 	/**
@@ -106,7 +116,7 @@ public class GUIController {
 	public GUIController() {
 		myWindow = new JFrame();
 		myFileChooser = new JFileChooser();
-		state = 1;
+		state = FIRST_PANEL;
 		mainPanel = makeMainPanel();
 		basicInfoPanel = makeCreatePanel();
 		itemPanel = makeItemPanel();
@@ -152,13 +162,12 @@ public class GUIController {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (state == 1) {
-					state = 2;
+				if (state == FIRST_PANEL) {
+					state = SECOND_PANEL;
 					createPanel.remove(basicInfoPanel);
 					createPanel.add(itemPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
 					createPanel.repaint();
-//					myWindow.pack();
 				}
 				
 			}
@@ -171,23 +180,22 @@ public class GUIController {
 				
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (state == 1) {
+				if (state == FIRST_PANEL) {
 					String[] optionStrings = {"Yes" , "No"};
 					int x = JOptionPane.showOptionDialog(null, "You will lose all progress if you back out. Proceed?",
 													 "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 													 optionStrings, optionStrings[0]);
-						
+					// If user say yes
 					if (x == 0) {
 						myWindow.setContentPane(mainPanel);
 						myWindow.pack();
 					}
 				} else {
-					state = 1;
+					state = FIRST_PANEL;
 					createPanel.remove(itemPanel);
 					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
 					createPanel.repaint();
-//					myWindow.pack();
 				}
 					
 			}
@@ -198,7 +206,6 @@ public class GUIController {
 		return createPanel;
 	}
 
-	
 	
 	/**
 	 * Final setup including packing and setting the frame to visible.

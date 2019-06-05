@@ -42,17 +42,14 @@ public class Application {
 
 		// This dummy project will get overwritten either when the user chooses to view
 		// a project, or when they choose to create a new project.
-		final Project dummyProject = new Project("Dummy", "Dummy Description",
-				Currency.getInstance(Locale.US), "Dummy Value");
+//		final Project dummyProject = new Project("Dummy", "Dummy Description",
+//				Currency.getInstance(Locale.US), "Dummy Value");
 
 		// Dole out the controllers to whoever needs them.
-		final ProjectEditController editor = new ProjectEditController(dummyProject);
-		final ProjectViewController viewer = new ProjectViewController(dummyProject);
-		final ProjectLoadController loader = new ProjectLoadController(editor, viewer);
-		final SchemaController rules = new SchemaController(SCHEMA_DATABASE_LOCATION);
-//		final CreatePanel createPanel = new CreatePanel(editor, viewer, rules);
-//		final ProjectViewer viewerPanel = new ProjectViewer(viewer, loader);
-//		final MainFrame guiMain = new MainFrame(createPanel, viewerPanel, loader);
+//		final ProjectEditController editor = new ProjectEditController(dummyProject);
+//		final ProjectViewController viewer = new ProjectViewController(dummyProject);
+//		final ProjectLoadController loader = new ProjectLoadController(editor, viewer);
+//		final SchemaController rules = new SchemaController(SCHEMA_DATABASE_LOCATION);
 		final GUIController applicationGuiController = new GUIController();
 		applicationGuiController.start();
 	}
