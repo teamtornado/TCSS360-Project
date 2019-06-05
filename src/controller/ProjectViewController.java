@@ -60,6 +60,16 @@ public class ProjectViewController {
 	}
 
 	/**
+	 * Returns the budget as a String in the form x.xx
+	 * 
+	 * @return return a formatted budget String.
+	 * @author Eric
+	 */
+	public String getFormattedBudgetAsString() {
+		return myLoader.myProject.getFormattedBudgetAsString();
+	}
+
+	/**
 	 * Returns the location of this project.
 	 * 
 	 * @return the location of this project.
