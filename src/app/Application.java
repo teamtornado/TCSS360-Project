@@ -25,7 +25,6 @@ import model.Project;
  * Entry point for the UI. Sets up the controllers and starts the app.
  * 
  * @author Everyone, including Unkown
- *
  */
 public class Application {
 
@@ -50,10 +49,8 @@ public class Application {
 			theException.printStackTrace();
 		}
 
-		// This dummy project will get overwritten either when the user chooses to view
-		// a project, or when they choose to create a new project.
-		final Project dummyProject = new Project("Dummy", "Dummy Description",
-				Currency.getInstance(Locale.US), "Dummy Value");
+		// Controllers need to be pre-loaded with a dummy project before they can run.
+		final Project dummyProject = new Project("Dummy", "Dummy Description", 0.00, "Dummy Value");
 
 		// Dole out the controllers to whoever needs them.
 		final ProjectLoadController loader = new ProjectLoadController(dummyProject);
@@ -62,8 +59,6 @@ public class Application {
 		final SchemaController rules = new SchemaController(SCHEMA_DATABASE_LOCATION);
 		final GUIController applicationGuiController = new GUIController(editor, viewer, loader,
 				rules);
-
-		// Enable the app!
 		applicationGuiController.start();
 	}
 

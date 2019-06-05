@@ -61,7 +61,7 @@ public class ProjectEditController {
 	 *             if theBudget is null.
 	 * @author Eric
 	 */
-	public void setBudget(final Currency theBudget) {
+	public void setBudget(final double theBudget) {
 		myLoader.myProject.setBudget(theBudget);
 	}
 
@@ -155,5 +155,14 @@ public class ProjectEditController {
 	 */
 	public void clearAllItems() {
 		this.myLoader.myProject.clearAllItems();
+	}
+
+	/**
+	 * Sets the basic information to default values.
+	 * 
+	 * @author Eric
+	 */
+	public void resetBasicInformation() {
+		myLoader.myProject.clearBasicInformation();
 	}
 }

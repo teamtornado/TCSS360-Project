@@ -25,7 +25,7 @@ class ProjectTest {
 	@BeforeEach
 	void setup() {
 		final Project project = new Project("WoofProject", "This Project is all about dogs",
-				Currency.getInstance(Locale.US), "The United Empire of Doggos");
+				100.20, "The United Empire of Doggos");
 		myLoader = new ProjectLoadController(project);
 		myEditor = new ProjectEditController(myLoader);
 		myViewer = new ProjectViewController(myLoader);

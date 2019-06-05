@@ -13,6 +13,11 @@ import java.util.List;
  */
 public class Project {
 
+	public static final String DEFAULT_PROJECT_NAME = "...";
+	public static final String DEFAULT_PROJECT_DESCRIPTION = "...";
+	public static final double DEFAULT_PROJECT_BUDGET = 0.00;
+	public static final String DEFAULT_PROJECT_LOCATION = "...";
+
 	/**
 	 * The user entered name of the project.
 	 */
@@ -26,7 +31,7 @@ public class Project {
 	/**
 	 * A user entered budget for the project.
 	 */
-	private Currency myBudget; // Have look up how to use this library
+	private double myBudget; // Have look up how to use this library
 
 	/**
 	 * A user entered location for this project.
@@ -53,24 +58,16 @@ public class Project {
 	 *             if any argument is null.
 	 * @author Eric
 	 */
-	public Project(final String theProjectName,
-			final String theProjectDescription, final Currency theBudget,
-			final String theProjectLocation) {
+	public Project(final String theProjectName, final String theProjectDescription,
+			final double theBudget, final String theProjectLocation) {
 		if (theProjectName == null) {
-			throw new IllegalArgumentException(
-					"Error: Cannot have null project name");
+			throw new IllegalArgumentException("Error: Cannot have null project name");
 		}
 		if (theProjectDescription == null) {
-			throw new IllegalArgumentException(
-					"Error: Cannot have null projectDescription");
-		}
-		if (theBudget == null) {
-			throw new IllegalArgumentException(
-					"Error: Cannot have null budget");
+			throw new IllegalArgumentException("Error: Cannot have null projectDescription");
 		}
 		if (theProjectLocation == null) {
-			throw new IllegalArgumentException(
-					"Error: Cannot have null project location");
+			throw new IllegalArgumentException("Error: Cannot have null project location");
 		}
 		this.myName = theProjectName;
 		this.myProjectDescription = theProjectDescription;
@@ -126,20 +123,47 @@ public class Project {
 	 */
 	public void setProjectDescription(String theProjectDescription) {
 		if (theProjectDescription == null) {
-			throw new IllegalArgumentException(
-					"Cannot set projectDescription to null");
+			throw new IllegalArgumentException("Cannot set projectDescription to null");
 		}
 		this.myProjectDescription = theProjectDescription;
 	}
 
 	/**
-	 * Returns the budget of the project.
+	 * Returns the budget of the project as a formatted double.
 	 * 
-	 * @return the budget of the project.
+	 * @return the formatted budget of the project.
 	 * @author Eric
 	 */
-	public Currency getBudget() {
-		return myBudget;
+	public double getBudget() {
+		// Just keeping only two decimal places.
+		// Not worrying about rounding error.
+		int budgetMult = (int) (myBudget * 100);
+		double budgetFormatted = ((double) budgetMult) / 100;
+		return budgetFormatted;
+	}
+
+	/**
+	 * Returns the budget as a String in the form x.xx
+	 * 
+	 * @return return a formatted budget String.
+	 * @author Eric
+	 */
+	public String getFormattedBudgetAsString() {
+		final double formattedBudget = getBudget();
+		final String budgetStringRaw = "" + formattedBudget;
+		final String[] tokens = budgetStringRaw.split(".");
+		// grabbing stuff to the right of the decimal
+		if (tokens.length == 1) {
+			return budgetStringRaw + ".00";
+		}
+		// in case it rounded to something like x.x
+		// need to add another 0 in this case.
+		final String decimal = tokens[1];
+		if (decimal.length() == 1) {
+			return budgetStringRaw + "0";
+		}
+		// Doesn't need anything fancy!
+		return budgetStringRaw;
 	}
 
 	/**
@@ -147,15 +171,9 @@ public class Project {
 	 * 
 	 * @param theBudget
 	 *            the budget to set for this project.
-	 * @throws IllegalArgumentException
-	 *             if theBudget is null.
 	 * @author Eric
 	 */
-	public void setBudget(final Currency theBudget) {
-		if (theBudget == null) {
-			throw new IllegalArgumentException(
-					"Cannot set budget to null");
-		}
+	public void setBudget(final double theBudget) {
 		this.myBudget = theBudget;
 	}
 
@@ -180,8 +198,7 @@ public class Project {
 	 */
 	public void setLocation(final String theLocation) {
 		if (theLocation == null) {
-			throw new IllegalArgumentException(
-					"Cannot set location to null");
+			throw new IllegalArgumentException("Cannot set location to null");
 		}
 		this.myLocation = theLocation;
 	}
@@ -202,15 +219,13 @@ public class Project {
 	 */
 	public void addItem(final String theItemType) {
 		if (theItemType == null) {
-			throw new IllegalArgumentException(
-					"Error: item-type cannot be null");
+			throw new IllegalArgumentException("Error: item-type cannot be null");
 		}
 
 		// Check to see if the itemType is unique
 		for (Item item : myItems) {
 			if (item.getItemType().equals(theItemType)) {
-				throw new IllegalArgumentException(
-						"Error: item-type has to be unqiue");
+				throw new IllegalArgumentException("Error: item-type has to be unqiue");
 			}
 		}
 
@@ -232,8 +247,7 @@ public class Project {
 	 */
 	public void removeItem(final String theItemType) {
 		if (theItemType == null) {
-			throw new IllegalArgumentException(
-					"Error: item-type cannot be null");
+			throw new IllegalArgumentException("Error: item-type cannot be null");
 		}
 
 		// Find and remove the matching item.
@@ -247,8 +261,7 @@ public class Project {
 		}
 
 		// Oh no! There was no match!
-		throw new IllegalArgumentException(
-				"Error: given item-type did not have a match");
+		throw new IllegalArgumentException("Error: given item-type did not have a match");
 	}
 
 	/**
@@ -269,18 +282,15 @@ public class Project {
 	 *             if the given item-type did not have a match.
 	 * @author Eric
 	 */
-	public void addFieldToItem(final String theItemDestination,
-			final String theFieldName, final String theDescription,
-			final String theValueType, final String theValue) {
+	public void addFieldToItem(final String theItemDestination, final String theFieldName,
+			final String theDescription, final String theValueType, final String theValue) {
 		for (Item item : myItems) {
-			item.addField(theFieldName, theDescription, theValueType,
-					theValue);
+			item.addField(theFieldName, theDescription, theValueType, theValue);
 			return;
 		}
 
 		// Oh no! there was no matching item-type
-		throw new IllegalArgumentException(
-				"Error: the item-type destination could not be found.");
+		throw new IllegalArgumentException("Error: the item-type destination could not be found.");
 	}
 
 	/**
@@ -294,8 +304,7 @@ public class Project {
 	 *             if the item-type could not be found.
 	 * @author Eric
 	 */
-	public void removeFieldFromItem(final String theItemType,
-			final String theFieldName) {
+	public void removeFieldFromItem(final String theItemType, final String theFieldName) {
 		for (Item item : myItems) {
 			if (item.getItemType().equals(theItemType)) {
 				item.removeField(theFieldName);
@@ -304,8 +313,7 @@ public class Project {
 		}
 
 		// No match found
-		throw new IllegalArgumentException(
-				"Error: give item-type could not be found.");
+		throw new IllegalArgumentException("Error: give item-type could not be found.");
 	}
 
 	// Field viewer methods
@@ -333,8 +341,7 @@ public class Project {
 	 * @return a COPY of the ItemFields within the matching Item to item-type.
 	 * @author Eric
 	 */
-	public List<ItemField> getAllItemFieldsFromItem(
-			final String theItemType) {
+	public List<ItemField> getAllItemFieldsFromItem(final String theItemType) {
 		final List<ItemField> listOfFields = new LinkedList<>();
 
 		for (Item item : myItems) {
@@ -362,8 +369,7 @@ public class Project {
 	 *             if either the item-type or the fieldName had no match.
 	 * @author Eric
 	 */
-	public ItemField getFieldFromItem(final String theItemType,
-			final String theItemFieldName) {
+	public ItemField getFieldFromItem(final String theItemType, final String theItemFieldName) {
 		// Find the matching Item
 		for (Item item : myItems) {
 			if (item.getItemType().equals(theItemType)) {
@@ -388,7 +394,7 @@ public class Project {
 	public void printToConsole() {
 		System.out.println("Project Name: " + myName);
 		System.out.println("Project Description: " + myProjectDescription);
-		System.out.println("Project Budget: " + myBudget.toString());
+		System.out.println("Project Budget: " + getBudget());
 		System.out.println("Project Location: " + myLocation);
 		System.out.println("----------------------------");
 		for (Item item : myItems) {
@@ -406,5 +412,17 @@ public class Project {
 	 */
 	public void clearAllItems() {
 		this.myItems.clear();
+	}
+
+	/**
+	 * Resets the basic information back to their default values.
+	 * 
+	 * @author Eric
+	 */
+	public void clearBasicInformation() {
+		setName(DEFAULT_PROJECT_NAME);
+		setProjectDescription(DEFAULT_PROJECT_DESCRIPTION);
+		setBudget(DEFAULT_PROJECT_BUDGET);
+		setLocation(DEFAULT_PROJECT_LOCATION);
 	}
 }

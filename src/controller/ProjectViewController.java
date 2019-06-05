@@ -25,6 +25,7 @@ public class ProjectViewController {
 	 * 
 	 * @param theProject
 	 *            the project to create a controller for.
+	 * @author Eric
 	 */
 	public ProjectViewController(final ProjectLoadController theLoader) {
 		this.myLoader = theLoader;
@@ -56,7 +57,7 @@ public class ProjectViewController {
 	 * @return the budget of the project.
 	 * @author Eric
 	 */
-	public Currency getBudget() {
+	public double getBudget() {
 		return myLoader.myProject.getBudget();
 	}
 
@@ -88,8 +89,7 @@ public class ProjectViewController {
 	 * @return a COPY of the ItemFields within the matching Item to item-type.
 	 * @author Eric
 	 */
-	public List<ItemField> getAllItemFieldsFromItem(
-			final String theItemType) {
+	public List<ItemField> getAllItemFieldsFromItem(final String theItemType) {
 		return myLoader.myProject.getAllItemFieldsFromItem(theItemType);
 	}
 
@@ -105,8 +105,7 @@ public class ProjectViewController {
 	 *             if either the item-type or the fieldName had no match.
 	 * @author Eric
 	 */
-	public ItemField getFieldFromItem(final String theItemType,
-			final String theItemFieldName) {
+	public ItemField getFieldFromItem(final String theItemType, final String theItemFieldName) {
 		return myLoader.myProject.getFieldFromItem(theItemType, theItemFieldName);
 	}
 

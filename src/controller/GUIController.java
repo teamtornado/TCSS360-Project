@@ -104,6 +104,11 @@ public class GUIController {
 	 */
 	private ProjectViewer myProjectViewer;
 
+	private ProjectEditController myEditor;
+	private ProjectViewController myViewer;
+	private ProjectLoadController myLoader;
+	private SchemaController myRules;
+
 	/**
 	 * The state of the creation panel.
 	 */
@@ -118,6 +123,10 @@ public class GUIController {
 	public GUIController(final ProjectEditController theEditor,
 			final ProjectViewController theViewer, final ProjectLoadController theLoader,
 			final SchemaController theRules) {
+		myEditor = theEditor;
+		myViewer = theViewer;
+		myLoader = theLoader;
+		myRules = theRules;
 		myCreatePanel = new CreatePanel(theEditor, theViewer, theRules);
 		myProjectViewer = new ProjectViewer(theViewer, theLoader);
 		myWindow = new JFrame();
@@ -145,6 +154,7 @@ public class GUIController {
 		createButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
+				myLoader.createNewProject();
 				myWindow.setContentPane(basicInfoPanel);
 				myWindow.pack();
 			}
@@ -216,6 +226,8 @@ public class GUIController {
 							optionStrings, optionStrings[0]);
 
 					if (x == 0) {
+						myEditor.clearAllItems();
+						myEditor.resetBasicInformation();
 						myWindow.setContentPane(mainPanel);
 						myWindow.pack();
 					}
