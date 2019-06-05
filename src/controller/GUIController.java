@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
-import gui.createpanels.BasicInfoPanel;
 import utilities.About;
 import utilities.FileParser;
 
@@ -142,9 +141,7 @@ public class GUIController {
 		JPanel createPanel = new JPanel();
 		createPanel.setLayout(new BorderLayout());
 		// the info stuffs
-		BasicInfoPanel basicInfoPanel = new BasicInfoPanel();
-		JPanel tempPanel = new JPanel();
-
+		
 		// adding stuffs together
 		createPanel.add(basicInfoPanel, BorderLayout.CENTER);
 		JButton nextButton = new JButton("Next");
@@ -155,7 +152,7 @@ public class GUIController {
 				if (state == 1) {
 					state = 2;
 					createPanel.remove(basicInfoPanel);
-					createPanel.add(tempPanel, BorderLayout.CENTER);
+					createPanel.add(itemPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
 					createPanel.repaint();
 //					myWindow.pack();
@@ -183,7 +180,7 @@ public class GUIController {
 					}
 				} else {
 					state = 1;
-					createPanel.remove(tempPanel);
+					createPanel.remove(itemPanel);
 					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
 					createPanel.repaint();
