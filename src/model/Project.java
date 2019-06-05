@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Currency;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,11 +11,31 @@ import java.util.List;
  * @author Eric
  *
  */
-public class Project {
+public class Project implements Serializable {
 
+	/**
+	 * Serial UID for outputing the Project.
+	 */
+	private static final long serialVersionUID = -5725244061748389461L;
+
+	/**
+	 * Default name of a project.
+	 */
 	public static final String DEFAULT_PROJECT_NAME = "...";
+
+	/**
+	 * Default description of a project.
+	 */
 	public static final String DEFAULT_PROJECT_DESCRIPTION = "...";
+
+	/**
+	 * Default budget of a project.
+	 */
 	public static final double DEFAULT_PROJECT_BUDGET = 0.00;
+
+	/**
+	 * Default location of a project.
+	 */
 	public static final String DEFAULT_PROJECT_LOCATION = "...";
 
 	/**
@@ -31,7 +51,7 @@ public class Project {
 	/**
 	 * A user entered budget for the project.
 	 */
-	private double myBudget; // Have look up how to use this library
+	private double myBudget;
 
 	/**
 	 * A user entered location for this project.
@@ -151,19 +171,14 @@ public class Project {
 	public String getFormattedBudgetAsString() {
 		final double formattedBudget = getBudget();
 		final String budgetStringRaw = "" + formattedBudget;
-		final String[] tokens = budgetStringRaw.split(".");
-		// grabbing stuff to the right of the decimal
-		if (tokens.length == 1) {
-			return budgetStringRaw + ".00";
-		}
-		// in case it rounded to something like x.x
-		// need to add another 0 in this case.
-		final String decimal = tokens[1];
-		if (decimal.length() == 1) {
+		final int indexOfDot = budgetStringRaw.indexOf('.');
+		// Now everything after the dot.
+		final String subBudgetString = budgetStringRaw.substring(indexOfDot + 1);
+		if (subBudgetString.length() < 2) {
 			return budgetStringRaw + "0";
+		} else {
+			return budgetStringRaw;
 		}
-		// Doesn't need anything fancy!
-		return budgetStringRaw;
 	}
 
 	/**
@@ -394,7 +409,7 @@ public class Project {
 	public void printToConsole() {
 		System.out.println("Project Name: " + myName);
 		System.out.println("Project Description: " + myProjectDescription);
-		System.out.println("Project Budget: " + getBudget());
+		System.out.println("Project Budget: $" + getFormattedBudgetAsString());
 		System.out.println("Project Location: " + myLocation);
 		System.out.println("----------------------------");
 		for (Item item : myItems) {

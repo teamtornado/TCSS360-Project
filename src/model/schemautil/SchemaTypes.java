@@ -1,4 +1,4 @@
-package model;
+package model.schemautil;
 
 public class SchemaTypes {
 

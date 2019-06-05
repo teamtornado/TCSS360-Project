@@ -7,8 +7,6 @@ package app;
  * for the various GUI elements current operable.
  */
 import java.io.FileNotFoundException;
-import java.util.Currency;
-import java.util.Locale;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;

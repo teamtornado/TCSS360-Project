@@ -1,10 +1,8 @@
 package controller;
 
-import java.util.Currency;
 import java.util.List;
 
 import model.ItemField;
-import model.Project;
 
 /**
  * This class allows the front end to query for data from the model to display

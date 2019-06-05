@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import controller.SchemaController;
 import model.SchemaField;
 import model.SchemaItem;
-import model.SchemaTypes;
+import model.schemautil.SchemaTypes;
 
 /**
  * Tests the Schema controller and database.

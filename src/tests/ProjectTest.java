@@ -2,9 +2,7 @@ package tests;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.Currency;
 import java.util.List;
-import java.util.Locale;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +12,7 @@ import controller.ProjectViewController;
 import controller.ProjectLoadController;
 import model.ItemField;
 import model.Project;
-import model.SchemaTypes;
+import model.schemautil.SchemaTypes;
 
 class ProjectTest {
 

@@ -1,9 +1,5 @@
 package controller;
 
-import java.util.Currency;
-
-import model.Project;
-
 /**
  * This class allows the front end to alter the model.
  * 

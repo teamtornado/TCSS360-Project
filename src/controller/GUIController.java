@@ -112,7 +112,7 @@ public class GUIController {
 	/**
 	 * The state of the creation panel.
 	 */
-	private int state;
+	private int myState;
 
 	/**
 	 * Constructs a controller that handles input from the user interface and
@@ -130,7 +130,7 @@ public class GUIController {
 		myCreatePanel = new CreatePanel(theEditor, theViewer, theRules);
 		myProjectViewer = new ProjectViewer(theViewer, theLoader);
 		myWindow = new JFrame();
-		state = 1;
+		myState = 1;
 		mainPanel = makeMainPanel();
 		basicInfoPanel = makeCreatePanel();
 		itemPanel = makeItemPanel();
@@ -149,12 +149,37 @@ public class GUIController {
 	private JPanel makeMainPanel() {
 		JPanel contentPanel = new JPanel();
 		JButton openButton = new JButton("Open Project");
+		openButton.addActionListener(new ActionListener() {
+
+			/**
+			 * Opens the ProjectViewer panel and loads an existent file.
+			 * 
+			 * @author Eric
+			 */
+			@Override
+			public void actionPerformed(final ActionEvent theEvent) {
+				int returnCondition = myLoader.loadProject(myWindow);
+				if (returnCondition == ProjectLoadController.SUCCESS) {
+					// If the file loaded correctly, then switch the panels.
+					myWindow.setContentPane(myProjectViewer);
+					myWindow.pack();
+				}
+				// Something went weird, so leave us on the main menu.
+			}
+		});
 		contentPanel.add(openButton);
 		JButton createButton = new JButton("Create Project");
 		createButton.addActionListener(new ActionListener() {
+
+			/**
+			 * Opens the basic information panel and creates a new project.
+			 * 
+			 * @author Eric, Minh
+			 */
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
 				myLoader.createNewProject();
+				myLoader.saveProject(myWindow);
 				myWindow.setContentPane(basicInfoPanel);
 				myWindow.pack();
 			}
@@ -194,8 +219,8 @@ public class GUIController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (state == 1) {
-					state = 2;
+				if (myState == 1) {
+					myState = 2;
 					createPanel.remove(basicInfoPanel);
 					createPanel.add(itemPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
@@ -218,7 +243,7 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (state == 1) {
+				if (myState == 1) {
 					String[] optionStrings = { "Yes", "No" };
 					int x = JOptionPane.showOptionDialog(null,
 							"You will lose all progress if you back out. Proceed?", "Warning",
@@ -232,7 +257,7 @@ public class GUIController {
 						myWindow.pack();
 					}
 				} else {
-					state = 1;
+					myState = 1;
 					createPanel.remove(itemPanel);
 					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
@@ -317,16 +342,16 @@ public class GUIController {
 		changeSize.setText("Set Frame Size");
 		changeSize.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent theException) {
-				final String arg1 = JOptionPane.showInputDialog("Input new width");
-				if (arg1 == null) {
+				final String widthInput = JOptionPane.showInputDialog("Input new width");
+				if (widthInput == null) {
 					return;
 				}
-				final int width = Integer.parseInt(arg1);
-				final String arg2 = JOptionPane.showInputDialog("Input new height");
-				if (arg2 == null) {
+				final int width = Integer.parseInt(widthInput);
+				final String heightInput = JOptionPane.showInputDialog("Input new height");
+				if (heightInput == null) {
 					return;
 				}
-				final int height = Integer.parseInt(arg2);
+				final int height = Integer.parseInt(heightInput);
 				myWindow.setSize(new Dimension(width, height));
 			}
 		});
