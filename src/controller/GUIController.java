@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
-import gui.CreatePanel;
 import gui.ProjectViewer;
 import gui.createpanels.BasicInfoPanel;
 import gui.createpanels.ItemInputPanel;
@@ -114,17 +113,17 @@ public class GUIController {
 	/**
 	 * The project creation panel for adding items and features to projects.
 	 */
-	private CreatePanel myCreatePanel;
+	private JPanel myCreatePanel;
 
 	/**
 	 * Allows the user to view projects that have already been created.
 	 */
 	private ProjectViewer myProjectViewer;
 
-	private ProjectEditController myEditor;
-	private ProjectViewController myViewer;
-	private ProjectLoadController myLoader;
-	private SchemaController myRules;
+//	private ProjectEditController myEditor;
+//	private ProjectViewController myViewer;
+//	private ProjectLoadController myLoader;
+//	private SchemaController myRules;
 
 	/**
 	 * The state of the creation panel.
@@ -137,15 +136,8 @@ public class GUIController {
 	 * 
 	 * @author Eric, Minh, Curran, Sharanjit
 	 */
-	public GUIController(final ProjectEditController theEditor,
-			final ProjectViewController theViewer, final ProjectLoadController theLoader,
-			final SchemaController theRules) {
-		myEditor = theEditor;
-		myViewer = theViewer;
-		myLoader = theLoader;
-		myRules = theRules;
-		myCreatePanel = new CreatePanel(theEditor, theViewer, theRules);
-		myProjectViewer = new ProjectViewer(theViewer, theLoader);
+	public GUIController() {
+		myCreatePanel = makeCreatePanel();
 		myWindow = new JFrame();
 		myFileChooser = new JFileChooser();
 		myState = FIRST_PANEL;
@@ -177,10 +169,23 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
-				int returnCondition = myLoader.loadProject(myWindow);
-				if (returnCondition == ProjectLoadController.SUCCESS) {
+				final int returnValue = myFileChooser.showOpenDialog(myWindow);
+//				int returnCondition = myLoader.loadProject(myWindow);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					// If the file loaded correctly, then switch the panels.
-					myWindow.setContentPane(myProjectViewer);
+					JPanel tempPanel = new JPanel();
+					JButton backButton = new JButton("Back");
+					tempPanel.add(backButton);
+					backButton.addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							myWindow.setContentPane(mainPanel);
+							myWindow.pack();
+							
+						}
+					});
+					myWindow.setContentPane(tempPanel);
 					myWindow.pack();
 				}
 				// Something went weird, so leave us on the main menu.
@@ -197,7 +202,6 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
-				myLoader.createNewProject();
 				myWindow.setContentPane(basicInfoPanel);
 				myWindow.pack();
 			}
@@ -242,8 +246,8 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (state == FIRST_PANEL) {
-					state = SECOND_PANEL;
+				if (myState == FIRST_PANEL) {
+					myState = SECOND_PANEL;
 					createPanel.remove(basicInfoPanel);
 					createPanel.add(itemPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
@@ -264,20 +268,18 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (state == FIRST_PANEL) {
+				if (myState == FIRST_PANEL) {
 					String[] optionStrings = {"Yes" , "No"};
 					int x = JOptionPane.showOptionDialog(null, "You will lose all progress if you back out. Proceed?",
 													 "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 													 optionStrings, optionStrings[0]);
 					// If user say yes
 					if (x == 0) {
-						myEditor.clearAllItems();
-						myEditor.resetBasicInformation();
 						myWindow.setContentPane(mainPanel);
 						myWindow.pack();
 					}
 				} else {
-					state = FIRST_PANEL;
+					myState = FIRST_PANEL;
 					createPanel.remove(itemPanel);
 					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
