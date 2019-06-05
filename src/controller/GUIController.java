@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -74,7 +75,22 @@ public class GUIController {
 	 * The fraction constant to provide relative calculations to the main window.
 	 */
 	private static final float FRACTION_OF_MAIN_WINDOW = 0.5f;
-
+	
+	/**
+	 * 
+	 */
+	private static final int FIRST_PANEL = 1;
+	
+	/**
+	 * 
+	 */
+	private static final int SECOND_PANEL = 2;
+	
+	/**
+	 * 
+	 */
+	private JFileChooser myFileChooser;
+	
 	/**
 	 * Allows the user to enter basic information when creating a new project.
 	 */
@@ -131,7 +147,8 @@ public class GUIController {
 		myCreatePanel = new CreatePanel(theEditor, theViewer, theRules);
 		myProjectViewer = new ProjectViewer(theViewer, theLoader);
 		myWindow = new JFrame();
-		myState = 1;
+		myFileChooser = new JFileChooser();
+		myState = FIRST_PANEL;
 		mainPanel = makeMainPanel();
 		basicInfoPanel = makeCreatePanel();
 		itemPanel = new ItemInputPanel();
@@ -225,27 +242,12 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (myState == 1) {
-					myState = 2;
+				if (state == FIRST_PANEL) {
+					state = SECOND_PANEL;
 					createPanel.remove(basicInfoPanel);
 					createPanel.add(itemPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
 					createPanel.repaint();
-					// myWindow.pack();
-				} else if (myState == 2) {
-					// I think this is resetting it... ?? Minh, stop making magic numbers!!
-					// Constants would help - especially for stuff like states.
-					myState = 1;
-					myLoader.saveProject(myWindow);
-
-					// Don't know if I need to reset all this stuff for the next time around.
-					createPanel.remove(itemPanel);
-					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
-					createPanel.revalidate();
-					createPanel.repaint();
-
-					// Back to the main menu!
-					myWindow.setContentPane(mainPanel);
 				}
 			}
 		});
@@ -262,22 +264,12 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Oh my goodness, Minh -> add some freaking comments!
-				// Also, 'x' is a pretty shit variable name.
-
-				// There's also a bug in here and its like 4 in the morning now.
-				// Go to the last panel of the create Project thing, hit next one last
-				// time, the click cancel when the filechooser comes up.
-
-				// It should stay on that last create panel instead of going back to the
-				// main menu.
-				if (myState == 1) {
-					String[] optionStrings = { "Yes", "No" };
-					int x = JOptionPane.showOptionDialog(null,
-							"You will lose all progress if you back out. Proceed?", "Warning",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-							optionStrings, optionStrings[0]);
-
+				if (state == FIRST_PANEL) {
+					String[] optionStrings = {"Yes" , "No"};
+					int x = JOptionPane.showOptionDialog(null, "You will lose all progress if you back out. Proceed?",
+													 "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+													 optionStrings, optionStrings[0]);
+					// If user say yes
 					if (x == 0) {
 						myEditor.clearAllItems();
 						myEditor.resetBasicInformation();
@@ -285,12 +277,11 @@ public class GUIController {
 						myWindow.pack();
 					}
 				} else {
-					myState = 1;
+					state = FIRST_PANEL;
 					createPanel.remove(itemPanel);
 					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
 					createPanel.repaint();
-					// myWindow.pack();
 				}
 
 			}
@@ -301,6 +292,7 @@ public class GUIController {
 		return createPanel;
 	}
 
+	
 	/**
 	 * Final setup including packing and setting the frame to visible.
 	 * 
