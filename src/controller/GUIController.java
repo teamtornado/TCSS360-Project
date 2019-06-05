@@ -154,8 +154,11 @@ public class GUIController {
 			public void actionPerformed(ActionEvent e) {
 				if (state == 1) {
 					state = 2;
+					createPanel.remove(basicInfoPanel);
 					createPanel.add(tempPanel, BorderLayout.CENTER);
-					myWindow.pack();
+					createPanel.revalidate();
+					createPanel.repaint();
+//					myWindow.pack();
 				}
 				
 			}
@@ -180,8 +183,11 @@ public class GUIController {
 					}
 				} else {
 					state = 1;
+					createPanel.remove(tempPanel);
 					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
-					myWindow.pack();
+					createPanel.revalidate();
+					createPanel.repaint();
+//					myWindow.pack();
 				}
 					
 			}
