@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
-import gui.CreatePanel;
 import gui.createpanels.BasicInfoPanel;
 import utilities.About;
 import utilities.FileParser;
@@ -82,7 +81,12 @@ public class GUIController {
 	/**
 	 * 
 	 */
-	private JPanel createPanel;
+	private JPanel basicInfoPanel;
+	
+	/**
+	 * 
+	 */
+	private JPanel itemPanel;
 	
 	/**
 	 * 
@@ -104,7 +108,8 @@ public class GUIController {
 		myFileChooser = new JFileChooser();
 		state = 1;
 		mainPanel = makeMainPanel();
-		createPanel = makeCreatePanel();
+		basicInfoPanel = makeCreatePanel();
+		itemPanel = makeItemPanel();
 		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
 		setupJFrameIcon();
@@ -119,7 +124,7 @@ public class GUIController {
 		createButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				myWindow.setContentPane(createPanel);
+				myWindow.setContentPane(basicInfoPanel);
 				myWindow.pack();
 			}
 		});
@@ -127,40 +132,67 @@ public class GUIController {
 		return contentPanel;
 	}
 	
+	private JPanel makeItemPanel() {
+		JPanel itemPanel = new JPanel();
+		
+		return itemPanel;
+	}
+	
 	private JPanel makeCreatePanel() {
 		JPanel createPanel = new JPanel();
 		createPanel.setLayout(new BorderLayout());
 		// the info stuffs
 		BasicInfoPanel basicInfoPanel = new BasicInfoPanel();
+		JPanel tempPanel = new JPanel();
 
 		// adding stuffs together
 		createPanel.add(basicInfoPanel, BorderLayout.CENTER);
 		JButton nextButton = new JButton("Next");
-		createPanel.add(nextButton, BorderLayout.EAST);
-		JButton backButton = new JButton("Back");
-		if (state == 1) {
-			backButton.addActionListener(new ActionListener() {
+		nextButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (state == 1) {
+					state = 2;
+					createPanel.add(tempPanel, BorderLayout.CENTER);
+					myWindow.pack();
+				}
 				
-				@Override
-				public void actionPerformed(ActionEvent e) {
+			}
+		});
+		createPanel.add(nextButton, BorderLayout.EAST);
+		
+		JButton backButton = new JButton("Back");
+		
+		backButton.addActionListener(new ActionListener() {
+				
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (state == 1) {
 					String[] optionStrings = {"Yes" , "No"};
 					int x = JOptionPane.showOptionDialog(null, "You will lose all progress if you back out. Proceed?",
-												 "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-												 optionStrings, optionStrings[0]);
-					
+													 "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+													 optionStrings, optionStrings[0]);
+						
 					if (x == 0) {
 						myWindow.setContentPane(mainPanel);
 						myWindow.pack();
 					}
+				} else {
+					state = 1;
+					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
+					myWindow.pack();
 				}
-			});
-		}
+					
+			}
+		});
+		
 		createPanel.add(backButton, BorderLayout.WEST);
 		
 		return createPanel;
 	}
 
-
+	
 	
 	/**
 	 * Final setup including packing and setting the frame to visible.
