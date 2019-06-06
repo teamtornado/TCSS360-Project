@@ -60,31 +60,37 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 		itemTypeChooserPanel.setBackground(Color.LIGHT_GRAY);
 		itemAdder.add(itemTypeChooserPanel, BorderLayout.NORTH);
 
-//		JButton upButton = new JButton("Up");
-//		itemTypeChooserPanel.add(upButton);
-
 		// Drop down menu for the item-types
-		String[] itemStrings = theRules.getAllParentTypes().stream().toArray(String[] :: new);
-		myItemtypeDropDown = new JComboBox<String>(itemStrings);
+		String[] parentString = theRules.getAllParentTypes().stream().toArray(String[] :: new);
+		myItemtypeDropDown = new JComboBox<String>(parentString);
 		itemTypeChooserPanel.add(myItemtypeDropDown);
 		myItemtypeDropDown.addActionListener(this);
 		
-		myChildTypeDropDown = new JComboBox<String>(itemStrings);
-//		myChildTypeDropDown.setEnabled(false);
+		String[] childStrings = {"<Select a parent type>"};
+		myChildTypeDropDown = new JComboBox<String>(childStrings);
+		myChildTypeDropDown.setEnabled(false);
 		myChildTypeDropDown.addActionListener(this);
 		itemTypeChooserPanel.add(myChildTypeDropDown);
-		
-
-//		JMenuItem firstItem = new JMenuItem("First Item");
-//		itemtypeDropDown.add(firstItem);
-//
-//		JMenuItem secondItem = new JMenuItem("Second Item");
-//		itemtypeDropDown.add(secondItem);
-
-		// I don't know why the menu thing isn't working... -> but you get the idea.
 
 		JButton addItemButton = new JButton("Add Item");
 		itemTypeChooserPanel.add(addItemButton);
+		
+		JButton resetButton = new JButton("Reset");
+		resetButton.setToolTipText("When you want to change your mind");
+		resetButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myItemtypeDropDown.removeActionListener(this);
+				myChildTypeDropDown.removeActionListener(this);
+				myChildTypeDropDown.setEnabled(false);
+				myChildTypeDropDown.removeAllItems();
+				myChildTypeDropDown.addItem("<Select a parent type>");
+				myItemtypeDropDown.addActionListener(this);
+				myChildTypeDropDown.addActionListener(this);
+			}
+		});
+		itemTypeChooserPanel.add(resetButton);
 
 		JScrollPane scrollPane = new JScrollPane();
 		final int lessShittyIncrement = 15;
@@ -95,12 +101,7 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 		scrollPane.setViewportView(fieldListContainer);
 		fieldListContainer.setLayout(new BoxLayout(fieldListContainer, BoxLayout.Y_AXIS));
 
-		// Test! Check it out Minh!
-//		for (int i = 1; i <= 50; i++) {
-//			fieldListContainer.add(new JButton("woof " + i));
-			// Instead, you'd be adding all the available fields offered by each child and
-			// all parents.
-//		}
+		
 
 		// So basically, I think all you have to do is create a special panel type that
 		// can show the info from the schema and allow input from the user. It should

@@ -34,7 +34,7 @@ public class BasicInfoPanel extends JPanel {
 		name.add(myNameField);
 		
 		JPanel location = new JPanel(new FlowLayout());
-		location.add(new JLabel("Location"));
+		location.add(new JLabel("State"));
 		myLocationField = new JTextField(5);
 		textFields.add(myLocationField);
 		location.add(myLocationField);
