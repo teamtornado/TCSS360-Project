@@ -103,7 +103,7 @@ public class ProjectViewer extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				PrintStream output;
 				try {
-					output = new PrintStream(myProject.getName() + "EXPORTED.txt");
+					output = new PrintStream(myProject.getName() + "_EXPORTED.txt");
 					output.print(myProject.getProjectString());
 					JOptionPane.showMessageDialog(myProjectSummary, "Project exported.");
 				} catch (FileNotFoundException e1) {
