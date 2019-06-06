@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import model.schemautil.SchemaDataParser;
+import model.schemautil.SchemaTypes;
 
 /**
  * A Schema class instance will hold the contents of one schema database as a

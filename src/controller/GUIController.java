@@ -160,7 +160,7 @@ public class GUIController {
 		myViewer = new ProjectViewController(myLoader);
 		myState = FIRST_PANEL;
 		mainPanel = makeMainPanel();
-		myProjectViewer = new ProjectViewer(myViewer, myLoader, myLoader.myProject);
+		myProjectViewer = new ProjectViewer(myViewer, myLoader);
 		myBasicInfoPanel = new BasicInfoPanel();
 		myCreatePanel = makeCreatePanel();
 		myItemPanel = new ItemInputPanel(myRules);

@@ -132,7 +132,7 @@ public class SchemaDataParser {
 			// Get the list without curly brackets.
 			final String fieldNameListRaw = fieldTokens[1].substring(1,
 					fieldTokens[1].length() - 1);
-			final String[] fieldNames = fieldNameListRaw.split(",");
+			final String[] fieldNames = fieldNameListRaw.split("-");
 
 			// Add the fields to a new item
 			final List<SchemaField> fieldsOfItem = new LinkedList<>();
