@@ -48,8 +48,7 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 		currentItemsViewer.setLayout(new BorderLayout(0, 0));
 
 		JTextArea stupidMessage = new JTextArea();
-		stupidMessage.setText(
-				"This is where we will see all of the items currently loaded into the project.");
+		stupidMessage.setText("plz");
 		currentItemsViewer.add(stupidMessage, BorderLayout.CENTER);
 
 		JPanel itemAdder = new JPanel();
@@ -70,8 +69,8 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 		itemTypeChooserPanel.add(myItemtypeDropDown);
 		myItemtypeDropDown.addActionListener(this);
 		
-		myChildTypeDropDown = new JComboBox<String>();
-		myChildTypeDropDown.setEnabled(false);
+		myChildTypeDropDown = new JComboBox<String>(itemStrings);
+//		myChildTypeDropDown.setEnabled(false);
 		myChildTypeDropDown.addActionListener(this);
 		itemTypeChooserPanel.add(myChildTypeDropDown);
 		
@@ -112,8 +111,8 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(e.getSource());
-		if (e.getSource() == myItemtypeDropDown) {
+		if(e.getSource() == myItemtypeDropDown) {
+			System.out.println("parent");
 			JComboBox<String> cb = (JComboBox<String>) e.getSource();
 			String parentName = (String) cb.getSelectedItem();
 			System.out.println(parentName);
@@ -126,7 +125,14 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 				myChildTypeDropDown.addItem(child);
 			}
 			myChildTypeDropDown.setEnabled(true);
-		} 
+		} else if (e.getSource() == myChildTypeDropDown) {
+			System.out.println("child");
+		}
+		
+		
+//		if (e.getSource() == myItemtypeDropDown) {
+			
+//		} 
 //		else if (e.getSource() == myChildTypeDropDown) {
 //			JComboBox<String> cb = (JComboBox<String>) e.getSource();
 //			String childType = (String) cb.getSelectedItem();
