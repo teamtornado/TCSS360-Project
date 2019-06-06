@@ -73,11 +73,17 @@ public class BasicInfoPanel extends JPanel {
 	}
 	
 	public boolean checkAllField() {
-		for (JTextField textbox : textFields) {
-            if (textbox.getText().trim().isEmpty() ) {
+		for (JTextField textField : textFields) {
+            if (textField.getText().trim().isEmpty() ) {
                 return false;
             }
         }
         return true; 
+	}
+	
+	public void clearAllField() {
+		for (JTextField textField : textFields) {
+			textField.setText("");
+		}
 	}
 }
