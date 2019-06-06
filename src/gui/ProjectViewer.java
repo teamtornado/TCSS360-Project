@@ -20,7 +20,7 @@ import gui.createpanels.ScrollablePane;
  * This class displays the contents of the project and allows the user to export
  * the project.
  * 
- * @author Sharanjit
+ * @author Curran, Sharanjit
  *
  */
 public class ProjectViewer extends JPanel {
@@ -39,6 +39,8 @@ public class ProjectViewer extends JPanel {
 	 * Allows for loading, saving, and creating projects.
 	 */
 	private ProjectLoadController myLoader;
+	
+	private ScrollablePane myProjectSummary;
 
 	public ProjectViewer(final ProjectViewController theViewer,
 			final ProjectLoadController theLoader) {
@@ -50,10 +52,10 @@ public class ProjectViewer extends JPanel {
 		final JPanel buttonPanel = new JPanel(new BorderLayout());
 		
 		final JTextArea myData = new JTextArea(5, 5);
-		ScrollablePane projectSummary = new ScrollablePane(new Dimension(10, 10), false, myData);
+		myProjectSummary = new ScrollablePane(new Dimension(10, 10), false, myData);
 		
 		this.add(buttonPanel, BorderLayout.SOUTH);
-		this.add(projectSummary, BorderLayout.CENTER);
+		this.add(myProjectSummary, BorderLayout.CENTER);
 		
 		
 		JButton edit = new JButton("Edit");
@@ -92,5 +94,8 @@ public class ProjectViewer extends JPanel {
 		buttonPanel.add(export, BorderLayout.EAST);
 		
 	}
-
+	
+	public void addData(final String theString) {
+		myProjectSummary.addText(theString);
+	}
 }

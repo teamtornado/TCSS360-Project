@@ -125,4 +125,11 @@ public class ProjectViewController {
 	public void printToConsole() {
 		myLoader.myProject.printToConsole();
 	}
+	
+	/**
+	 * @author Curran
+	 */
+	public String getProjectString() {
+		return myLoader.myProject.getProjectString();
+	}
 }

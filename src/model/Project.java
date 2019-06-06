@@ -68,6 +68,7 @@ public class Project implements Serializable {
 		this.myProjectLocation = "Woof Location";
 		this.myProjectBudget = 0.00;
 		this.myProjectDescription = "This is a woof project";
+		this.myItems = 
 	}
 
 	/**
@@ -425,6 +426,31 @@ public class Project implements Serializable {
 				System.out.println("\tField: " + field.toString());
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @author Curran
+	 * @return project string
+	 */
+	public String getProjectString() {
+		final StringBuilder project = new StringBuilder();
+		project.append("Project Name: " + myProjectName);
+		project.append("Project Description: " + myProjectDescription);
+		project.append("Project Budget: $" + getFormattedBudgetAsString());
+		project.append("Project Location: " + myProjectLocation);
+		project.append("----------------------------\n");
+		if (myItems != null) {
+			for (Item item : myItems) {
+				project.append("ItemType: " + item.getItemType());
+				for (ItemField field : item.getFields()) {
+					project.append("\tField: " + field.toString());
+				}
+			}
+		} else {
+			project.append("No items currently.);
+		}
+		return project.toString();
 	}
 
 	/**
