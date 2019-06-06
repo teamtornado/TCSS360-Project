@@ -99,7 +99,7 @@ class SchemaTest {
 	}
 	
 	@Test
-	void correct() {
+	void correctGetChildAndGetParent() {
 		final String appliance = mySchemaController.getParentOfChild(SchemaTypes.STOVE);
 		assertTrue(appliance.equals(SchemaTypes.APPLIANCE));
 		final String stove = mySchemaController.getChildTypes(appliance).get(0);
@@ -114,6 +114,9 @@ class SchemaTest {
 		
 		final String furnace = mySchemaController.getChildTypes(SchemaTypes.HEATING).get(0);
 		assertTrue(furnace.equals(SchemaTypes.FURNACE));
+		
+		List<String> shouldBeEmptyList = mySchemaController.getChildTypes(SchemaTypes.WOK_STOVE);
+		assertTrue(shouldBeEmptyList.isEmpty());
 	}
  
 }
