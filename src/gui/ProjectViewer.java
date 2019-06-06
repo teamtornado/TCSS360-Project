@@ -9,6 +9,7 @@ import java.io.PrintStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -25,7 +26,7 @@ import gui.createpanels.ScrollablePane;
  * @author Curran, Sharanjit
  *
  */
-public class ProjectViewer extends JPanel {
+public class ProjectViewer extends JFrame {
 
 	/**
 	 * Auto Generated Serial.
@@ -48,12 +49,17 @@ public class ProjectViewer extends JPanel {
 	private ProjectLoadController myLoader;
 
 	private ScrollablePane myProjectSummary;
+	
+	private JPanel myCenterPanel;
 
 	public ProjectViewer(final ProjectViewController theViewer,
 			final ProjectLoadController theLoader) {
+		super();
 		this.myViewer = theViewer;
 		this.myLoader = theLoader;
-		this.setLayout(new BorderLayout());
+		myCenterPanel = new JPanel(new BorderLayout());
+		myCenterPanel.setPreferredSize(new Dimension(600, 400));
+		//this.setLayout(new BorderLayout());
 
 		final JPanel buttonPanel = new JPanel(new BorderLayout());
 
@@ -65,8 +71,8 @@ public class ProjectViewer extends JPanel {
 				TABPANE_PADDING, TABPANE_PADDING));
 		projectPane.addTab(myViewer.getName(), myProjectSummary);
 
-		this.add(buttonPanel, BorderLayout.SOUTH);
-		this.add(projectPane, BorderLayout.CENTER);
+		myCenterPanel.add(buttonPanel, BorderLayout.SOUTH);
+		myCenterPanel.add(projectPane, BorderLayout.CENTER);
 
 		JButton edit = new JButton("Edit");
 		edit.addActionListener(new ActionListener() {
@@ -115,7 +121,25 @@ public class ProjectViewer extends JPanel {
 
 	}
 
+	/**
+	 * @author Curran
+	 * @param theString
+	 */
 	public void addData(final String theString) {
 		myProjectSummary.addText(theString);
 	}
+	
+	/**
+	 * @author Curran
+	 */
+	public void start() {
+        setTitle("Project Viewer");
+        add(myCenterPanel, BorderLayout.CENTER);
+        //add(myEastPanel, BorderLayout.CENTER);
+        //add(myStatusPanel, BorderLayout.SOUTH);
+        pack();
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setVisible(true);
+    }
 }

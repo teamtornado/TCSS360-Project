@@ -203,8 +203,9 @@ public class GUIController {
 					});
 					//myWindow.setContentPane(tempPanel);
 					myProjectViewer.addData(myViewer.getProjectString());
-					myWindow.setContentPane(myProjectViewer);
-					myWindow.pack();
+					myProjectViewer.start();
+					//myWindow.setContentPane(myProjectViewer);
+					//myWindow.pack();
 				}
 				// Something went weird, so leave us on the main menu.
 			}
