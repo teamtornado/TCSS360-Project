@@ -7,10 +7,12 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 import controller.ProjectLoadController;
@@ -32,6 +34,11 @@ public class ProjectViewer extends JPanel {
 	 * Auto Generated Serial.
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+     * Amount of padding for the tabbed pane.
+     */
+    private static final int TABPANE_PADDING = 10;
 
 	/**
 	 * Allows for viewing the user's project contents.
@@ -60,8 +67,17 @@ public class ProjectViewer extends JPanel {
 		final JTextArea myData = new JTextArea(5, 5);
 		myProjectSummary = new ScrollablePane(new Dimension(10, 10), false, myData, 20);
 		
+		final JTabbedPane projectPane = new JTabbedPane();
+		projectPane.setBorder(BorderFactory.createEmptyBorder(TABPANE_PADDING,
+                TABPANE_PADDING,
+                TABPANE_PADDING,
+                TABPANE_PADDING));
+		
+		projectPane.addTab(myProject.getName(), myProjectSummary);
+		
+		
 		this.add(buttonPanel, BorderLayout.SOUTH);
-		this.add(myProjectSummary, BorderLayout.CENTER);
+		this.add(projectPane, BorderLayout.CENTER);
 		
 		
 		JButton edit = new JButton("Edit");
