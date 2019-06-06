@@ -52,7 +52,7 @@ public class ProjectViewer extends JPanel {
 		final JPanel buttonPanel = new JPanel(new BorderLayout());
 		
 		final JTextArea myData = new JTextArea(5, 5);
-		myProjectSummary = new ScrollablePane(new Dimension(10, 10), false, myData);
+		myProjectSummary = new ScrollablePane(new Dimension(10, 10), false, myData, 20);
 		
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		this.add(myProjectSummary, BorderLayout.CENTER);

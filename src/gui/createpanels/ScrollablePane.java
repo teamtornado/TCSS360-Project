@@ -13,13 +13,22 @@ public class ScrollablePane extends JScrollPane {
 	
 	private JTextArea myData;
 
-	public ScrollablePane(final Dimension dimension, boolean isEditable, JTextArea data) {	
+	/**
+	 * 
+	 * @param dimension
+	 * @param isEditable
+	 * @param data
+	 * @param fontSize Enter a float for font size.
+	 */
+	public ScrollablePane(final Dimension dimension, final boolean isEditable, 
+			final JTextArea data, final float fontSize) {	
 		super(data);
 		myData = data;
         this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.setPreferredSize(dimension);
         myData.setEditable(isEditable);
+        myData.setFont(myData.getFont().deriveFont(fontSize));
 	}
 	
 	public void addText(final String theString) {
