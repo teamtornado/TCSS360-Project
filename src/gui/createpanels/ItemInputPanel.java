@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EtchedBorder;
@@ -61,16 +62,17 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 		itemAdder.add(itemTypeChooserPanel, BorderLayout.NORTH);
 
 		// Drop down menu for the item-types
-		String[] parentString = theRules.getAllParentTypes().stream().toArray(String[] :: new);
+		List<String> parentList = theRules.getAllParentTypes();
+		String[] parentString = parentList.stream().toArray(String[] :: new);
 		myItemtypeDropDown = new JComboBox<String>(parentString);
 		itemTypeChooserPanel.add(myItemtypeDropDown);
 		myItemtypeDropDown.addActionListener(this);
 		
-		String[] childStrings = {"<Select a parent type>"};
-		myChildTypeDropDown = new JComboBox<String>(childStrings);
-		myChildTypeDropDown.setEnabled(false);
-		myChildTypeDropDown.addActionListener(this);
-		itemTypeChooserPanel.add(myChildTypeDropDown);
+//		String[] childStrings = {"<Select a parent type>"};
+//		myChildTypeDropDown = new JComboBox<String>(childStrings);
+//		myChildTypeDropDown.setEnabled(false);
+//		myChildTypeDropDown.addActionListener(this);
+//		itemTypeChooserPanel.add(myChildTypeDropDown);
 
 		JButton addItemButton = new JButton("Add Item");
 		itemTypeChooserPanel.add(addItemButton);
@@ -82,12 +84,12 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				myItemtypeDropDown.removeActionListener(this);
-				myChildTypeDropDown.removeActionListener(this);
-				myChildTypeDropDown.setEnabled(false);
-				myChildTypeDropDown.removeAllItems();
-				myChildTypeDropDown.addItem("<Select a parent type>");
+				myItemtypeDropDown.removeAllItems();
+				for (String item : parentList) {
+					myItemtypeDropDown.addItem(item);
+				}
+				myItemtypeDropDown = new JComboBox<String>(parentString);
 				myItemtypeDropDown.addActionListener(this);
-				myChildTypeDropDown.addActionListener(this);
 			}
 		});
 		itemTypeChooserPanel.add(resetButton);
@@ -112,33 +114,24 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void actionPerformed(ActionEvent e) {		
-		if (e.getSource() == myItemtypeDropDown) {
-			JComboBox<String> cb = (JComboBox<String>) e.getSource();
-			String parentName = (String) cb.getSelectedItem();
-			System.out.println(parentName);
-			// Get all the child type
-			List<String> childTypes = myRules.getChildTypes(parentName);
-			System.out.println("Length of childTypes: " + childTypes.size());
+	
+//		System.out.println("?");
+		JComboBox<String> cb = (JComboBox<String>) e.getSource();
+		String parentName = (String) cb.getSelectedItem();
+		System.out.println(parentName);
+		// Get all the child type
+		List<String> childTypes = myRules.getChildTypes(parentName);
+		if (childTypes.size() != 0) {
 			// Clear out the old type
-			myChildTypeDropDown.removeActionListener(this);
-			myChildTypeDropDown.removeAllItems();
+			myItemtypeDropDown.removeActionListener(this);
+			myItemtypeDropDown.removeAllItems();
 			for (String child : childTypes) {
-				myChildTypeDropDown.addItem(child);
+				myItemtypeDropDown.addItem(child);
 			}
-			myChildTypeDropDown.addActionListener(this);
-			myChildTypeDropDown.setEnabled(true);
-			
-		} else if (e.getSource() == myChildTypeDropDown) {
-			JComboBox<String> cb = (JComboBox<String>) e.getSource();
-			String childType = (String) cb.getSelectedItem();
-			System.out.println(childType);
-			List<SchemaField> schemaTypes = myRules.getSchemaFieldsFromItem(childType);
-			for (SchemaField schemaField : schemaTypes) {
-				System.out.println(schemaField.getSchemaFieldName() + " " 
-								 + schemaField.getDescription() + " "
-								 + schemaField.getValueType() + " "
-								 + schemaField.isRequired() + "\n");
-			}
-		}		
+			myItemtypeDropDown.addActionListener(this); 
+		} else {
+			JOptionPane.showMessageDialog(this, "There are no more child type");
+		}
+		
 	}
 }
