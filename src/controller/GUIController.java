@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,6 +26,7 @@ import javax.swing.WindowConstants;
 import gui.ProjectViewer;
 import gui.createpanels.BasicInfoPanel;
 import gui.createpanels.ItemInputPanel;
+import model.Project;
 import utilities.About;
 import utilities.FileParser;
 
@@ -93,12 +96,12 @@ public class GUIController {
 	/**
 	 * Allows the user to enter basic information when creating a new project.
 	 */
-	private JPanel basicInfoPanel;
+	private JPanel myCreatePanel;
 
 	/**
 	 * A magical panel that does something.
 	 */
-	private JPanel itemPanel;
+	private JPanel myItemPanel;
 
 	/**
 	 * The main menu panel for the application.
@@ -113,14 +116,17 @@ public class GUIController {
 	/**
 	 * The project creation panel for adding items and features to projects.
 	 */
-	private JPanel myCreatePanel;
+//	private JPanel myCreatePanel;
 
 	/**
 	 * Allows the user to view projects that have already been created.
 	 */
 	private ProjectViewer myProjectViewer;
 
-//	private ProjectEditController myEditor;
+	/**
+	 * 
+	 */
+	private ProjectEditController myEditor;
 //	private ProjectViewController myViewer;
 //	private ProjectLoadController myLoader;
 //	private SchemaController myRules;
@@ -137,13 +143,12 @@ public class GUIController {
 	 * @author Eric, Minh, Curran, Sharanjit
 	 */
 	public GUIController() {
-		myCreatePanel = makeCreatePanel();
 		myWindow = new JFrame();
-		myFileChooser = new JFileChooser();
+		myFileChooser = new JFileChooser("./SavedProjects/");
 		myState = FIRST_PANEL;
 		mainPanel = makeMainPanel();
-		basicInfoPanel = makeCreatePanel();
-		itemPanel = new ItemInputPanel();
+		myCreatePanel = makeCreatePanel();
+		myItemPanel = new ItemInputPanel();
 		// makeItemPanel();
 		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
@@ -202,7 +207,7 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
-				myWindow.setContentPane(basicInfoPanel);
+				myWindow.setContentPane(myCreatePanel);
 				myWindow.pack();
 			}
 		});
@@ -240,7 +245,7 @@ public class GUIController {
 		nextButton.addActionListener(new ActionListener() {
 
 			/**
-			 * Does a bunch of stuff that Minh should have left comments for.
+			 * Set how the next button function depending on the state of the program
 			 * 
 			 * @author Minh, Eric
 			 */
@@ -248,8 +253,10 @@ public class GUIController {
 			public void actionPerformed(ActionEvent e) {
 				if (myState == FIRST_PANEL) {
 					myState = SECOND_PANEL;
+					String projectName = basicInfoPanel.getProjectName();
+					String projectLocation = basicInfoPanel.getProjectLocation();
 					createPanel.remove(basicInfoPanel);
-					createPanel.add(itemPanel, BorderLayout.CENTER);
+					createPanel.add(myItemPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
 					createPanel.repaint();
 				}
@@ -280,7 +287,7 @@ public class GUIController {
 					}
 				} else {
 					myState = FIRST_PANEL;
-					createPanel.remove(itemPanel);
+					createPanel.remove(myItemPanel);
 					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
 					createPanel.repaint();
@@ -464,5 +471,11 @@ public class GUIController {
 	private void setupJFrameIcon() {
 		final ImageIcon img = new ImageIcon("tornadoIcon.png");
 		myWindow.setIconImage(img.getImage());
+	}
+	
+	private boolean containsIllegals(String toExamine) {
+	    Pattern pattern = Pattern.compile("[~#@*+%{}<>\\[\\]|\"\\_^]");
+	    Matcher matcher = pattern.matcher(toExamine);
+	    return matcher.find();
 	}
 }

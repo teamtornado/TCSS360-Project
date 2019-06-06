@@ -51,7 +51,7 @@ public class Application {
 		final Project dummyProject = new Project("Dummy", "Dummy Description", 0.00, "Dummy Value");
 
 		// Dole out the controllers to whoever needs them.
-		final ProjectLoadController loader = new ProjectLoadController(dummyProject);
+		final ProjectLoadController loader = new ProjectLoadController();
 		final ProjectEditController editor = new ProjectEditController(loader);
 		final ProjectViewController viewer = new ProjectViewController(loader);
 		final SchemaController rules = new SchemaController(SCHEMA_DATABASE_LOCATION);

@@ -65,8 +65,8 @@ public class ProjectLoadController {
 	 *            the project to manage.
 	 * @author Eric
 	 */
-	public ProjectLoadController(final Project theProject) {
-		this.myProject = theProject;
+	public ProjectLoadController() {
+		this.myProject = new Project();
 		this.myChooser = new JFileChooser("./SavedProjects/");
 	}
 

@@ -1,12 +1,16 @@
 package gui.createpanels;
 
 import java.awt.FlowLayout;
+import java.util.ArrayList;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class BasicInfoPanel extends JPanel {
+	
+	private final ArrayList<JTextField> textFields = new ArrayList<>();
 	
 	private JTextField myNameField;
 
@@ -26,19 +30,25 @@ public class BasicInfoPanel extends JPanel {
 		JPanel name = new JPanel(new FlowLayout());
 		name.add(new JLabel("Project name"));
 		myNameField = new JTextField(20);
+		textFields.add(myNameField);
 		name.add(myNameField);
+		
 		JPanel location = new JPanel(new FlowLayout());
 		location.add(new JLabel("Location"));
 		myLocationField = new JTextField(5);
+		textFields.add(myLocationField);
 		location.add(myLocationField);
+		
 		JPanel budget = new JPanel(new FlowLayout());
 		budget.add(new JLabel("Budget"));
 		mybudgetField = new JTextField(5);
+		textFields.add(mybudgetField);
 		budget.add(mybudgetField);
 		JPanel description = new JPanel();
 		description.setLayout(new BoxLayout(description, BoxLayout.Y_AXIS));
 		description.add(new JLabel("Description"));
 		myDescriptionField = new JTextField(40);
+		textFields.add(myDescriptionField);
 		description.add(myDescriptionField);
 		this.add(name);
 		this.add(location);
@@ -60,5 +70,14 @@ public class BasicInfoPanel extends JPanel {
 	
 	public String getProjectDescription() {
 		return myDescriptionField.getText();
+	}
+	
+	public boolean checkAllFilled() {
+		for (JTextField textbox : textFields) {
+            if (textbox.getText().trim().isEmpty() ) {
+                return false;
+            }
+        }
+        return true; 
 	}
 }

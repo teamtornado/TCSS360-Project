@@ -24,7 +24,7 @@ class ProjectTest {
 	void setup() {
 		final Project project = new Project("WoofProject", "This Project is all about dogs",
 				100.20, "The United Empire of Doggos");
-		myLoader = new ProjectLoadController(project);
+		myLoader = new ProjectLoadController();
 		myEditor = new ProjectEditController(myLoader);
 		myViewer = new ProjectViewController(myLoader);
 	}

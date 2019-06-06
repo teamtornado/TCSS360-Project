@@ -41,7 +41,7 @@ public class Project implements Serializable {
 	/**
 	 * The user entered name of the project.
 	 */
-	private String myName;
+	private String myProjectName;
 
 	/**
 	 * A user entered description about the project as a whole.
@@ -51,17 +51,24 @@ public class Project implements Serializable {
 	/**
 	 * A user entered budget for the project.
 	 */
-	private double myBudget;
+	private double myProjectBudget;
 
 	/**
 	 * A user entered location for this project.
 	 */
-	private String myLocation;
+	private String myProjectLocation;
 
 	/**
 	 * A list of items holding fields which carry user entered data.
 	 */
 	private List<Item> myItems; // No getter and setter for this
+	
+	public Project() {
+		this.myProjectName = "Dog Name";
+		this.myProjectLocation = "Woof Location";
+		this.myProjectBudget = 0.00;
+		this.myProjectDescription = "This is a woof project";
+	}
 
 	/**
 	 * Creates a project with the given basic information. Fields are added LATER.
@@ -89,10 +96,10 @@ public class Project implements Serializable {
 		if (theProjectLocation == null) {
 			throw new IllegalArgumentException("Error: Cannot have null project location");
 		}
-		this.myName = theProjectName;
+		this.myProjectName = theProjectName;
 		this.myProjectDescription = theProjectDescription;
-		this.myBudget = theBudget;
-		this.myLocation = theProjectLocation;
+		this.myProjectBudget = theBudget;
+		this.myProjectLocation = theProjectLocation;
 		this.myItems = new LinkedList<Item>();
 	}
 
@@ -103,7 +110,7 @@ public class Project implements Serializable {
 	 * @author Eric
 	 */
 	public String getName() {
-		return myName;
+		return myProjectName;
 	}
 
 	/**
@@ -119,7 +126,7 @@ public class Project implements Serializable {
 		if (theName == null) {
 			throw new IllegalArgumentException("Cannot set name to null");
 		}
-		this.myName = theName;
+		this.myProjectName = theName;
 	}
 
 	/**
@@ -157,7 +164,7 @@ public class Project implements Serializable {
 	public double getBudget() {
 		// Just keeping only two decimal places.
 		// Not worrying about rounding error.
-		int budgetMult = (int) (myBudget * 100);
+		int budgetMult = (int) (myProjectBudget * 100);
 		double budgetFormatted = ((double) budgetMult) / 100;
 		return budgetFormatted;
 	}
@@ -189,7 +196,7 @@ public class Project implements Serializable {
 	 * @author Eric
 	 */
 	public void setBudget(final double theBudget) {
-		this.myBudget = theBudget;
+		this.myProjectBudget = theBudget;
 	}
 
 	/**
@@ -199,7 +206,7 @@ public class Project implements Serializable {
 	 * @author Eric
 	 */
 	public String getLocation() {
-		return myLocation;
+		return myProjectLocation;
 	}
 
 	/**
@@ -215,7 +222,7 @@ public class Project implements Serializable {
 		if (theLocation == null) {
 			throw new IllegalArgumentException("Cannot set location to null");
 		}
-		this.myLocation = theLocation;
+		this.myProjectLocation = theLocation;
 	}
 
 	// Field edit methods
@@ -407,10 +414,10 @@ public class Project implements Serializable {
 	 * @author Eric
 	 */
 	public void printToConsole() {
-		System.out.println("Project Name: " + myName);
+		System.out.println("Project Name: " + myProjectName);
 		System.out.println("Project Description: " + myProjectDescription);
 		System.out.println("Project Budget: $" + getFormattedBudgetAsString());
-		System.out.println("Project Location: " + myLocation);
+		System.out.println("Project Location: " + myProjectLocation);
 		System.out.println("----------------------------");
 		for (Item item : myItems) {
 			System.out.println("ItemType: " + item.getItemType());
