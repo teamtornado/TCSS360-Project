@@ -2,6 +2,8 @@ package gui.createpanels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -18,7 +20,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
 
-public class ItemInputPanel extends JPanel {
+public class ItemInputPanel extends JPanel implements ActionListener {
 
 	/**
 	 * Default serial version
@@ -59,6 +61,7 @@ public class ItemInputPanel extends JPanel {
 		String[] itemStrings = theRules.getAllParentTypes().stream().toArray(String[] :: new);
 		JComboBox<String> itemtypeDropDown = new JComboBox<String>(itemStrings);
 		itemTypeChooserPanel.add(itemtypeDropDown);
+		itemtypeDropDown.addActionListener(this);
 
 //		JMenuItem firstItem = new JMenuItem("First Item");
 //		itemtypeDropDown.add(firstItem);
@@ -81,15 +84,24 @@ public class ItemInputPanel extends JPanel {
 		fieldListContainer.setLayout(new BoxLayout(fieldListContainer, BoxLayout.Y_AXIS));
 
 		// Test! Check it out Minh!
-		for (int i = 1; i <= 50; i++) {
-			fieldListContainer.add(new JButton("woof " + i));
+//		for (int i = 1; i <= 50; i++) {
+//			fieldListContainer.add(new JButton("woof " + i));
 			// Instead, you'd be adding all the available fields offered by each child and
 			// all parents.
-		}
+//		}
 
 		// So basically, I think all you have to do is create a special panel type that
 		// can show the info from the schema and allow input from the user. It should
 		// also have getters so we can query each tile for their values and upload them
 		// into items into the project with the edit controller.
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JComboBox<String> cb = (JComboBox<String>) e.getSource();
+		String parentName = (String) cb.getSelectedItem();
+		System.out.println(parentName);
+		
 	}
 }
