@@ -35,6 +35,11 @@ import utilities.FileParser;
  */
 
 public class GUIController {
+	
+	/**
+	 * The location for the rules of the database.
+	 */
+	public static final String SCHEMA_DATABASE_LOCATION = "SchemaData.txt";
 
 	/**
 	 * The text displayed on the 'help' JMenu button.
@@ -107,11 +112,6 @@ public class GUIController {
 	private JFrame myWindow;
 
 	/**
-	 * The project creation panel for adding items and features to projects.
-	 */
-	// private JPanel myCreatePanel;
-
-	/**
 	 * Allows the user to view projects that have already been created.
 	 */
 //	private ProjectViewer myProjectViewer;
@@ -130,7 +130,11 @@ public class GUIController {
 	 * 
 	 */
 	private ProjectLoadController myLoader;
-	// private SchemaController myRules;
+	
+	/**
+	 * 
+	 */
+	private SchemaController myRules;
 
 	/**
 	 * The state of the creation panel.
@@ -147,12 +151,12 @@ public class GUIController {
 		myWindow = new JFrame();
 		myLoader = new ProjectLoadController();
 		myEditor = new ProjectEditController(myLoader);
+		myRules = new SchemaController(SCHEMA_DATABASE_LOCATION);
 		myState = FIRST_PANEL;
 		mainPanel = makeMainPanel();
 		myBasicInfoPanel = new BasicInfoPanel();
 		myCreatePanel = makeCreatePanel();
-		myItemPanel = new ItemInputPanel();
-		// makeItemPanel();
+		myItemPanel = new ItemInputPanel(myRules);
 		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
 		setupJFrameIcon();
@@ -163,7 +167,7 @@ public class GUIController {
 	 * Creates the main menu for the opening of the application.
 	 * 
 	 * @return the main menu panel for the application.
-	 * @author Minh
+	 * @author Minh Pham
 	 */
 	private JPanel makeMainPanel() {
 		JPanel contentPanel = new JPanel();

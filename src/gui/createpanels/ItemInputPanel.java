@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EtchedBorder;
 
+import controller.SchemaController;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
@@ -20,9 +21,17 @@ import javax.swing.BoxLayout;
 public class ItemInputPanel extends JPanel {
 
 	/**
+	 * Default serial version
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private SchemaController myRules;
+
+	/**
 	 * Create the panel.
 	 */
-	public ItemInputPanel() {
+	public ItemInputPanel(SchemaController theRules) {
+		myRules = theRules;
 		setLayout(new MigLayout("", "[300.00,grow,left][600.00px,grow,right][-634.00]", "[grow]"));
 
 		JPanel currentItemsViewer = new JPanel();
@@ -43,11 +52,11 @@ public class ItemInputPanel extends JPanel {
 		itemTypeChooserPanel.setBackground(Color.LIGHT_GRAY);
 		itemAdder.add(itemTypeChooserPanel, BorderLayout.NORTH);
 
-		JButton upButton = new JButton("Up");
-		itemTypeChooserPanel.add(upButton);
+//		JButton upButton = new JButton("Up");
+//		itemTypeChooserPanel.add(upButton);
 
 		// Drop down menu for the item-types
-		String[] itemStrings = {"First Item", "Second Item"};
+		String[] itemStrings = theRules.getAllParentTypes().stream().toArray(String[] :: new);
 		JComboBox<String> itemtypeDropDown = new JComboBox<String>(itemStrings);
 		itemTypeChooserPanel.add(itemtypeDropDown);
 
