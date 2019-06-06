@@ -72,7 +72,7 @@ public class BasicInfoPanel extends JPanel {
 		return myDescriptionField.getText();
 	}
 	
-	public boolean checkAllFilled() {
+	public boolean checkAllField() {
 		for (JTextField textbox : textFields) {
             if (textbox.getText().trim().isEmpty() ) {
                 return false;

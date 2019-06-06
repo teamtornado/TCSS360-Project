@@ -128,7 +128,10 @@ public class GUIController {
 	 */
 	private ProjectEditController myEditor;
 //	private ProjectViewController myViewer;
-//	private ProjectLoadController myLoader;
+	/**
+	 * 
+	 */
+	private ProjectLoadController myLoader;
 //	private SchemaController myRules;
 
 	/**
@@ -145,6 +148,8 @@ public class GUIController {
 	public GUIController() {
 		myWindow = new JFrame();
 		myFileChooser = new JFileChooser("./SavedProjects/");
+		myLoader = new ProjectLoadController();
+		myEditor = new ProjectEditController(myLoader);
 		myState = FIRST_PANEL;
 		mainPanel = makeMainPanel();
 		myCreatePanel = makeCreatePanel();
@@ -174,9 +179,8 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
-				final int returnValue = myFileChooser.showOpenDialog(myWindow);
-//				int returnCondition = myLoader.loadProject(myWindow);
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
+				final int returnValue = myLoader.loadProject(myWindow);
+				if (returnValue == myLoader.SUCCESS) {
 					// If the file loaded correctly, then switch the panels.
 					JPanel tempPanel = new JPanel();
 					JButton backButton = new JButton("Back");
@@ -253,12 +257,16 @@ public class GUIController {
 			public void actionPerformed(ActionEvent e) {
 				if (myState == FIRST_PANEL) {
 					myState = SECOND_PANEL;
-					String projectName = basicInfoPanel.getProjectName();
-					String projectLocation = basicInfoPanel.getProjectLocation();
-					createPanel.remove(basicInfoPanel);
-					createPanel.add(myItemPanel, BorderLayout.CENTER);
-					createPanel.revalidate();
-					createPanel.repaint();
+					if (!basicInfoPanel.checkAllField()) {
+						JOptionPane.showMessageDialog(myWindow, "You need to filled all these fields before continue");
+					} else {
+						String projectName = basicInfoPanel.getProjectName();
+						String projectLocation = basicInfoPanel.getProjectLocation();
+						createPanel.remove(basicInfoPanel);
+						createPanel.add(myItemPanel, BorderLayout.CENTER);
+						createPanel.revalidate();
+						createPanel.repaint();
+					}
 				}
 			}
 		});
