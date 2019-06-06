@@ -9,6 +9,7 @@ import java.io.PrintStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -48,12 +49,15 @@ public class ProjectViewer extends JPanel {
 	private ProjectLoadController myLoader;
 
 	private ScrollablePane myProjectSummary;
+	
+	//private JPanel myCenterPanel;
 
-	public ProjectViewer(final ProjectViewController theViewer,
-			final ProjectLoadController theLoader, final JButton theBackButton,
-			final JButton theEditButton) {
+	public ProjectViewer(final ProjectViewController theViewer, final ProjectLoadController theLoader, 
+			final JButton theBackButton, final JButton theEditButton) {
 		this.myViewer = theViewer;
 		this.myLoader = theLoader;
+		//myCenterPanel = new JPanel(new BorderLayout());
+		//myCenterPanel.setPreferredSize(new Dimension(600, 400));
 		this.setLayout(new BorderLayout());
 
 		final JPanel buttonPanel = new JPanel();
@@ -93,7 +97,25 @@ public class ProjectViewer extends JPanel {
 
 	}
 
+	/**
+	 * @author Curran
+	 * @param theString
+	 */
 	public void addData(final String theString) {
 		myProjectSummary.setText(theString);
 	}
+	
+	/**
+	 * @author Curran
+	 */
+//	public void start() {
+//        setTitle("Project Viewer");
+//        add(myCenterPanel, BorderLayout.CENTER);
+//        //add(myEastPanel, BorderLayout.CENTER);
+//        //add(myStatusPanel, BorderLayout.SOUTH);
+//        pack();
+//        setLocationRelativeTo(null);
+//        setResizable(false);
+//        setVisible(true);
+//    }
 }

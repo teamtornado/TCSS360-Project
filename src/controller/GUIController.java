@@ -258,6 +258,7 @@ public class GUIController {
 						}
 					});
 					myProjectViewer.addData(myViewer.getProjectString());
+					//myProjectViewer.start();
 					myWindow.setContentPane(myProjectViewer);
 					myWindow.pack();
 				}
