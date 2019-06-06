@@ -32,6 +32,6 @@ public class ScrollablePane extends JScrollPane {
 	}
 	
 	public void addText(final String theString) {
-		myData.append(theString);
+		myData.setText(theString);
 	}
 }
