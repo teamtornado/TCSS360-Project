@@ -50,12 +50,13 @@ public class ProjectViewer extends JPanel {
 	private ScrollablePane myProjectSummary;
 
 	public ProjectViewer(final ProjectViewController theViewer,
-			final ProjectLoadController theLoader) {
+			final ProjectLoadController theLoader, final JButton theBackButton,
+			final JButton theEditButton) {
 		this.myViewer = theViewer;
 		this.myLoader = theLoader;
 		this.setLayout(new BorderLayout());
 
-		final JPanel buttonPanel = new JPanel(new BorderLayout());
+		final JPanel buttonPanel = new JPanel();
 
 		final JTextArea myData = new JTextArea(5, 5);
 		myProjectSummary = new ScrollablePane(new Dimension(10, 10), false, myData, 20);
@@ -68,20 +69,6 @@ public class ProjectViewer extends JPanel {
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		this.add(projectPane, BorderLayout.CENTER);
 
-		JButton edit = new JButton("Edit");
-		edit.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String[] optionStrings = { "Yes", "No" };
-				int x = JOptionPane.showOptionDialog(null,
-						"You will lose all progress if you back out. Proceed?", "Warning",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, optionStrings,
-						optionStrings[0]);
-
-				System.out.println(x);
-			}
-		});
 
 		JButton export = new JButton("Export");
 
@@ -99,19 +86,10 @@ public class ProjectViewer extends JPanel {
 				}
 			}
 		});
-		
-		final JButton backButton = new JButton("Back");
-		backButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-			
-		});
-
-		buttonPanel.add(edit, BorderLayout.WEST);
-		buttonPanel.add(export, BorderLayout.EAST);
+		buttonPanel.add(theBackButton);
+		buttonPanel.add(theEditButton);
+		buttonPanel.add(export);
 
 	}
 
