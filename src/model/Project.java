@@ -37,7 +37,7 @@ public class Project implements Serializable {
 	 * Default location of a project.
 	 */
 	public static final String DEFAULT_PROJECT_LOCATION = "...";
-	
+
 	public static final String NEWLINE = "\n";
 
 	/**
@@ -64,13 +64,13 @@ public class Project implements Serializable {
 	 * A list of items holding fields which carry user entered data.
 	 */
 	private List<Item> myItems; // No getter and setter for this
-	
+
 	public Project() {
 		this.myProjectName = "Dog Name";
 		this.myProjectLocation = "Woof Location";
 		this.myProjectBudget = 0.00;
-		this.myProjectDescription = "This is a woof project"; 
-		this.myItems = new LinkedList<>();
+		this.myProjectDescription = "This is a woof project";
+		this.myItems = new LinkedList<Item>();
 	}
 
 	/**
@@ -429,30 +429,48 @@ public class Project implements Serializable {
 			}
 		}
 	}
-	
+
 	/**
+	 * Creates a String representation of the project and returns it.
 	 * 
-	 * @author Curran
-	 * @return project string
+	 * All items currently within the project are included.
+	 * 
+	 * @author Curran, Eric
+	 * @return a String representation of the project.
 	 */
 	public String getProjectString() {
-		final StringBuilder project = new StringBuilder();
-		project.append("Project Name: " + myProjectName + NEWLINE);
-		project.append("Project Description: " + myProjectDescription + NEWLINE);
-		project.append("Project Budget: $" + getFormattedBudgetAsString() + NEWLINE);
-		project.append("Project Location: " + myProjectLocation + NEWLINE);
-		project.append("----------------------------\n");
-		if (myItems != null) {
+		final StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Project Name: ");
+		stringBuilder.append(myProjectName);
+		stringBuilder.append(NEWLINE);
+		stringBuilder.append("Project Description: ");
+		stringBuilder.append(myProjectDescription);
+		stringBuilder.append(NEWLINE);
+		stringBuilder.append("Project Budget: $");
+		stringBuilder.append(getFormattedBudgetAsString());
+		stringBuilder.append(NEWLINE);
+		stringBuilder.append("Project Location: ");
+		stringBuilder.append(myProjectLocation);
+		stringBuilder.append(NEWLINE);
+		stringBuilder.append("----------------------------");
+		stringBuilder.append(NEWLINE);
+		
+		if (myItems != null && !myItems.isEmpty()) {
+			// Add the contents 
 			for (Item item : myItems) {
-				project.append("ItemType: " + item.getItemType() + NEWLINE);
+				stringBuilder.append("ItemType: ");
+				stringBuilder.append(item.getItemType());
+				stringBuilder.append(NEWLINE);
 				for (ItemField field : item.getFields()) {
-					project.append("\tField: " + field.toString()+ NEWLINE);
+					stringBuilder.append("\tField: ");
+					stringBuilder.append(field.toString());
+					stringBuilder.append(NEWLINE);
 				}
 			}
 		} else {
-			project.append("No items currently.");
+			stringBuilder.append("No items currently.");
 		}
-		return project.toString();
+		return stringBuilder.toString();
 	}
 
 	/**
