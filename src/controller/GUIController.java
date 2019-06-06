@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -26,7 +25,6 @@ import javax.swing.WindowConstants;
 import gui.ProjectViewer;
 import gui.createpanels.BasicInfoPanel;
 import gui.createpanels.ItemInputPanel;
-import model.Project;
 import utilities.About;
 import utilities.FileParser;
 
@@ -89,11 +87,6 @@ public class GUIController {
 	private static final int SECOND_PANEL = 2;
 
 	/**
-	 * 
-	 */
-	private JFileChooser myFileChooser;
-
-	/**
 	 * Allows the user to enter basic information when creating a new project.
 	 */
 	private JPanel myCreatePanel;
@@ -121,8 +114,11 @@ public class GUIController {
 	/**
 	 * Allows the user to view projects that have already been created.
 	 */
-	private ProjectViewer myProjectViewer;
+//	private ProjectViewer myProjectViewer;
 
+	/**
+	 * Panel that will get the basic information of the project
+	 */
 	private BasicInfoPanel myBasicInfoPanel;
 
 	/**
@@ -149,7 +145,6 @@ public class GUIController {
 	 */
 	public GUIController() {
 		myWindow = new JFrame();
-		myFileChooser = new JFileChooser("./SavedProjects/");
 		myLoader = new ProjectLoadController();
 		myEditor = new ProjectEditController(myLoader);
 		myState = FIRST_PANEL;
@@ -183,7 +178,7 @@ public class GUIController {
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
 				final int returnValue = myLoader.loadProject(myWindow);
-				if (returnValue == myLoader.SUCCESS) {
+				if (returnValue == ProjectLoadController.SUCCESS) {
 					// If the file loaded correctly, then switch the panels.
 					JPanel tempPanel = new JPanel();
 					JButton backButton = new JButton("Back");
@@ -220,17 +215,6 @@ public class GUIController {
 		});
 		contentPanel.add(createButton);
 		return contentPanel;
-	}
-
-	/**
-	 * Magical code that does something great.
-	 * 
-	 * @return from the dead.
-	 * @author Unknown
-	 */
-	private JPanel makeItemPanel() {
-		JPanel itemPanel = new JPanel();
-		return itemPanel;
 	}
 
 	/**
@@ -311,7 +295,7 @@ public class GUIController {
 			/**
 			 * Back button to move to the previous state or panel of the application flow.
 			 * 
-			 * @author Minh
+			 * @author Minh Pham
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
