@@ -114,7 +114,7 @@ public class GUIController {
 	/**
 	 * Allows the user to view projects that have already been created.
 	 */
-//	private ProjectViewer myProjectViewer;
+	private ProjectViewer myProjectViewer;
 
 	/**
 	 * Panel that will get the basic information of the project
@@ -125,7 +125,10 @@ public class GUIController {
 	 * 
 	 */
 	private ProjectEditController myEditor;
-	// private ProjectViewController myViewer;
+	/**
+	 * 
+	 */
+	private ProjectViewController myViewer;
 	/**
 	 * 
 	 */
@@ -147,8 +150,10 @@ public class GUIController {
 		myWindow = new JFrame();
 		myLoader = new ProjectLoadController();
 		myEditor = new ProjectEditController(myLoader);
+		myViewer = new ProjectViewController(myLoader);
 		myState = FIRST_PANEL;
 		mainPanel = makeMainPanel();
+		myProjectViewer = new ProjectViewer(myViewer, myLoader);
 		myBasicInfoPanel = new BasicInfoPanel();
 		myCreatePanel = makeCreatePanel();
 		myItemPanel = new ItemInputPanel();
@@ -192,7 +197,8 @@ public class GUIController {
 
 						}
 					});
-					myWindow.setContentPane(tempPanel);
+					//myWindow.setContentPane(tempPanel);
+					myWindow.setContentPane(myProjectViewer);
 					myWindow.pack();
 				}
 				// Something went weird, so leave us on the main menu.

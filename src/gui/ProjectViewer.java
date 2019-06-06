@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import controller.ProjectLoadController;
 import controller.ProjectViewController;
 import gui.createpanels.BasicInfoPanel;
+import gui.createpanels.ScrollablePane;
 
 /**
  * This class displays the contents of the project and allows the user to export
@@ -46,17 +47,13 @@ public class ProjectViewer extends JPanel {
 		this.myLoader = theLoader;
 		this.setLayout(new BorderLayout());
 		
-		final JPanel projectSummary = new JPanel();
 		final JPanel buttonPanel = new JPanel(new BorderLayout());
-		final JTextArea myData = new JTextArea(5, 5);
 		
-		final JScrollPane dataScroll = new JScrollPane(myData);
-        dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        dataScroll.setPreferredSize(new Dimension(100, 100));
-        myData.setEditable(false);
+		final JTextArea myData = new JTextArea(5, 5);
+		ScrollablePane projectSummary = new ScrollablePane(new Dimension(10, 10), false, myData);
+		
 		this.add(buttonPanel, BorderLayout.SOUTH);
-		this.add(dataScroll, BorderLayout.CENTER);
+		this.add(projectSummary, BorderLayout.CENTER);
 		
 		
 		JButton edit = new JButton("Edit");
