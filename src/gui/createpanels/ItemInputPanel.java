@@ -35,8 +35,14 @@ public class ItemInputPanel extends JPanel {
 	 */
 	private SchemaController myRules;
 
+	/**
+	 * 
+	 */
 	private ProjectViewController myViewer;
 
+	/**
+	 * 
+	 */
 	private ProjectEditController myEditor;
 
 	/**
@@ -69,12 +75,13 @@ public class ItemInputPanel extends JPanel {
 		JPanel currentItemsViewer = new JPanel();
 
 		// Can't let the viewer get to small, or its useless
-		currentItemsViewer.setMinimumSize(new Dimension(400, 300));
+		currentItemsViewer.setMinimumSize(new Dimension(350, 300));
 		add(currentItemsViewer, "cell 0 0,grow");
 		currentItemsViewer.setLayout(new BorderLayout(0, 0));
 
 		myCurrentItemViewState = new JTextArea();
 		myCurrentItemViewState.setText(myViewer.getProjectString());
+		myViewer.printToConsole();
 		currentItemsViewer.add(myCurrentItemViewState, BorderLayout.CENTER);
 
 		JPanel itemAdder = new JPanel();
@@ -93,10 +100,11 @@ public class ItemInputPanel extends JPanel {
 		itemTypeChooserPanel.add(myItemtypeDropDown);
 
 		// Need a pointer to the parent panel.
-		final ItemInputPanel thisPanel = this;
+//		final ItemInputPanel thisPanel = this;
 
 		myDropDownAction = new ActionListener() {
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e == null) {
@@ -119,12 +127,12 @@ public class ItemInputPanel extends JPanel {
 						myItemtypeDropDown.addItem(child);
 					}
 					// Update the field lists
-					fillFieldPane(parentName);
+//					fillFieldPane(parentName);
 					addActionToDropDown();
 				} else {
 					// Still need to update the field list though
 					fillFieldPane(parentName);
-					JOptionPane.showMessageDialog(thisPanel, "There are no more child type");
+//					JOptionPane.showMessageDialog(thisPanel, "There are no more child type");
 				}
 			}
 
@@ -233,10 +241,12 @@ public class ItemInputPanel extends JPanel {
 		// Add in the new field panels.
 		final List<SchemaField> fieldsToAdd = myRules.getInheritedFields(theItemType);
 		for (SchemaField field : fieldsToAdd) {
-			final FieldInputPanel newField = new FieldInputPanel(field.getSchemaFieldName(),
-					field.getDescription(), field.getValueType());
-			myItemFieldPane.add(newField);
-			this.myCurrentFields.add(newField);
+			System.out.println(field.getSchemaFieldName() + " " + field.getDescription() 
+					   + " " + field.getValueType() + " " + field.isRequired());
+//			final FieldInputPanel newField = new FieldInputPanel(field.getSchemaFieldName(),
+//					field.getDescription(), field.getValueType());
+//			myItemFieldPane.add(newField);
+//			this.myCurrentFields.add(newField);
 		}
 	}
 }

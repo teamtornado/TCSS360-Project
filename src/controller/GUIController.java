@@ -328,7 +328,17 @@ public class GUIController {
 						} else {
 							myState = SECOND_PANEL;
 							// Set whatever the user entered into the project.
-							myEditor.setBasicInformation(myBasicInfoPanel);
+//							myEditor.setBasicInformation(myBasicInfoPanel);
+							System.out.println("Name: " + projectName + "\n");
+							System.out.println("Location: " + projectLocation + "\n");
+							System.out.println("Budget: " + projectBudget + "\n");
+							System.out.println("Description: " + projectDescription + "\n");
+							System.out.println(myLoader.myProject);
+							myEditor.setName(projectName);
+							myEditor.setLocation(projectLocation);
+							myEditor.setBudget(projectBudget);
+							myEditor.setDescription(projectDescription);
+							myViewer.printToConsole();
 							createPanel.remove(myBasicInfoPanel);
 							createPanel.add(myItemPanel, BorderLayout.CENTER);
 							createPanel.revalidate();
