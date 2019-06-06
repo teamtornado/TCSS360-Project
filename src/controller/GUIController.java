@@ -77,22 +77,22 @@ public class GUIController {
 	 * The fraction constant to provide relative calculations to the main window.
 	 */
 	private static final float FRACTION_OF_MAIN_WINDOW = 0.5f;
-	
+
 	/**
 	 * 
 	 */
 	private static final int FIRST_PANEL = 1;
-	
+
 	/**
 	 * 
 	 */
 	private static final int SECOND_PANEL = 2;
-	
+
 	/**
 	 * 
 	 */
 	private JFileChooser myFileChooser;
-	
+
 	/**
 	 * Allows the user to enter basic information when creating a new project.
 	 */
@@ -116,7 +116,7 @@ public class GUIController {
 	/**
 	 * The project creation panel for adding items and features to projects.
 	 */
-//	private JPanel myCreatePanel;
+	// private JPanel myCreatePanel;
 
 	/**
 	 * Allows the user to view projects that have already been created.
@@ -127,12 +127,12 @@ public class GUIController {
 	 * 
 	 */
 	private ProjectEditController myEditor;
-//	private ProjectViewController myViewer;
+	// private ProjectViewController myViewer;
 	/**
 	 * 
 	 */
 	private ProjectLoadController myLoader;
-//	private SchemaController myRules;
+	// private SchemaController myRules;
 
 	/**
 	 * The state of the creation panel.
@@ -186,12 +186,12 @@ public class GUIController {
 					JButton backButton = new JButton("Back");
 					tempPanel.add(backButton);
 					backButton.addActionListener(new ActionListener() {
-						
+
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							myWindow.setContentPane(mainPanel);
 							myWindow.pack();
-							
+
 						}
 					});
 					myWindow.setContentPane(tempPanel);
@@ -257,7 +257,8 @@ public class GUIController {
 			public void actionPerformed(ActionEvent e) {
 				if (myState == FIRST_PANEL) {
 					if (!basicInfoPanel.checkAllField()) {
-						JOptionPane.showMessageDialog(myWindow, "You need to filled all these fields before continue");
+						JOptionPane.showMessageDialog(myWindow,
+								"You need to filled all these fields before continue");
 					} else {
 						myState = SECOND_PANEL;
 						String projectName = basicInfoPanel.getProjectName();
@@ -273,6 +274,19 @@ public class GUIController {
 						createPanel.revalidate();
 						createPanel.repaint();
 					}
+				} else if (myState == SECOND_PANEL) {
+					final int returnCondition = myLoader.saveProject(myWindow);
+					if (returnCondition == myLoader.SUCCESS) {
+						// If everything saved correctly!
+						myState = FIRST_PANEL; // reset it for the next time around.
+						myWindow.setContentPane(mainPanel); // go back to the main menu.
+						createPanel.remove(myItemPanel);
+						createPanel.add(basicInfoPanel, BorderLayout.CENTER);
+						createPanel.revalidate();
+						createPanel.repaint();
+					}
+					// If something when wrong or the user backed out of save.
+					// want to stay on the same panel.
 				}
 			}
 		});
@@ -290,10 +304,11 @@ public class GUIController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (myState == FIRST_PANEL) {
-					String[] optionStrings = {"Yes" , "No"};
-					int x = JOptionPane.showOptionDialog(null, "You will lose all progress if you back out. Proceed?",
-													 "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-													 optionStrings, optionStrings[0]);
+					String[] optionStrings = { "Yes", "No" };
+					int x = JOptionPane.showOptionDialog(null,
+							"You will lose all progress if you back out. Proceed?", "Warning",
+							JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+							optionStrings, optionStrings[0]);
 					// If user say yes
 					if (x == 0) {
 						myWindow.setContentPane(mainPanel);
@@ -315,7 +330,6 @@ public class GUIController {
 		return createPanel;
 	}
 
-	
 	/**
 	 * Final setup including packing and setting the frame to visible.
 	 * 
@@ -486,10 +500,10 @@ public class GUIController {
 		final ImageIcon img = new ImageIcon("tornadoIcon.png");
 		myWindow.setIconImage(img.getImage());
 	}
-	
+
 	private boolean containsIllegals(String toExamine) {
-	    Pattern pattern = Pattern.compile("[~#@*+%{}<>\\[\\]|\"\\_^]");
-	    Matcher matcher = pattern.matcher(toExamine);
-	    return matcher.find();
+		Pattern pattern = Pattern.compile("[~#@*+%{}<>\\[\\]|\"\\_^]");
+		Matcher matcher = pattern.matcher(toExamine);
+		return matcher.find();
 	}
 }
