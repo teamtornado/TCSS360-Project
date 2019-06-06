@@ -26,5 +26,6 @@ public class SchemaTypes {
 	public static final String DAILY_USE = "Daily use";
 	public static final String ENERGY_USE = "Energy use";
 	public static final String VOLUME_CAPACITY = "Volume capacity";
+	public static final String USER_NOTES = "User notes";
 
 }

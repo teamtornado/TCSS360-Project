@@ -109,4 +109,19 @@ public class SchemaController {
 	public String getParentOfChild(final String theChildItemType) {
 		return mySchema.getParentOfChild(theChildItemType);
 	}
+
+	/**
+	 * Returns the list of field names that are inherited by the give item. Includes
+	 * the fields at the give item-types level.
+	 * 
+	 * @param theItemType
+	 *            The item type to find inherited field for.
+	 * @return the list of field names inherited by the given item-type
+	 * @throws IllegalArgumentException
+	 *             if the item-type has no match in the Schema.
+	 * @author Eric
+	 */
+	public List<String> getInheritedFields(final String theItemType) {
+		return mySchema.getInheritedFields(theItemType);
+	}
 }
