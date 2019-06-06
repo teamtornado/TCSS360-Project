@@ -5,6 +5,7 @@ import java.awt.Color;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -46,14 +47,15 @@ public class ItemInputPanel extends JPanel {
 		itemTypeChooserPanel.add(upButton);
 
 		// Drop down menu for the item-types
-		JMenu itemtypeDropDown = new JMenu("Item-Type");
+		String[] itemStrings = {"First Item", "Second Item"};
+		JComboBox<String> itemtypeDropDown = new JComboBox<String>(itemStrings);
 		itemTypeChooserPanel.add(itemtypeDropDown);
 
-		JMenuItem firstItem = new JMenuItem("FirstItem");
-		itemtypeDropDown.add(firstItem);
-
-		JMenuItem secondItem = new JMenuItem("SecondItem");
-		itemtypeDropDown.add(secondItem);
+//		JMenuItem firstItem = new JMenuItem("First Item");
+//		itemtypeDropDown.add(firstItem);
+//
+//		JMenuItem secondItem = new JMenuItem("Second Item");
+//		itemtypeDropDown.add(secondItem);
 
 		// I don't know why the menu thing isn't working... -> but you get the idea.
 

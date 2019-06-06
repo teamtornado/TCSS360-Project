@@ -282,7 +282,7 @@ public class GUIController {
 						myState = FIRST_PANEL; // reset it for the next time around.
 						myWindow.setContentPane(mainPanel); // go back to the main menu.
 						createPanel.remove(myItemPanel);
-						createPanel.add(basicInfoPanel, BorderLayout.CENTER);
+						createPanel.add(myBasicInfoPanel, BorderLayout.CENTER);
 						createPanel.revalidate();
 						createPanel.repaint();
 					}
@@ -316,7 +316,7 @@ public class GUIController {
 						myWindow.setContentPane(mainPanel);
 						myWindow.pack();
 					}
-				} else {
+				} else if (myState == SECOND_PANEL) {
 					myState = FIRST_PANEL;
 					createPanel.remove(myItemPanel);
 					createPanel.add(myBasicInfoPanel, BorderLayout.CENTER);
