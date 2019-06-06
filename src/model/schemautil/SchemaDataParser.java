@@ -36,6 +36,7 @@ public class SchemaDataParser {
 					"Error: could not find the SchemaData text file.");
 			theException.printStackTrace();
 		}
+		
 		// Have to get all fields first
 		final List<SchemaField> allFields = parseFields(schemaScan);
 
@@ -118,6 +119,7 @@ public class SchemaDataParser {
 		// Parse away!
 		boolean keepGoing = true;
 		do {
+			System.out.println(line);
 			final String[] tokens = line.split(",");
 			final String[] idTokens = tokens[0].split(":");
 			final int id = Integer.parseInt(idTokens[1]);
@@ -169,7 +171,7 @@ public class SchemaDataParser {
 			// Add this new Item to the full list of items for the database.
 			schemaItemList.add(item);
 
-			if (theSchemaScan.hasNext()) {
+			if (theSchemaScan.hasNextLine()) {
 				line = theSchemaScan.nextLine();
 			} else {
 				keepGoing = false; // Out of items to parse!
