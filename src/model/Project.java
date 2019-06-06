@@ -37,6 +37,8 @@ public class Project implements Serializable {
 	 * Default location of a project.
 	 */
 	public static final String DEFAULT_PROJECT_LOCATION = "...";
+	
+	public static final String NEWLINE = "\n";
 
 	/**
 	 * The user entered name of the project.
@@ -84,7 +86,7 @@ public class Project implements Serializable {
 	 *            the location of the project.
 	 * @throws IllegalArgumentException
 	 *             if any argument is null.
-	 * @author Eric
+	 * @author Eric, Curran
 	 */
 	public Project(final String theProjectName, final String theProjectDescription,
 			final double theBudget, final String theProjectLocation) {
@@ -435,16 +437,16 @@ public class Project implements Serializable {
 	 */
 	public String getProjectString() {
 		final StringBuilder project = new StringBuilder();
-		project.append("Project Name: " + myProjectName);
-		project.append("Project Description: " + myProjectDescription);
-		project.append("Project Budget: $" + getFormattedBudgetAsString());
-		project.append("Project Location: " + myProjectLocation);
+		project.append("Project Name: " + myProjectName + NEWLINE);
+		project.append("Project Description: " + myProjectDescription + NEWLINE);
+		project.append("Project Budget: $" + getFormattedBudgetAsString() + NEWLINE);
+		project.append("Project Location: " + myProjectLocation + NEWLINE);
 		project.append("----------------------------\n");
 		if (myItems != null) {
 			for (Item item : myItems) {
-				project.append("ItemType: " + item.getItemType());
+				project.append("ItemType: " + item.getItemType() + NEWLINE);
 				for (ItemField field : item.getFields()) {
-					project.append("\tField: " + field.toString());
+					project.append("\tField: " + field.toString()+ NEWLINE);
 				}
 			}
 		} else {
