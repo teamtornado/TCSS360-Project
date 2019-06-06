@@ -70,7 +70,7 @@ public class Project implements Serializable {
 		this.myProjectLocation = "Woof Location";
 		this.myProjectBudget = 0.00;
 		this.myProjectDescription = "This is a woof project";
-		this.myItems = new LinkedList<>();
+		this.myItems = new LinkedList<Item>();
 	}
 
 	/**
@@ -454,7 +454,9 @@ public class Project implements Serializable {
 		stringBuilder.append(NEWLINE);
 		stringBuilder.append("----------------------------");
 		stringBuilder.append(NEWLINE);
-		if (myItems.isEmpty()) {
+		
+		if (myItems != null && !myItems.isEmpty()) {
+			// Add the contents 
 			for (Item item : myItems) {
 				stringBuilder.append("ItemType: ");
 				stringBuilder.append(item.getItemType());
