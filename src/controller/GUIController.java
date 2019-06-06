@@ -122,7 +122,7 @@ public class GUIController {
 	 * Allows the user to view projects that have already been created.
 	 */
 	private ProjectViewer myProjectViewer;
-	
+
 	private BasicInfoPanel myBasicInfoPanel;
 
 	/**
@@ -254,28 +254,42 @@ public class GUIController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (myState == FIRST_PANEL) {
+
+					// If the user tries to go to the next create panel without filling basic info
+					// fields.
+					if (!myBasicInfoPanel.checkAllField()) {
+						JOptionPane.showMessageDialog(myWindow,
+								"You need to filled all these fields before continue");
+						return; // We should not leave the panel, so don't do anything
+					}
+
+					// The fields seem to have 'something' in them. Grab them now.
 					String projectName = myBasicInfoPanel.getProjectName();
 					String projectLocation = myBasicInfoPanel.getProjectLocation();
 					Double projectBudget = myBasicInfoPanel.getProjectBudget();
 					String projectDescription = myBasicInfoPanel.getProjectDescription();
-					if (!myBasicInfoPanel.checkAllField()) {
-						JOptionPane.showMessageDialog(myWindow, "You need to filled all these fields before continue");
-					} else if(containsIllegals(projectName) || containsIllegals(Double.toString(projectBudget)) ||
-							  containsIllegals(projectLocation) || containsIllegals(projectDescription)) {
-						JOptionPane.showMessageDialog(myWindow, "One of the field contains an illegal symbol\n "
-								                    + "Illegal symbols are ~ # @ * + % { } < > [ ] | \" \' \\ _ ^");
-					} else {
-						myState = SECOND_PANEL;
-						// Set whatever the user entered into the project.
-						myEditor.setBasicInformation(myBasicInfoPanel);
-						createPanel.remove(myBasicInfoPanel);
-						createPanel.add(myItemPanel, BorderLayout.CENTER);
-						createPanel.revalidate();
-						createPanel.repaint();
+
+					// Now check that the fields are legal.
+					if (containsIllegals(projectName)
+							|| containsIllegals(Double.toString(projectBudget))
+							|| containsIllegals(projectLocation)
+							|| containsIllegals(projectDescription)) {
+						JOptionPane.showMessageDialog(myWindow,
+								"One of the field contains an illegal symbol\n "
+										+ "Illegal symbols are ~ # @ * + % { } < > [ ] | \" \' \\ _ ^");
+						return; // Fields were not legal, We should not leave this panel!
 					}
+					myState = SECOND_PANEL;
+					// Set whatever the user entered into the project.
+					myEditor.setBasicInformation(myBasicInfoPanel);
+					createPanel.remove(myBasicInfoPanel);
+					createPanel.add(myItemPanel, BorderLayout.CENTER);
+					createPanel.revalidate();
+					createPanel.repaint();
+
 				} else if (myState == SECOND_PANEL) {
 					final int returnCondition = myLoader.saveProject(myWindow);
-					if (returnCondition == myLoader.SUCCESS) {
+					if (returnCondition == ProjectLoadController.SUCCESS) {
 						// If everything saved correctly!
 						myState = FIRST_PANEL; // reset it for the next time around.
 						myWindow.setContentPane(mainPanel); // go back to the main menu.
@@ -323,6 +337,7 @@ public class GUIController {
 				}
 
 			}
+
 		});
 
 		createPanel.add(backButton, BorderLayout.WEST);
@@ -502,8 +517,8 @@ public class GUIController {
 	}
 
 	private boolean containsIllegals(String toExamine) {
-	    Pattern pattern = Pattern.compile("[~#@*+%{}<>\\[\\]|\"\'\\_^]");
-	    Matcher matcher = pattern.matcher(toExamine);
-	    return matcher.find();
+		Pattern pattern = Pattern.compile("[~#@*+%{}<>\\[\\]|\"\'\\_^]");
+		Matcher matcher = pattern.matcher(toExamine);
+		return matcher.find();
 	}
 }
