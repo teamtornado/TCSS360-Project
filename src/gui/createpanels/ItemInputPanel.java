@@ -112,7 +112,6 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {		
 		if (e.getSource() == myItemtypeDropDown) {
-			System.out.println("parent");
 			JComboBox<String> cb = (JComboBox<String>) e.getSource();
 			String parentName = (String) cb.getSelectedItem();
 			System.out.println(parentName);
@@ -139,8 +138,6 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 								 + schemaField.getValueType() + " "
 								 + schemaField.isRequired() + "\n");
 			}
-		}
-		
-		
+		}		
 	}
 }
