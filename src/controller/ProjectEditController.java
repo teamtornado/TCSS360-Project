@@ -43,7 +43,7 @@ public class ProjectEditController {
 	 *             if theProjectDescription is null.
 	 * @author Eric
 	 */
-	public void setProjectDescription(String theProjectDescription) {
+	public void setDescription(String theProjectDescription) {
 		myLoader.myProject.setProjectDescription(theProjectDescription);
 	}
 
