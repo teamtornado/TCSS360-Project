@@ -235,7 +235,8 @@ public class Schema {
 
 		// Oh no! No matching SchemaItem!
 		throw new IllegalArgumentException(
-				"Error: there was no match with itemType within the list of SchemaItems");
+				"Error: there was no match with itemType within the list of SchemaItems "
+						+ theSchemaItemType);
 	}
 
 	/**
@@ -273,33 +274,36 @@ public class Schema {
 	}
 
 	/**
-	 * Returns the list of field names that are inherited by the give item. Includes
-	 * the fields at the give item-types level.
+	 * Returns the list of fields that are inherited by the give item. Includes the
+	 * fields at the give item-types level.
 	 * 
 	 * @param theItemType
 	 *            The item type to find inherited field for.
-	 * @return the list of field names inherited by the given item-type
+	 * @return the list of fields inherited by the given item-type
 	 * @throws IllegalArgumentException
 	 *             if the item-type has no match in the Schema.
 	 * @author Eric
 	 */
-	public List<String> getInheritedFields(final String theItemType) {
-		final List<String> listOfInheritedFields = new LinkedList<>();
+	public List<SchemaField> getInheritedFields(final String theItemType) {
+		final List<SchemaField> listOfInheritedFields = new LinkedList<>();
 
 		// find the itemType
 		for (SchemaItem item : mySchemaItems) {
 			if (item.getItemType().equals(theItemType)) {
 				// Grab this item's fields.
 				for (SchemaField field : item.getFields()) {
-					listOfInheritedFields.add(field.getSchemaFieldName());
+					listOfInheritedFields.add(field);
 				}
 
+				if (item.getIsA() == Schema.GLOBAL_PARENT_ID) {
+					return item.getFields(); // This is already a parent global, so stop.
+				}
 				// Grab the parent of the item
 				SchemaItem currentItem = getSchemaItem(getParentOfChild(item.getItemType()));
 				// Found, now grab all the inherited stuff
 				while (currentItem.getIsA() != Schema.GLOBAL_PARENT_ID) {
 					for (SchemaField field : currentItem.getFields()) {
-						listOfInheritedFields.add(field.getSchemaFieldName());
+						listOfInheritedFields.add(field);
 					}
 					// Find the next parent
 					currentItem = getSchemaItem(getParentOfChild(currentItem.getItemType()));
@@ -307,13 +311,13 @@ public class Schema {
 
 				// Should be at the global parent at this point. So add those.
 				for (SchemaField field : currentItem.getFields()) {
-					listOfInheritedFields.add(field.getSchemaFieldName());
+					listOfInheritedFields.add(field);
 				}
 				return listOfInheritedFields;
 			}
 		}
 
 		// Oh no! Couldn't find the schema item~
-		throw new IllegalArgumentException("Error: Schema item-type was not found.");
+		throw new IllegalArgumentException("Error: Schema item-type was not found: " + theItemType);
 	}
 }

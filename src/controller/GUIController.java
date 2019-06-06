@@ -161,7 +161,7 @@ public class GUIController {
 		myProjectViewer = makeProjectViewer(myViewer, myLoader);
 		myBasicInfoPanel = new BasicInfoPanel();
 		myCreatePanel = makeCreatePanel();
-		myItemPanel = new ItemInputPanel(myRules);
+		myItemPanel = new ItemInputPanel(myViewer, myRules);
 		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
 		setupJFrameIcon();

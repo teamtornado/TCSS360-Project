@@ -94,6 +94,6 @@ public class ProjectViewer extends JPanel {
 	}
 
 	public void addData(final String theString) {
-		myProjectSummary.addText(theString);
+		myProjectSummary.setText(theString);
 	}
 }

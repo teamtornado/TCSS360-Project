@@ -26,12 +26,12 @@ public class ScrollablePane extends JScrollPane {
 		myData = data;
         this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        this.setPreferredSize(dimension);
+        //this.setPreferredSize(dimension);
         myData.setEditable(isEditable);
         myData.setFont(myData.getFont().deriveFont(fontSize));
 	}
 	
-	public void addText(final String theString) {
+	public void setText(final String theString) {
 		myData.setText(theString);
 	}
 }
