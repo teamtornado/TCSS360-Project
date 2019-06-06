@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -15,6 +17,7 @@ import controller.ProjectLoadController;
 import controller.ProjectViewController;
 import gui.createpanels.BasicInfoPanel;
 import gui.createpanels.ScrollablePane;
+import model.Project;
 
 /**
  * This class displays the contents of the project and allows the user to export
@@ -40,13 +43,16 @@ public class ProjectViewer extends JPanel {
 	 */
 	private ProjectLoadController myLoader;
 	
+	private Project myProject;
+	
 	private ScrollablePane myProjectSummary;
 
 	public ProjectViewer(final ProjectViewController theViewer,
-			final ProjectLoadController theLoader) {
+			final ProjectLoadController theLoader, final Project theProject) {
 		super();
 		this.myViewer = theViewer;
 		this.myLoader = theLoader;
+		this.myProject = theProject;
 		this.setLayout(new BorderLayout());
 		
 		final JPanel buttonPanel = new JPanel(new BorderLayout());
@@ -79,13 +85,14 @@ public class ProjectViewer extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String[] optionStrings = { "Yes", "No" };
-				int x = JOptionPane.showOptionDialog(null,
-						"You will lose all progress if you back out. Proceed?", "Warning",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-						optionStrings, optionStrings[0]);
-
-				System.out.println(x);
+				PrintStream output;
+				try {
+					output = new PrintStream(myProject.getName() + "EXPORTED.txt");
+					output.print(myProject.getProjectString());
+					JOptionPane.showMessageDialog(myProjectSummary, "Project exported.");
+				} catch (FileNotFoundException e1) {
+					JOptionPane.showMessageDialog(myProjectSummary, "Error occured.");
+				}
 			}
 		});
 		

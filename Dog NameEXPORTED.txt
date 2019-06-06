@@ -1,0 +1,5 @@
+Project Name: Dog Name
+Project Description: This is a woof project
+Project Budget: $0.00
+Project Location: Woof Location
+----------------------------
