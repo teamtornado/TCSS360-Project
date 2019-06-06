@@ -115,11 +115,9 @@ class SchemaTest {
 
 	@Test
 	void correctInheritedFields() {
-		// final List<String> inheritedFields =
-		// mySchemaController.getInheritedFields(SchemaTypes.FURNACE);
-		// assertTrue(inheritedFields.contains(SchemaTypes.BRAND));
-		// assertTrue(inheritedFields.contains(SchemaTypes.BTU));
-		// assertTrue(inheritedFields.contains(SchemaTypes.USER_NOTES));
+		final List<SchemaField> inheritedFields = mySchemaController
+				.getInheritedFields(SchemaTypes.WOK_STOVE);
+		int x = 1;
 	}
 
 }

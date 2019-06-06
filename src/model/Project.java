@@ -38,6 +38,9 @@ public class Project implements Serializable {
 	 */
 	public static final String DEFAULT_PROJECT_LOCATION = "...";
 
+	/**
+	 * A new line escape character.
+	 */
 	public static final String NEWLINE = "\n";
 
 	/**
