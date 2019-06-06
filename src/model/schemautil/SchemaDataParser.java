@@ -116,6 +116,7 @@ public class SchemaDataParser {
 		final List<SchemaItem> schemaItemList = new LinkedList<>();
 
 		// Parse away!
+		boolean keepGoing = true;
 		do {
 			final String[] tokens = line.split(",");
 			final String[] idTokens = tokens[0].split(":");
@@ -168,8 +169,12 @@ public class SchemaDataParser {
 			// Add this new Item to the full list of items for the database.
 			schemaItemList.add(item);
 
-			line = theSchemaScan.nextLine();
-		} while (theSchemaScan.hasNextLine() && line.startsWith("ID:"));
+			if (theSchemaScan.hasNext()) {
+				line = theSchemaScan.nextLine();
+			} else {
+				keepGoing = false; // Out of items to parse!
+			}
+		} while (keepGoing && line.startsWith("ID:"));
 
 		return schemaItemList;
 	}
