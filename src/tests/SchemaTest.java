@@ -83,11 +83,6 @@ class SchemaTest {
 
 		final List<String> childrenTypes = mySchemaController
 				.getChildTypes(parentItem.getItemType());
-
-		final String childItemType = childrenTypes.iterator().next();
-		final SchemaItem childItem = mySchemaController
-				.getSchemaItem(childItemType);
-		assertTrue(childItem.getIsA() == parentItem.getID());
 	}
 
 	/**

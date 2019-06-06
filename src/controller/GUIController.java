@@ -7,10 +7,13 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -20,10 +23,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
-import gui.CreatePanel;
 import gui.ProjectViewer;
 import gui.createpanels.BasicInfoPanel;
 import gui.createpanels.ItemInputPanel;
+import model.Project;
 import utilities.About;
 import utilities.FileParser;
 
@@ -76,14 +79,29 @@ public class GUIController {
 	private static final float FRACTION_OF_MAIN_WINDOW = 0.5f;
 
 	/**
+	 * 
+	 */
+	private static final int FIRST_PANEL = 1;
+
+	/**
+	 * 
+	 */
+	private static final int SECOND_PANEL = 2;
+
+	/**
+	 * 
+	 */
+	private JFileChooser myFileChooser;
+
+	/**
 	 * Allows the user to enter basic information when creating a new project.
 	 */
-	private JPanel basicInfoPanel;
+	private JPanel myCreatePanel;
 
 	/**
 	 * A magical panel that does something.
 	 */
-	private JPanel itemPanel;
+	private JPanel myItemPanel;
 
 	/**
 	 * The main menu panel for the application.
@@ -98,17 +116,25 @@ public class GUIController {
 	/**
 	 * The project creation panel for adding items and features to projects.
 	 */
-	private CreatePanel myCreatePanel;
+	// private JPanel myCreatePanel;
 
 	/**
 	 * Allows the user to view projects that have already been created.
 	 */
 	private ProjectViewer myProjectViewer;
 
+	private BasicInfoPanel myBasicInfoPanel;
+
+	/**
+	 * 
+	 */
 	private ProjectEditController myEditor;
-	private ProjectViewController myViewer;
+	// private ProjectViewController myViewer;
+	/**
+	 * 
+	 */
 	private ProjectLoadController myLoader;
-	private SchemaController myRules;
+	// private SchemaController myRules;
 
 	/**
 	 * The state of the creation panel.
@@ -121,20 +147,16 @@ public class GUIController {
 	 * 
 	 * @author Eric, Minh, Curran, Sharanjit
 	 */
-	public GUIController(final ProjectEditController theEditor,
-			final ProjectViewController theViewer, final ProjectLoadController theLoader,
-			final SchemaController theRules) {
-		myEditor = theEditor;
-		myViewer = theViewer;
-		myLoader = theLoader;
-		myRules = theRules;
-		myCreatePanel = new CreatePanel(theEditor, theViewer, theRules);
-		myProjectViewer = new ProjectViewer(theViewer, theLoader);
+	public GUIController() {
 		myWindow = new JFrame();
-		myState = 1;
+		myFileChooser = new JFileChooser("./SavedProjects/");
+		myLoader = new ProjectLoadController();
+		myEditor = new ProjectEditController(myLoader);
+		myState = FIRST_PANEL;
 		mainPanel = makeMainPanel();
-		basicInfoPanel = makeCreatePanel();
-		itemPanel = new ItemInputPanel();
+		myBasicInfoPanel = new BasicInfoPanel();
+		myCreatePanel = makeCreatePanel();
+		myItemPanel = new ItemInputPanel();
 		// makeItemPanel();
 		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
@@ -160,10 +182,22 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
-				int returnCondition = myLoader.loadProject(myWindow);
-				if (returnCondition == ProjectLoadController.SUCCESS) {
+				final int returnValue = myLoader.loadProject(myWindow);
+				if (returnValue == myLoader.SUCCESS) {
 					// If the file loaded correctly, then switch the panels.
-					myWindow.setContentPane(myProjectViewer);
+					JPanel tempPanel = new JPanel();
+					JButton backButton = new JButton("Back");
+					tempPanel.add(backButton);
+					backButton.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							myWindow.setContentPane(mainPanel);
+							myWindow.pack();
+
+						}
+					});
+					myWindow.setContentPane(tempPanel);
 					myWindow.pack();
 				}
 				// Something went weird, so leave us on the main menu.
@@ -180,8 +214,7 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
-				myLoader.createNewProject();
-				myWindow.setContentPane(basicInfoPanel);
+				myWindow.setContentPane(myCreatePanel);
 				myWindow.pack();
 			}
 		});
@@ -209,43 +242,64 @@ public class GUIController {
 	private JPanel makeCreatePanel() {
 		JPanel createPanel = new JPanel();
 		createPanel.setLayout(new BorderLayout());
-		// the info stuffs
-
-		BasicInfoPanel basicInfoPanel = new BasicInfoPanel();
-
-		// adding stuffs together
-		createPanel.add(basicInfoPanel, BorderLayout.CENTER);
+		createPanel.add(myBasicInfoPanel, BorderLayout.CENTER);
 		JButton nextButton = new JButton("Next");
 		nextButton.addActionListener(new ActionListener() {
 
 			/**
-			 * Does a bunch of stuff that Minh should have left comments for.
+			 * Set how the next button function depending on the state of the program
 			 * 
 			 * @author Minh, Eric
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (myState == 1) {
-					myState = 2;
-					createPanel.remove(basicInfoPanel);
-					createPanel.add(itemPanel, BorderLayout.CENTER);
+				if (myState == FIRST_PANEL) {
+
+					// If the user tries to go to the next create panel without filling basic info
+					// fields.
+					if (!myBasicInfoPanel.checkAllField()) {
+						JOptionPane.showMessageDialog(myWindow,
+								"You need to filled all these fields before continue");
+						return; // We should not leave the panel, so don't do anything
+					}
+
+					// The fields seem to have 'something' in them. Grab them now.
+					String projectName = myBasicInfoPanel.getProjectName();
+					String projectLocation = myBasicInfoPanel.getProjectLocation();
+					Double projectBudget = myBasicInfoPanel.getProjectBudget();
+					String projectDescription = myBasicInfoPanel.getProjectDescription();
+
+					// Now check that the fields are legal.
+					if (containsIllegals(projectName)
+							|| containsIllegals(Double.toString(projectBudget))
+							|| containsIllegals(projectLocation)
+							|| containsIllegals(projectDescription)) {
+						JOptionPane.showMessageDialog(myWindow,
+								"One of the field contains an illegal symbol\n "
+										+ "Illegal symbols are ~ # @ * + % { } < > [ ] | \" \' \\ _ ^");
+						return; // Fields were not legal, We should not leave this panel!
+					}
+					myState = SECOND_PANEL;
+					// Set whatever the user entered into the project.
+					myEditor.setBasicInformation(myBasicInfoPanel);
+					createPanel.remove(myBasicInfoPanel);
+					createPanel.add(myItemPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
 					createPanel.repaint();
-					// myWindow.pack();
-				} else if (myState == 2) {
-					// I think this is resetting it... ?? Minh, stop making magic numbers!!
-					// Constants would help - especially for stuff like states.
-					myState = 1;
-					myLoader.saveProject(myWindow);
 
-					// Don't know if I need to reset all this stuff for the next time around.
-					createPanel.remove(itemPanel);
-					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
-					createPanel.revalidate();
-					createPanel.repaint();
-
-					// Back to the main menu!
-					myWindow.setContentPane(mainPanel);
+				} else if (myState == SECOND_PANEL) {
+					final int returnCondition = myLoader.saveProject(myWindow);
+					if (returnCondition == ProjectLoadController.SUCCESS) {
+						// If everything saved correctly!
+						myState = FIRST_PANEL; // reset it for the next time around.
+						myWindow.setContentPane(mainPanel); // go back to the main menu.
+						createPanel.remove(myItemPanel);
+						createPanel.add(myBasicInfoPanel, BorderLayout.CENTER);
+						createPanel.revalidate();
+						createPanel.repaint();
+					}
+					// If something when wrong or the user backed out of save.
+					// want to stay on the same panel.
 				}
 			}
 		});
@@ -262,38 +316,28 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Oh my goodness, Minh -> add some freaking comments!
-				// Also, 'x' is a pretty shit variable name.
-
-				// There's also a bug in here and its like 4 in the morning now.
-				// Go to the last panel of the create Project thing, hit next one last
-				// time, the click cancel when the filechooser comes up.
-
-				// It should stay on that last create panel instead of going back to the
-				// main menu.
-				if (myState == 1) {
+				if (myState == FIRST_PANEL) {
 					String[] optionStrings = { "Yes", "No" };
 					int x = JOptionPane.showOptionDialog(null,
 							"You will lose all progress if you back out. Proceed?", "Warning",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 							optionStrings, optionStrings[0]);
-
+					// If user say yes
 					if (x == 0) {
-						myEditor.clearAllItems();
-						myEditor.resetBasicInformation();
+						myBasicInfoPanel.clearAllField();
 						myWindow.setContentPane(mainPanel);
 						myWindow.pack();
 					}
-				} else {
-					myState = 1;
-					createPanel.remove(itemPanel);
-					createPanel.add(basicInfoPanel, BorderLayout.CENTER);
+				} else if (myState == SECOND_PANEL) {
+					myState = FIRST_PANEL;
+					createPanel.remove(myItemPanel);
+					createPanel.add(myBasicInfoPanel, BorderLayout.CENTER);
 					createPanel.revalidate();
 					createPanel.repaint();
-					// myWindow.pack();
 				}
 
 			}
+
 		});
 
 		createPanel.add(backButton, BorderLayout.WEST);
@@ -470,5 +514,11 @@ public class GUIController {
 	private void setupJFrameIcon() {
 		final ImageIcon img = new ImageIcon("tornadoIcon.png");
 		myWindow.setIconImage(img.getImage());
+	}
+
+	private boolean containsIllegals(String toExamine) {
+		Pattern pattern = Pattern.compile("[~#@*+%{}<>\\[\\]|\"\'\\_^]");
+		Matcher matcher = pattern.matcher(toExamine);
+		return matcher.find();
 	}
 }

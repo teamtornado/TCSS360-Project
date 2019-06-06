@@ -1,5 +1,7 @@
 package controller;
 
+import gui.createpanels.BasicInfoPanel;
+
 /**
  * This class allows the front end to alter the model.
  * 
@@ -43,7 +45,7 @@ public class ProjectEditController {
 	 *             if theProjectDescription is null.
 	 * @author Eric
 	 */
-	public void setProjectDescription(String theProjectDescription) {
+	public void setDescription(String theProjectDescription) {
 		myLoader.myProject.setProjectDescription(theProjectDescription);
 	}
 
@@ -159,5 +161,23 @@ public class ProjectEditController {
 	 */
 	public void resetBasicInformation() {
 		myLoader.myProject.clearBasicInformation();
+	}
+
+	/**
+	 * Given a basicInfoPanel, will query for the given information, and will set
+	 * them within the project
+	 * 
+	 * @param basicInfoPanel
+	 *            the panel to query from.
+	 */
+	public void setBasicInformation(final BasicInfoPanel basicInfoPanel) {
+		String projectName = basicInfoPanel.getProjectName();
+		String projectLocation = basicInfoPanel.getProjectLocation();
+		Double projectBudget = basicInfoPanel.getProjectBudget();
+		String projectDescription = basicInfoPanel.getProjectDescription();
+		myLoader.myProject.setName(projectName);
+		myLoader.myProject.setLocation(projectLocation);
+		myLoader.myProject.setBudget(projectBudget);
+		myLoader.myProject.setProjectDescription(projectDescription);
 	}
 }

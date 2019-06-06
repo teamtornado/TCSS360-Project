@@ -38,6 +38,16 @@ public class ProjectLoadController {
 	private static final String FILE_SAVE_SUCCESS_MESSAGE = "File saved.";
 
 	/**
+	 * Text that appears on file chooser accept button when saving.
+	 */
+	private static final String SAVE_FILE_BUTTON_TEXT = "Save";
+
+	/**
+	 * Text that appears on file chooser accept button when loading.
+	 */
+	private static final String LOAD_FILE_BUTTON_TEXT = "Load";
+
+	/**
 	 * Return value condition if the operation was successful.
 	 */
 	public static final int SUCCESS = 1;
@@ -65,8 +75,8 @@ public class ProjectLoadController {
 	 *            the project to manage.
 	 * @author Eric
 	 */
-	public ProjectLoadController(final Project theProject) {
-		this.myProject = theProject;
+	public ProjectLoadController() {
+		this.myProject = new Project();
 		this.myChooser = new JFileChooser("./SavedProjects/");
 	}
 
@@ -80,6 +90,7 @@ public class ProjectLoadController {
 	 */
 	public int loadProject(final Component theParentComponent) {
 		// filechooser, find serialized instance, load.
+		myChooser.setApproveButtonText(LOAD_FILE_BUTTON_TEXT);
 		final int returnValue = myChooser.showOpenDialog(theParentComponent);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			try {
@@ -114,7 +125,7 @@ public class ProjectLoadController {
 	 */
 	public int saveProject(final Component theParentComponent) {
 		// export file as serialized to path
-
+		myChooser.setApproveButtonText(SAVE_FILE_BUTTON_TEXT);
 		final int returnValue = myChooser.showOpenDialog(theParentComponent);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			try {
