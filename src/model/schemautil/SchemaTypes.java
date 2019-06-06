@@ -13,6 +13,7 @@ public class SchemaTypes {
 	public static final String LIGHT = "Light";
 	public static final String FURNACE = "Furnace";
 	public static final String REFRIGERATOR = "Refrigerator";
+	public static final String WOK_STOVE = "Wok stove";
 
 	// ----
 	

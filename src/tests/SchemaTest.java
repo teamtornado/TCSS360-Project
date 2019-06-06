@@ -102,6 +102,18 @@ class SchemaTest {
 	void correct() {
 		final String appliance = mySchemaController.getParentOfChild(SchemaTypes.STOVE);
 		assertTrue(appliance.equals(SchemaTypes.APPLIANCE));
+		final String stove = mySchemaController.getChildTypes(appliance).get(0);
+		assertTrue(stove.equals(SchemaTypes.STOVE));
+		final String wokStove = mySchemaController.getChildTypes(stove).get(0);
+		assertTrue(wokStove.equals(SchemaTypes.WOK_STOVE));
+		
+		final String heating = mySchemaController.getParentOfChild(SchemaTypes.HEATING);
+		assertTrue(heating == null);
+		final String heatingReal = mySchemaController.getParentOfChild(SchemaTypes.FURNACE);
+		assertTrue(heatingReal.equals(SchemaTypes.HEATING));
+		
+		final String furnace = mySchemaController.getChildTypes(SchemaTypes.HEATING).get(0);
+		assertTrue(furnace.equals(SchemaTypes.FURNACE));
 	}
  
 }
