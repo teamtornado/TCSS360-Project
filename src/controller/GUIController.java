@@ -257,35 +257,34 @@ public class GUIController {
 
 					// If the user tries to go to the next create panel without filling basic info
 					// fields.
+					
 					if (!myBasicInfoPanel.checkAllField()) {
 						JOptionPane.showMessageDialog(myWindow,
 								"You need to filled all these fields before continue");
-						return; // We should not leave the panel, so don't do anything
-					}
-
-					// The fields seem to have 'something' in them. Grab them now.
-					String projectName = myBasicInfoPanel.getProjectName();
-					String projectLocation = myBasicInfoPanel.getProjectLocation();
-					Double projectBudget = myBasicInfoPanel.getProjectBudget();
-					String projectDescription = myBasicInfoPanel.getProjectDescription();
-
-					// Now check that the fields are legal.
-					if (containsIllegals(projectName)
-							|| containsIllegals(Double.toString(projectBudget))
-							|| containsIllegals(projectLocation)
-							|| containsIllegals(projectDescription)) {
-						JOptionPane.showMessageDialog(myWindow,
-								"One of the field contains an illegal symbol\n "
-										+ "Illegal symbols are ~ # @ * + % { } < > [ ] | \" \' \\ _ ^");
-						return; // Fields were not legal, We should not leave this panel!
-					}
-					myState = SECOND_PANEL;
-					// Set whatever the user entered into the project.
-					myEditor.setBasicInformation(myBasicInfoPanel);
-					createPanel.remove(myBasicInfoPanel);
-					createPanel.add(myItemPanel, BorderLayout.CENTER);
-					createPanel.revalidate();
-					createPanel.repaint();
+					} else {
+						String projectName = myBasicInfoPanel.getProjectName();
+						String projectLocation = myBasicInfoPanel.getProjectLocation();
+						Double projectBudget = myBasicInfoPanel.getProjectBudget();
+						String projectDescription = myBasicInfoPanel.getProjectDescription();
+						
+						if (containsIllegals(projectName)
+								|| containsIllegals(Double.toString(projectBudget))
+								|| containsIllegals(projectLocation)
+								|| containsIllegals(projectDescription)) {
+							JOptionPane.showMessageDialog(myWindow,
+									"One of the field contains an illegal symbol\n "
+											+ "Illegal symbols are ~ # @ * + % { } < > [ ] | \" \' \\ _ ^");
+						} else {
+							myState = SECOND_PANEL;
+							// Set whatever the user entered into the project.
+							myEditor.setBasicInformation(myBasicInfoPanel);
+							createPanel.remove(myBasicInfoPanel);
+							createPanel.add(myItemPanel, BorderLayout.CENTER);
+							createPanel.revalidate();
+							createPanel.repaint();
+						}
+					} 
+					
 
 				} else if (myState == SECOND_PANEL) {
 					final int returnCondition = myLoader.saveProject(myWindow);
@@ -348,7 +347,7 @@ public class GUIController {
 	/**
 	 * Final setup including packing and setting the frame to visible.
 	 * 
-	 * @author Minh
+	 * @author Minh Pham
 	 */
 	public void start() {
 		myWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

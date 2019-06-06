@@ -44,12 +44,14 @@ public class BasicInfoPanel extends JPanel {
 		mybudgetField = new JTextField(5);
 		textFields.add(mybudgetField);
 		budget.add(mybudgetField);
+		
 		JPanel description = new JPanel();
 		description.setLayout(new BoxLayout(description, BoxLayout.Y_AXIS));
 		description.add(new JLabel("Description"));
 		myDescriptionField = new JTextField(40);
 		textFields.add(myDescriptionField);
 		description.add(myDescriptionField);
+		
 		this.add(name);
 		this.add(location);
 		this.add(budget);
