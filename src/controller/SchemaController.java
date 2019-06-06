@@ -90,20 +90,23 @@ public class SchemaController {
 	 *             if there was no match with a SchemaItem
 	 * @author Eric
 	 */
-	public List<SchemaField> getSchemaFieldsFromItem(
-			final String theItemType) {
+	public List<SchemaField> getSchemaFieldsFromItem(final String theItemType) {
 		return mySchema.getSchemaFieldsFromItem(theItemType);
 	}
 
 	/**
-	 * Returns a deep copy of the matching SchemaItem.
+	 * Returns the item-type of the child's parent. For instance, if "Stove" is
+	 * given, "Appliance" will be returned.
 	 * 
-	 * @param theSchemaItemType
-	 *            the item-type to match by.
-	 * @return a deep copy of the matching SchemaItem.
+	 * @param theChildItemType
+	 *            the child who's parent item-type will be returned.
+	 * @throws IllegalArgumentException
+	 *             if the given child item-type was not found in the Schema.
+	 * @return A String representing the parent's item-type, or null if its a global
+	 *         parent. Global parent means that the given item-type has NO parent.
 	 * @author Eric
 	 */
-	public SchemaItem getSchemaItem(final String theSchemaItemType) {
-		return mySchema.getSchemaItem(theSchemaItemType);
+	public String getParentOfChild(final String theChildItemType) {
+		return mySchema.getParentOfChild(theChildItemType);
 	}
 }

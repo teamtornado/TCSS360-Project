@@ -19,6 +19,13 @@ import model.schemautil.SchemaDataParser;
 public class Schema {
 
 	/**
+	 * The ID for a SchemaItem that identifies the item as a global parent.
+	 * 
+	 * Global parent simply means that the item does not have a parent itself.
+	 */
+	private static final int GLOBAL_PARENT_ID = 0;
+
+	/**
 	 * The internal schema database! Represents the data parsed from a
 	 * SchemaData.txt file
 	 */
@@ -38,18 +45,15 @@ public class Schema {
 	 * @author Eric
 	 */
 	public Schema(final String theSchemaDatabaseLocation) {
-		mySchemaItems = SchemaDataParser
-				.parseSchemaDatabase(theSchemaDatabaseLocation);
+		mySchemaItems = SchemaDataParser.parseSchemaDatabase(theSchemaDatabaseLocation);
 
 		// Get the SchemaScanner
-		final File schemaDatabaseFile = new File(
-				theSchemaDatabaseLocation);
+		final File schemaDatabaseFile = new File(theSchemaDatabaseLocation);
 		Scanner schemaScan = null;
 		try {
 			schemaScan = new Scanner(schemaDatabaseFile);
 		} catch (final FileNotFoundException theException) {
-			System.out.println(
-					"Error: could not find the SchemaData text file.");
+			System.out.println("Error: could not find the SchemaData text file.");
 			theException.printStackTrace();
 		}
 
@@ -150,8 +154,7 @@ public class Schema {
 		}
 
 		// Oh no! The item type wasn't in the database!
-		throw new IllegalArgumentException(
-				"Itemtype not found inside Schema database.");
+		throw new IllegalArgumentException("Itemtype not found inside Schema database.");
 	}
 
 	/**
@@ -164,8 +167,7 @@ public class Schema {
 	 *             if there was no match with a SchemaItem
 	 * @author Eric
 	 */
-	public List<SchemaField> getSchemaFieldsFromItem(
-			final String theItemType) {
+	public List<SchemaField> getSchemaFieldsFromItem(final String theItemType) {
 		final List<SchemaField> fieldsFromItemType = new LinkedList<>();
 
 		// Get all the fields from the matching item-type
@@ -184,8 +186,7 @@ public class Schema {
 		// Error checking. Has to at least have something in the list.
 		if (fieldsFromItemType.isEmpty()) {
 			throw new IllegalArgumentException(
-					"Error: there was no match with itemType within the"
-							+ " list of SchemaItems");
+					"Error: there was no match with itemType within the" + " list of SchemaItems");
 		}
 
 		return fieldsFromItemType;
@@ -222,7 +223,7 @@ public class Schema {
 	 * @return the matching SchemaItem with the same SchemItemType given.
 	 * @author Eric
 	 */
-	public SchemaItem getSchemaItem(final String theSchemaItemType) {
+	private SchemaItem getSchemaItem(final String theSchemaItemType) {
 		for (SchemaItem item : mySchemaItems) {
 			if (item.getItemType().equals(theSchemaItemType)) {
 				// SchemaItems are immutable, so okay to return since this is a copy of its own
@@ -233,7 +234,40 @@ public class Schema {
 
 		// Oh no! No matching SchemaItem!
 		throw new IllegalArgumentException(
-				"Error: there was no match with itemType within the"
-						+ " list of SchemaItems");
+				"Error: there was no match with itemType within the list of SchemaItems");
+	}
+
+	/**
+	 * Returns the item-type of the child's parent. For instance, if "Stove" is
+	 * given, "Appliance" will be returned.
+	 * 
+	 * @param theChildItemType
+	 *            the child who's parent item-type will be returned.
+	 * @throws IllegalArgumentException
+	 *             if the given child item-type was not found in the Schema.
+	 * @return A String representing the parent's item-type, or null if its a global
+	 *         parent. Global parent means that the given item-type has NO parent.
+	 * @author Eric
+	 */
+	public String getParentOfChild(final String theChildItemType) {
+		// Find the parent ID through child's isA field.
+		for (SchemaItem item : mySchemaItems) {
+			if (item.getItemType().equals(theChildItemType)) {
+				final int parentID = item.getIsA();
+				// If this is actually a global parent, then return null.
+				if (parentID == 0) {
+					return null; // Agh, a global parent!!
+				}
+				// Get parent item-type with ID
+				for (SchemaItem possibleParent : mySchemaItems) {
+					if (possibleParent.getID() == parentID) {
+						// Found the parent, return its Item-type
+						return possibleParent.getItemType();
+					}
+				}
+			}
+		}
+		// Oh no! No item-type found!
+		throw new IllegalArgumentException("Error: Schema item-type was not found.");
 	}
 }

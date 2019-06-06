@@ -261,14 +261,10 @@ public class GUIController {
 								"You need to filled all these fields before continue");
 					} else {
 						myState = SECOND_PANEL;
-						String projectName = basicInfoPanel.getProjectName();
-						String projectLocation = basicInfoPanel.getProjectLocation();
-						Double projectBudget = basicInfoPanel.getProjectBudget();
-						String projectDescription = basicInfoPanel.getProjectDescription();
-						myEditor.setName(projectName);
-						myEditor.setLocation(projectLocation);
-						myEditor.setBudget(projectBudget);
-						myEditor.setDescription(projectDescription);
+
+						// Set whatever the user entered into the project.
+						myEditor.setBasicInformation(basicInfoPanel);
+
 						createPanel.remove(basicInfoPanel);
 						createPanel.add(myItemPanel, BorderLayout.CENTER);
 						createPanel.revalidate();
