@@ -26,7 +26,7 @@ import gui.createpanels.ScrollablePane;
  * @author Curran, Sharanjit
  *
  */
-public class ProjectViewer extends JFrame {
+public class ProjectViewer extends JPanel {
 
 	/**
 	 * Auto Generated Serial.
@@ -50,18 +50,17 @@ public class ProjectViewer extends JFrame {
 
 	private ScrollablePane myProjectSummary;
 	
-	private JPanel myCenterPanel;
+	//private JPanel myCenterPanel;
 
-	public ProjectViewer(final ProjectViewController theViewer,
-			final ProjectLoadController theLoader) {
-		super();
+	public ProjectViewer(final ProjectViewController theViewer, final ProjectLoadController theLoader, 
+			final JButton theBackButton, final JButton theEditButton) {
 		this.myViewer = theViewer;
 		this.myLoader = theLoader;
-		myCenterPanel = new JPanel(new BorderLayout());
-		myCenterPanel.setPreferredSize(new Dimension(600, 400));
-		//this.setLayout(new BorderLayout());
+		//myCenterPanel = new JPanel(new BorderLayout());
+		//myCenterPanel.setPreferredSize(new Dimension(600, 400));
+		this.setLayout(new BorderLayout());
 
-		final JPanel buttonPanel = new JPanel(new BorderLayout());
+		final JPanel buttonPanel = new JPanel();
 
 		final JTextArea myData = new JTextArea(5, 5);
 		myProjectSummary = new ScrollablePane(new Dimension(10, 10), false, myData, 20);
@@ -71,23 +70,9 @@ public class ProjectViewer extends JFrame {
 				TABPANE_PADDING, TABPANE_PADDING));
 		projectPane.addTab(myViewer.getName(), myProjectSummary);
 
-		myCenterPanel.add(buttonPanel, BorderLayout.SOUTH);
-		myCenterPanel.add(projectPane, BorderLayout.CENTER);
+		this.add(buttonPanel, BorderLayout.SOUTH);
+		this.add(projectPane, BorderLayout.CENTER);
 
-		JButton edit = new JButton("Edit");
-		edit.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String[] optionStrings = { "Yes", "No" };
-				int x = JOptionPane.showOptionDialog(null,
-						"You will lose all progress if you back out. Proceed?", "Warning",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, optionStrings,
-						optionStrings[0]);
-
-				System.out.println(x);
-			}
-		});
 
 		JButton export = new JButton("Export");
 
@@ -105,19 +90,10 @@ public class ProjectViewer extends JFrame {
 				}
 			}
 		});
-		
-		final JButton backButton = new JButton("Back");
-		backButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-			
-		});
-
-		buttonPanel.add(edit, BorderLayout.WEST);
-		buttonPanel.add(export, BorderLayout.EAST);
+		buttonPanel.add(theBackButton);
+		buttonPanel.add(theEditButton);
+		buttonPanel.add(export);
 
 	}
 
@@ -132,14 +108,14 @@ public class ProjectViewer extends JFrame {
 	/**
 	 * @author Curran
 	 */
-	public void start() {
-        setTitle("Project Viewer");
-        add(myCenterPanel, BorderLayout.CENTER);
-        //add(myEastPanel, BorderLayout.CENTER);
-        //add(myStatusPanel, BorderLayout.SOUTH);
-        pack();
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setVisible(true);
-    }
+//	public void start() {
+//        setTitle("Project Viewer");
+//        add(myCenterPanel, BorderLayout.CENTER);
+//        //add(myEastPanel, BorderLayout.CENTER);
+//        //add(myStatusPanel, BorderLayout.SOUTH);
+//        pack();
+//        setLocationRelativeTo(null);
+//        setResizable(false);
+//        setVisible(true);
+//    }
 }

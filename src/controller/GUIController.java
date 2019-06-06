@@ -35,7 +35,7 @@ import utilities.FileParser;
  */
 
 public class GUIController {
-	
+
 	/**
 	 * The location for the rules of the database.
 	 */
@@ -133,7 +133,7 @@ public class GUIController {
 	 * 
 	 */
 	private ProjectLoadController myLoader;
-	
+
 	/**
 	 * 
 	 */
@@ -158,7 +158,7 @@ public class GUIController {
 		myViewer = new ProjectViewController(myLoader);
 		myState = FIRST_PANEL;
 		mainPanel = makeMainPanel();
-		myProjectViewer = new ProjectViewer(myViewer, myLoader);
+		myProjectViewer = makeProjectViewer(myViewer, myLoader);
 		myBasicInfoPanel = new BasicInfoPanel();
 		myCreatePanel = makeCreatePanel();
 		myItemPanel = new ItemInputPanel(myRules);
@@ -166,6 +166,62 @@ public class GUIController {
 		setupFrameDimensions();
 		setupJFrameIcon();
 		setupMenuBar();
+	}
+
+	/**
+	 * Creates the ProjectViewer panel and its components. Returns the resulting
+	 * ProjectViewer.
+	 * 
+	 * @param theViewer
+	 *            the view controller for the current project.
+	 * @param theLoader
+	 *            the load controller for the current project.
+	 * @return the resulting ProjectViewer;
+	 * @author Eric
+	 */
+	public ProjectViewer makeProjectViewer(final ProjectViewController theViewer,
+			final ProjectLoadController theLoader) {
+		// Gotta make the back button to pass in so we can get out of the viewer.
+		final JButton backButton = new JButton("Back");
+		backButton.addActionListener(new ActionListener() {
+
+			/**
+			 * When clicked, takes the user to the main menu.
+			 * 
+			 * @author Eric
+			 */
+			@Override
+			public void actionPerformed(final ActionEvent theEvent) {
+				myWindow.setContentPane(mainPanel);
+				myWindow.pack();
+			}
+
+		});
+
+		// Now we need an edit button to take us into the createPanel
+		final JButton editButton = new JButton("Edit");
+		editButton.addActionListener(new ActionListener() {
+
+			/**
+			 * When clicked, takes the user to the editor panel.
+			 * 
+			 * @author Eric
+			 */
+			@Override
+			public void actionPerformed(ActionEvent theEvent) {
+				myWindow.setContentPane(myCreatePanel);
+				
+				// Pre-load the basicInfoPanel
+				myBasicInfoPanel.setAllFields(myViewer.getName(), myViewer.getLocation(),
+						myViewer.getFormattedBudgetAsString(), myViewer.getProjectDescription());
+				myWindow.pack();
+			}
+
+		});
+
+		final ProjectViewer projectViewer = new ProjectViewer(theViewer, theLoader, backButton,
+				editButton);
+		return projectViewer;
 	}
 
 	/**
@@ -201,11 +257,10 @@ public class GUIController {
 
 						}
 					});
-					//myWindow.setContentPane(tempPanel);
 					myProjectViewer.addData(myViewer.getProjectString());
-					myProjectViewer.start();
-					//myWindow.setContentPane(myProjectViewer);
-					//myWindow.pack();
+					//myProjectViewer.start();
+					myWindow.setContentPane(myProjectViewer);
+					myWindow.pack();
 				}
 				// Something went weird, so leave us on the main menu.
 			}
@@ -253,7 +308,7 @@ public class GUIController {
 
 					// If the user tries to go to the next create panel without filling basic info
 					// fields.
-					
+
 					if (!myBasicInfoPanel.checkAllField()) {
 						JOptionPane.showMessageDialog(myWindow,
 								"You need to filled all these fields before continue");
@@ -262,7 +317,7 @@ public class GUIController {
 						String projectLocation = myBasicInfoPanel.getProjectLocation();
 						Double projectBudget = myBasicInfoPanel.getProjectBudget();
 						String projectDescription = myBasicInfoPanel.getProjectDescription();
-						
+
 						if (containsIllegals(projectName)
 								|| containsIllegals(Double.toString(projectBudget))
 								|| containsIllegals(projectLocation)
@@ -279,8 +334,7 @@ public class GUIController {
 							createPanel.revalidate();
 							createPanel.repaint();
 						}
-					} 
-					
+					}
 
 				} else if (myState == SECOND_PANEL) {
 					final int returnCondition = myLoader.saveProject(myWindow);
@@ -471,7 +525,7 @@ public class GUIController {
 		theAboutMessage
 				.setMinimumSize(new Dimension((int) (myWindow.getWidth() * FRACTION_OF_MAIN_WINDOW),
 						(int) (myWindow.getHeight() * FRACTION_OF_MAIN_WINDOW)));
-		
+
 		theAboutMessage.setLocationRelativeTo(null);
 		theAboutMessage.setVisible(true);
 	}
