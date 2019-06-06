@@ -22,8 +22,8 @@ class ProjectTest {
 
 	@BeforeEach
 	void setup() {
-		final Project project = new Project("WoofProject", "This Project is all about dogs",
-				100.20, "The United Empire of Doggos");
+		final Project project = new Project("WoofProject", "This Project is all about dogs", 100.20,
+				"The United Empire of Doggos");
 		myLoader = new ProjectLoadController();
 		myEditor = new ProjectEditController(myLoader);
 		myViewer = new ProjectViewController(myLoader);
@@ -86,6 +86,21 @@ class ProjectTest {
 
 		// Now I'm just debugging, show me the whole project in the console
 		myViewer.printToConsole();
+	}
+
+	@Test
+	void correctSerialSave() {
+		myLoader.createNewProject();
+		myEditor.setName("woof");
+		myEditor.setDescription("wof");
+		myEditor.setBudget(100);
+		myEditor.setLocation("washington");
+		myEditor.addItem(SchemaTypes.APPLIANCE);
+
+		myLoader.saveProject(null);
+		myLoader.loadProject(null);
+
+		assertTrue(myViewer.getAllItemTypes().get(0).equals(SchemaTypes.APPLIANCE));
 	}
 
 }

@@ -310,8 +310,10 @@ public class Project implements Serializable {
 	public void addFieldToItem(final String theItemDestination, final String theFieldName,
 			final String theDescription, final String theValueType, final String theValue) {
 		for (Item item : myItems) {
-			item.addField(theFieldName, theDescription, theValueType, theValue);
-			return;
+			if (item.getItemType().equals(theItemDestination)) {
+				item.addField(theFieldName, theDescription, theValueType, theValue);
+				return;
+			}
 		}
 
 		// Oh no! there was no matching item-type
@@ -454,16 +456,16 @@ public class Project implements Serializable {
 		stringBuilder.append(NEWLINE);
 		stringBuilder.append("----------------------------");
 		stringBuilder.append(NEWLINE);
-		
+
 		if (myItems != null && !myItems.isEmpty()) {
-			// Add the contents 
+			// Add the contents
 			for (Item item : myItems) {
 				stringBuilder.append("ItemType: ");
 				stringBuilder.append(item.getItemType());
 				stringBuilder.append(NEWLINE);
 				for (ItemField field : item.getFields()) {
-					stringBuilder.append("\tField: ");
-					stringBuilder.append(field.toString());
+					stringBuilder.append("\t");
+					stringBuilder.append(field.getValue());
 					stringBuilder.append(NEWLINE);
 				}
 			}

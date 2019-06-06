@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EtchedBorder;
 
+import controller.ProjectEditController;
 import controller.ProjectViewController;
 import controller.SchemaController;
 import model.SchemaField;
@@ -35,6 +36,8 @@ public class ItemInputPanel extends JPanel {
 	private SchemaController myRules;
 
 	private ProjectViewController myViewer;
+
+	private ProjectEditController myEditor;
 
 	/**
 	 * 
@@ -55,16 +58,18 @@ public class ItemInputPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ItemInputPanel(final ProjectViewController theViewer, SchemaController theRules) {
+	public ItemInputPanel(final ProjectViewController theViewer,
+			final ProjectEditController theEditor, SchemaController theRules) {
 		myRules = theRules;
 		myViewer = theViewer;
+		myEditor = theEditor;
 		myCurrentFields = new LinkedList<FieldInputPanel>();
 		setLayout(new MigLayout("", "[300.00,grow,left][600.00px,grow,right][-634.00]", "[grow]"));
 
 		JPanel currentItemsViewer = new JPanel();
 
 		// Can't let the viewer get to small, or its useless
-		currentItemsViewer.setMinimumSize(new Dimension(300, 300));
+		currentItemsViewer.setMinimumSize(new Dimension(400, 300));
 		add(currentItemsViewer, "cell 0 0,grow");
 		currentItemsViewer.setLayout(new BorderLayout(0, 0));
 
@@ -133,6 +138,16 @@ public class ItemInputPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent theEvent) {
+				// Grab the data from the fields and throw it into the project.
+				final String selectedItem = (String) myItemtypeDropDown.getSelectedItem();
+				System.out.println("Adding item: " + selectedItem);
+				myEditor.addItem(selectedItem);
+				// Now load in the stuff from the field panels
+				for (FieldInputPanel input : myCurrentFields) {
+					System.out.println("\tAdding field: " + input.getFieldName());
+					myEditor.addFieldToItem(selectedItem, input.getFieldName(),
+							input.getDescription(), input.getValueType(), input.getValue());
+				}
 				myDropDownAction.actionPerformed(null);
 				// Now do all the item-type and field grabbing
 				// might need to save a pointer to the current item-type that was last clicked
@@ -163,13 +178,13 @@ public class ItemInputPanel extends JPanel {
 		resetButton.addActionListener(resetAction);
 		itemTypeChooserPanel.add(resetButton);
 
-		JScrollPane scrollPane = new JScrollPane();
+		final JScrollPane fieldScrollPane = new JScrollPane();
 		final int lessShittyIncrement = 15;
-		scrollPane.getVerticalScrollBar().setUnitIncrement(lessShittyIncrement);
-		itemAdder.add(scrollPane, BorderLayout.CENTER);
+		fieldScrollPane.getVerticalScrollBar().setUnitIncrement(lessShittyIncrement);
+		itemAdder.add(fieldScrollPane, BorderLayout.CENTER);
 
 		myItemFieldPane = new JPanel();
-		scrollPane.setViewportView(myItemFieldPane);
+		fieldScrollPane.setViewportView(myItemFieldPane);
 		myItemFieldPane.setLayout(new BoxLayout(myItemFieldPane, BoxLayout.Y_AXIS));
 
 		// So basically, I think all you have to do is create a special panel type that
@@ -218,7 +233,8 @@ public class ItemInputPanel extends JPanel {
 		// Add in the new field panels.
 		final List<SchemaField> fieldsToAdd = myRules.getInheritedFields(theItemType);
 		for (SchemaField field : fieldsToAdd) {
-			final FieldInputPanel newField = new FieldInputPanel(field.getSchemaFieldName());
+			final FieldInputPanel newField = new FieldInputPanel(field.getSchemaFieldName(),
+					field.getDescription(), field.getValueType());
 			myItemFieldPane.add(newField);
 			this.myCurrentFields.add(newField);
 		}
