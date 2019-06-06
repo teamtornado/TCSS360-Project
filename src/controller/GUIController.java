@@ -158,7 +158,7 @@ public class GUIController {
 		myViewer = new ProjectViewController(myLoader);
 		myState = FIRST_PANEL;
 		mainPanel = makeMainPanel();
-		myProjectViewer = new ProjectViewer(myViewer, myLoader);
+		myProjectViewer = new ProjectViewer(myViewer, myLoader, myLoader.myProject);
 		myBasicInfoPanel = new BasicInfoPanel();
 		myCreatePanel = makeCreatePanel();
 		myItemPanel = new ItemInputPanel(myRules);
@@ -182,7 +182,7 @@ public class GUIController {
 			/**
 			 * Opens the ProjectViewer panel and loads an existent file.
 			 * 
-			 * @author Eric
+			 * @author Eric, Curran
 			 */
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
