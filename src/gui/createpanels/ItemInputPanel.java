@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -16,6 +17,8 @@ import javax.swing.JTextArea;
 import javax.swing.border.EtchedBorder;
 
 import controller.SchemaController;
+import model.SchemaField;
+import model.schemautil.SchemaTypes;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
@@ -28,6 +31,10 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
 	private SchemaController myRules;
+	
+	private JComboBox<String> myChildTypeDropDown;
+	
+	private JComboBox<String> myItemtypeDropDown;
 
 	/**
 	 * Create the panel.
@@ -59,9 +66,15 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 
 		// Drop down menu for the item-types
 		String[] itemStrings = theRules.getAllParentTypes().stream().toArray(String[] :: new);
-		JComboBox<String> itemtypeDropDown = new JComboBox<String>(itemStrings);
-		itemTypeChooserPanel.add(itemtypeDropDown);
-		itemtypeDropDown.addActionListener(this);
+		myItemtypeDropDown = new JComboBox<String>(itemStrings);
+		itemTypeChooserPanel.add(myItemtypeDropDown);
+		myItemtypeDropDown.addActionListener(this);
+		
+		myChildTypeDropDown = new JComboBox<String>();
+		myChildTypeDropDown.setEnabled(false);
+		myChildTypeDropDown.addActionListener(this);
+		itemTypeChooserPanel.add(myChildTypeDropDown);
+		
 
 //		JMenuItem firstItem = new JMenuItem("First Item");
 //		itemtypeDropDown.add(firstItem);
@@ -99,9 +112,29 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JComboBox<String> cb = (JComboBox<String>) e.getSource();
-		String parentName = (String) cb.getSelectedItem();
-		System.out.println(parentName);
+		if (e.getSource() == myItemtypeDropDown) {
+			JComboBox<String> cb = (JComboBox<String>) e.getSource();
+			String parentName = (String) cb.getSelectedItem();
+			System.out.println(parentName);
+			// Get all the child type
+			List<String> childTypes = myRules.getChildTypes(parentName);
+			System.out.println("Length of childTypes: " + childTypes.size());
+			// Clear out the old type
+			myChildTypeDropDown.removeAllItems();
+			for (String child : childTypes) {
+				myChildTypeDropDown.addItem(child);
+			}
+			myChildTypeDropDown.setEnabled(true);
+		} else if (e.getSource() == myChildTypeDropDown) {
+			JComboBox<String> cb = (JComboBox<String>) e.getSource();
+			String childType = (String) cb.getSelectedItem();
+			System.out.println(childType);
+			List<SchemaField> schemaTypes = myRules.getSchemaFieldsFromItem(childType);
+			for (SchemaField schemaField : schemaTypes) {
+				System.out.println(schemaField);
+			}
+		}
+		
 		
 	}
 }

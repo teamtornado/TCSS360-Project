@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -202,7 +204,6 @@ public class GUIController {
 						}
 					});
 					//myWindow.setContentPane(tempPanel);
-					final StringBuilder projectData = new StringBuilder();
 					myProjectViewer.addData(myViewer.getProjectString());
 					myWindow.setContentPane(myProjectViewer);
 					myWindow.pack();
@@ -343,12 +344,13 @@ public class GUIController {
 	/**
 	 * Final setup including packing and setting the frame to visible.
 	 * 
-	 * @author Minh Pham
+	 * @author Minh Pham, Curran
 	 */
 	public void start() {
 		myWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		myWindow.setTitle(MAIN_TITLE);
 		myWindow.pack();
+		myWindow.setLocationRelativeTo(null);
 		myWindow.setVisible(true);
 	}
 
@@ -470,7 +472,8 @@ public class GUIController {
 		theAboutMessage
 				.setMinimumSize(new Dimension((int) (myWindow.getWidth() * FRACTION_OF_MAIN_WINDOW),
 						(int) (myWindow.getHeight() * FRACTION_OF_MAIN_WINDOW)));
-
+		
+		theAboutMessage.setLocationRelativeTo(null);
 		theAboutMessage.setVisible(true);
 	}
 
