@@ -117,6 +117,8 @@ public class ItemInputPanel extends JPanel {
 					fillFieldPane(parentName);
 					addActionToDropDown();
 				} else {
+					// Still need to update the field list though
+					fillFieldPane(parentName);
 					JOptionPane.showMessageDialog(thisPanel, "There are no more child type");
 				}
 			}
