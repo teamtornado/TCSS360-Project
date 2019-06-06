@@ -129,8 +129,6 @@ public class ProjectLoadController {
 		final int returnValue = myChooser.showOpenDialog(theParentComponent);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			try {
-				String fileNameString = myProject.getName() + ".txt";
-				myChooser.setSelectedFile(new File(fileNameString));
 				final File saveFile = myChooser.getSelectedFile();
 				final FileOutputStream saveFileOutput = new FileOutputStream(saveFile);
 				final ObjectOutputStream saveFileOutputObjStream = new ObjectOutputStream(
