@@ -23,7 +23,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
 
-public class ItemInputPanel extends JPanel {
+public class ItemInputPanel extends JPanel implements ActionListener {
 
 	/**
 	 * Default serial version
@@ -67,38 +67,11 @@ public class ItemInputPanel extends JPanel {
 		String[] itemStrings = theRules.getAllParentTypes().stream().toArray(String[] :: new);
 		myItemtypeDropDown = new JComboBox<String>(itemStrings);
 		itemTypeChooserPanel.add(myItemtypeDropDown);
-		myItemtypeDropDown.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("parent");
-				@SuppressWarnings("unchecked")
-				JComboBox<String> cb = (JComboBox<String>) e.getSource();
-				String parentName = (String) cb.getSelectedItem();
-				System.out.println(parentName);
-				// Get all the child type
-				List<String> childTypes = myRules.getChildTypes(parentName);
-				System.out.println("Length of childTypes: " + childTypes.size());
-				// Clear out the old type
-				myChildTypeDropDown.removeAllItems();
-				for (String child : childTypes) {
-					myChildTypeDropDown.addItem(child);
-				}
-				myChildTypeDropDown.setEnabled(true);
-				
-			}
-		});
+		myItemtypeDropDown.addActionListener(this);
 		
 		myChildTypeDropDown = new JComboBox<String>(itemStrings);
 //		myChildTypeDropDown.setEnabled(false);
-		myChildTypeDropDown.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(e.getActionCommand());
-				System.out.println("child");
-				
-			}
-		});
+		myChildTypeDropDown.addActionListener(this);
 		itemTypeChooserPanel.add(myChildTypeDropDown);
 		
 
@@ -133,5 +106,41 @@ public class ItemInputPanel extends JPanel {
 		// can show the info from the schema and allow input from the user. It should
 		// also have getters so we can query each tile for their values and upload them
 		// into items into the project with the edit controller.
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void actionPerformed(ActionEvent e) {		
+		if (e.getSource() == myItemtypeDropDown) {
+			System.out.println("parent");
+			JComboBox<String> cb = (JComboBox<String>) e.getSource();
+			String parentName = (String) cb.getSelectedItem();
+			System.out.println(parentName);
+			// Get all the child type
+			List<String> childTypes = myRules.getChildTypes(parentName);
+			System.out.println("Length of childTypes: " + childTypes.size());
+			// Clear out the old type
+			myChildTypeDropDown.removeActionListener(this);
+			myChildTypeDropDown.removeAllItems();
+			for (String child : childTypes) {
+				myChildTypeDropDown.addItem(child);
+			}
+			myChildTypeDropDown.addActionListener(this);
+			myChildTypeDropDown.setEnabled(true);
+			
+		} else if (e.getSource() == myChildTypeDropDown) {
+			JComboBox<String> cb = (JComboBox<String>) e.getSource();
+			String childType = (String) cb.getSelectedItem();
+			System.out.println(childType);
+			List<SchemaField> schemaTypes = myRules.getSchemaFieldsFromItem(childType);
+			for (SchemaField schemaField : schemaTypes) {
+				System.out.println(schemaField.getSchemaFieldName() + " " 
+								 + schemaField.getDescription() + " "
+								 + schemaField.getValueType() + " "
+								 + schemaField.isRequired() + "\n");
+			}
+		}
+		
+		
 	}
 }
