@@ -94,6 +94,7 @@ public class ItemInputPanel extends JPanel {
 		myChildTypeDropDown.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println(e.getActionCommand());
 				System.out.println("child");
 				
 			}
