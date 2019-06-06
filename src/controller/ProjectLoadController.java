@@ -119,7 +119,7 @@ public class ProjectLoadController {
 	 * the user for a save path.
 	 * 
 	 * @return ProjectLoadController.SUCCESS or ProjectLoadController.ERROR integer.
-	 *         Will return SUCESS if file saved, ERROR otherwise.
+	 *         Will return SUCCESS if file saved, ERROR otherwise.
 	 * 
 	 * @author Eric
 	 */
@@ -129,7 +129,8 @@ public class ProjectLoadController {
 		final int returnValue = myChooser.showOpenDialog(theParentComponent);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			try {
-				myChooser.setSelectedFile(new File(myProject.getName()));
+				String fileNameString = myProject.getName() + ".txt";
+				myChooser.setSelectedFile(new File(fileNameString));
 				final File saveFile = myChooser.getSelectedFile();
 				final FileOutputStream saveFileOutput = new FileOutputStream(saveFile);
 				final ObjectOutputStream saveFileOutputObjStream = new ObjectOutputStream(
