@@ -67,8 +67,8 @@ public class Project implements Serializable {
 		this.myProjectName = "Dog Name";
 		this.myProjectLocation = "Woof Location";
 		this.myProjectBudget = 0.00;
-		this.myProjectDescription = "This is a woof project";
-		this.myItems = 
+		this.myProjectDescription = "This is a woof project"; 
+		this.myItems = new LinkedList<>();
 	}
 
 	/**
@@ -448,7 +448,7 @@ public class Project implements Serializable {
 				}
 			}
 		} else {
-			project.append("No items currently.);
+			project.append("No items currently.");
 		}
 		return project.toString();
 	}
