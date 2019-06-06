@@ -112,6 +112,7 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println(e.getSource());
 		if (e.getSource() == myItemtypeDropDown) {
 			JComboBox<String> cb = (JComboBox<String>) e.getSource();
 			String parentName = (String) cb.getSelectedItem();
@@ -125,15 +126,19 @@ public class ItemInputPanel extends JPanel implements ActionListener {
 				myChildTypeDropDown.addItem(child);
 			}
 			myChildTypeDropDown.setEnabled(true);
-		} else if (e.getSource() == myChildTypeDropDown) {
-			JComboBox<String> cb = (JComboBox<String>) e.getSource();
-			String childType = (String) cb.getSelectedItem();
-			System.out.println(childType);
-			List<SchemaField> schemaTypes = myRules.getSchemaFieldsFromItem(childType);
-			for (SchemaField schemaField : schemaTypes) {
-				System.out.println(schemaField);
-			}
-		}
+		} 
+//		else if (e.getSource() == myChildTypeDropDown) {
+//			JComboBox<String> cb = (JComboBox<String>) e.getSource();
+//			String childType = (String) cb.getSelectedItem();
+//			System.out.println(childType);
+//			List<SchemaField> schemaTypes = myRules.getSchemaFieldsFromItem(childType);
+//			for (SchemaField schemaField : schemaTypes) {
+//				System.out.println(schemaField.getSchemaFieldName() + " " 
+//								 + schemaField.getDescription() + " "
+//								 + schemaField.getValueType() + " "
+//								 + schemaField.isRequired() + "\n");
+//			}
+//		}
 		
 		
 	}
