@@ -256,10 +256,11 @@ public class GUIController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (myState == FIRST_PANEL) {
-					myState = SECOND_PANEL;
+					
 					if (!basicInfoPanel.checkAllField()) {
 						JOptionPane.showMessageDialog(myWindow, "You need to filled all these fields before continue");
 					} else {
+						myState = SECOND_PANEL;
 						String projectName = basicInfoPanel.getProjectName();
 						String projectLocation = basicInfoPanel.getProjectLocation();
 						createPanel.remove(basicInfoPanel);
