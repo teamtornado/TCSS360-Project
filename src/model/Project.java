@@ -68,6 +68,7 @@ public class Project implements Serializable {
 		this.myProjectLocation = "Woof Location";
 		this.myProjectBudget = 0.00;
 		this.myProjectDescription = "This is a woof project";
+		this.myItems = new LinkedList<>();
 	}
 
 	/**

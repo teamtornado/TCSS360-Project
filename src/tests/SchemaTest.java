@@ -97,5 +97,11 @@ class SchemaTest {
 		assertTrue(applianceType.equals(SchemaTypes.APPLIANCE));
 		assertTrue(heatingType.equals(SchemaTypes.HEATING));
 	}
-
+	
+	@Test
+	void correct() {
+		final String appliance = mySchemaController.getParentOfChild(SchemaTypes.STOVE);
+		assertTrue(appliance.equals(SchemaTypes.APPLIANCE));
+	}
+ 
 }
