@@ -352,6 +352,8 @@ public class GUIController {
 						// If everything saved correctly!
 						myState = FIRST_PANEL; // reset it for the next time around.
 						myWindow.setContentPane(mainPanel); // go back to the main menu.
+						myBasicInfoPanel.clearAllField();
+						myItemPanel.clearAllFields();
 						createPanel.remove(myItemPanel);
 						createPanel.add(myBasicInfoPanel, BorderLayout.CENTER);
 						createPanel.revalidate();

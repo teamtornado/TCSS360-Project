@@ -81,7 +81,7 @@ public class ItemInputPanel extends JPanel {
 
 		myCurrentItemViewState = new JTextArea();
 		myCurrentItemViewState.setEditable(false);
-		myCurrentItemViewState.setText(myViewer.getProjectString());
+		myCurrentItemViewState.setText("");
 		currentItemsViewer.add(myCurrentItemViewState, BorderLayout.CENTER);
 
 		JPanel itemAdder = new JPanel();
@@ -249,6 +249,11 @@ public class ItemInputPanel extends JPanel {
 			myItemFieldPane.add(newField);
 			this.myCurrentFields.add(newField);
 		}
+	}
+	
+	public void clearAllFields() {
+		myCurrentItemViewState.setText("");
+		myEditor.clearAllItems();
 	}
 	
 	public void updatePanel() {
