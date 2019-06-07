@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -74,39 +73,6 @@ public class Project implements Serializable {
 		this.myProjectLocation = "Woof Location";
 		this.myProjectBudget = 0.00;
 		this.myProjectDescription = "This is a woof project";
-		this.myItems = new ArrayList<Item>();
-	}
-
-	/**
-	 * Creates a project with the given basic information. Fields are added LATER.
-	 * 
-	 * @param theProjectName
-	 *            the name of the project.
-	 * @param theProjectDescription
-	 *            the description of the project.
-	 * @param theBudget
-	 *            the budget of the project.
-	 * @param theProjectLocation
-	 *            the location of the project.
-	 * @throws IllegalArgumentException
-	 *             if any argument is null.
-	 * @author Eric, Curran
-	 */
-	public Project(final String theProjectName, final String theProjectDescription,
-			final double theBudget, final String theProjectLocation) {
-		if (theProjectName == null) {
-			throw new IllegalArgumentException("Error: Cannot have null project name");
-		}
-		if (theProjectDescription == null) {
-			throw new IllegalArgumentException("Error: Cannot have null projectDescription");
-		}
-		if (theProjectLocation == null) {
-			throw new IllegalArgumentException("Error: Cannot have null project location");
-		}
-		this.myProjectName = theProjectName;
-		this.myProjectDescription = theProjectDescription;
-		this.myProjectBudget = theBudget;
-		this.myProjectLocation = theProjectLocation;
 		this.myItems = new LinkedList<Item>();
 	}
 
@@ -345,76 +311,6 @@ public class Project implements Serializable {
 
 		// No match found
 		throw new IllegalArgumentException("Error: give item-type could not be found.");
-	}
-
-	// Field viewer methods
-
-	/**
-	 * Returns a list of all item-types held within this project.
-	 * 
-	 * @return a list of all item-types held within this project.
-	 * @author Eric
-	 */
-	public List<String> getAllItemTypes() {
-		final List<String> itemTypes = new LinkedList<>();
-		for (Item item : myItems) {
-			itemTypes.add(item.getItemType());
-		}
-
-		return itemTypes;
-	}
-
-	/**
-	 * Returns a COPY of the ItemFields within the matching Item to item-type.
-	 * 
-	 * @param theItemType
-	 *            the item-type to get fields from.
-	 * @return a COPY of the ItemFields within the matching Item to item-type.
-	 * @author Eric
-	 */
-	public List<ItemField> getAllItemFieldsFromItem(final String theItemType) {
-		final List<ItemField> listOfFields = new LinkedList<>();
-
-		for (Item item : myItems) {
-			if (item.getItemType().equals(theItemType)) {
-				// found a match, now get the fields
-				for (ItemField field : item.getFields()) {
-					listOfFields.add(field);
-				}
-				break;
-			}
-		}
-
-		return listOfFields;
-	}
-
-	/**
-	 * Returns the field from the matching item-type.
-	 * 
-	 * @param theItemType
-	 *            the item-type to find.
-	 * @param theItemFieldName
-	 *            the field to find.
-	 * @return the field from the given item-type.
-	 * @throws IllegalArgumentException
-	 *             if either the item-type or the fieldName had no match.
-	 * @author Eric
-	 */
-	public ItemField getFieldFromItem(final String theItemType, final String theItemFieldName) {
-		// Find the matching Item
-		for (Item item : myItems) {
-			if (item.getItemType().equals(theItemType)) {
-				// Found match, now find the field
-				for (ItemField field : item.getFields()) {
-					if (field.getFieldName().equals(theItemFieldName)) {
-						// Found match, now return
-						return field;
-					}
-				}
-			}
-		}
-		throw new IllegalArgumentException(
-				"Error: could not find matching item-type or itemFieldName.");
 	}
 
 	/**

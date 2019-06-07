@@ -1,94 +1,80 @@
 package tests;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-import controller.ProjectEditController;
-import controller.ProjectViewController;
-import controller.ProjectLoadController;
-import model.ItemField;
-import model.Project;
+import controller.ProjectController;
 import model.schemautil.SchemaTypes;
 
 class ProjectTest {
 
-	private ProjectEditController myEditor;
-	private ProjectViewController myViewer;
-	private ProjectLoadController myLoader;
+	private ProjectController myProject;
 
 	@BeforeEach
 	void setup() {
-		final Project project = new Project("WoofProject", "This Project is all about dogs", 100.20,
-				"The United Empire of Doggos");
-		myLoader = new ProjectLoadController();
-		myEditor = new ProjectEditController(myLoader);
-		myViewer = new ProjectViewController(myLoader);
+		myProject = new ProjectController();
 	}
 
 	@Test
 	void createProjectTest() {
 		// Add some items
-		myEditor.addItem(SchemaTypes.APPLIANCE);
-		myEditor.addItem(SchemaTypes.LIGHTING);
+		myProject.addItem(SchemaTypes.APPLIANCE);
+		myProject.addItem(SchemaTypes.LIGHTING);
 
 		// Add fields to the appliance item
 		final String powerUsageFieldName = "Power usage";
 		final String userNotesFieldName = "User notes";
-		myEditor.addFieldToItem(SchemaTypes.APPLIANCE, powerUsageFieldName,
+		myProject.addFieldToItem(SchemaTypes.APPLIANCE, powerUsageFieldName,
 				"How much power the appliance uses", "Number", "1000");
-		myEditor.addFieldToItem(SchemaTypes.APPLIANCE, userNotesFieldName, "User created notes",
+		myProject.addFieldToItem(SchemaTypes.APPLIANCE, userNotesFieldName, "User created notes",
 				"String", "I think I might change my mind about this appliance");
 
 		// Actually, I changed my mind. I won't want a lighting item anymore
-		myEditor.removeItem(SchemaTypes.LIGHTING);
+		myProject.removeItem(SchemaTypes.LIGHTING);
 
 		// I also don't want user notes in my appliance item
-		myEditor.removeFieldFromItem(SchemaTypes.APPLIANCE, userNotesFieldName);
+		myProject.removeFieldFromItem(SchemaTypes.APPLIANCE, userNotesFieldName);
 	}
 
 	@Test
 	void viewProjectTest() {
 		// Just setting this up from previous method.
-		myEditor.addItem(SchemaTypes.APPLIANCE);
-		myEditor.addItem(SchemaTypes.LIGHTING);
+		myProject.addItem(SchemaTypes.APPLIANCE);
+		myProject.addItem(SchemaTypes.LIGHTING);
 
 		final String powerUsageFieldName = "Power usage";
 		final String userNotesFieldName = "User notes";
-		myEditor.addFieldToItem(SchemaTypes.APPLIANCE, powerUsageFieldName,
+		myProject.addFieldToItem(SchemaTypes.APPLIANCE, powerUsageFieldName,
 				"How much power the appliance uses", "Number", "1000");
-		myEditor.addFieldToItem(SchemaTypes.APPLIANCE, userNotesFieldName, "User created notes",
+		myProject.addFieldToItem(SchemaTypes.APPLIANCE, userNotesFieldName, "User created notes",
 				"String", "I think I might change my mind about this appliance");
 
-		myEditor.removeItem(SchemaTypes.LIGHTING);
-		myEditor.removeFieldFromItem(SchemaTypes.APPLIANCE, userNotesFieldName);
+		myProject.removeItem(SchemaTypes.LIGHTING);
+		myProject.removeFieldFromItem(SchemaTypes.APPLIANCE, userNotesFieldName);
 
 		// Now onto some viewer stuff
 
 		// What is the name of this project?
-		final String projectName = myViewer.getName();
+		final String projectName = myProject.getName();
 
 		// What is the location?
-		final String projectLocation = myViewer.getLocation();
+		final String projectLocation = myProject.getLocation();
 
 		// Now I'm just debugging, show me the whole project in the console
-		myViewer.printToConsole();
+		myProject.printToConsole();
 	}
 
 	@Test
 	void correctSerialSave() {
-		myLoader.createNewProject();
-		myEditor.setName("woof");
-		myEditor.setDescription("wof");
-		myEditor.setBudget(100);
-		myEditor.setLocation("washington");
-		myEditor.addItem(SchemaTypes.APPLIANCE);
+		myProject.createNewProject();
+		myProject.setName("woof");
+		myProject.setDescription("wof");
+		myProject.setBudget(100);
+		myProject.setLocation("washington");
+		myProject.addItem(SchemaTypes.APPLIANCE);
 
-		myLoader.saveProject(null);
-		myLoader.loadProject(null);
+		myProject.saveProject(null);
+		myProject.loadProject(null);
 
 		// Agh! need a new test to make sure the serial save works!
 	}

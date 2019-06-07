@@ -14,8 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
-import controller.ProjectViewController;
-import gui.createpanels.ScrollablePane;
+import controller.ProjectController;
 
 /**
  * This class displays the contents of the project and allows the user to export
@@ -39,7 +38,7 @@ public class ProjectViewer extends JPanel {
 	/**
 	 * Allows for viewing the user's project contents.
 	 */
-	private ProjectViewController myViewer;
+	private ProjectController myLoader;
 
 	/**
 	 * The project summary
@@ -48,9 +47,9 @@ public class ProjectViewer extends JPanel {
 
 	// private JPanel myCenterPanel;
 
-	public ProjectViewer(final ProjectViewController theViewer, final JButton theBackButton,
+	public ProjectViewer(final ProjectController theLoader, final JButton theBackButton,
 			final JButton theEditButton) {
-		this.myViewer = theViewer;
+		this.myLoader = theLoader;
 		// myCenterPanel = new JPanel(new BorderLayout());
 		// myCenterPanel.setPreferredSize(new Dimension(600, 400));
 		this.setLayout(new BorderLayout());
@@ -76,8 +75,8 @@ public class ProjectViewer extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				PrintStream output;
 				try {
-					output = new PrintStream(myViewer.getName() + "_EXPORTED.txt");
-					output.print(myViewer.getProjectString());
+					output = new PrintStream(myLoader.getName() + "_EXPORTED.txt");
+					output.print(myLoader.getProjectString());
 					JOptionPane.showMessageDialog(myProjectSummary, "Project exported.");
 				} catch (FileNotFoundException e1) {
 					JOptionPane.showMessageDialog(myProjectSummary, "Error occured.");
@@ -98,18 +97,4 @@ public class ProjectViewer extends JPanel {
 	public void addData(final String theString) {
 		myProjectSummary.setText(theString);
 	}
-
-	/**
-	 * @author Curran
-	 */
-	// public void start() {
-	// setTitle("Project Viewer");
-	// add(myCenterPanel, BorderLayout.CENTER);
-	// //add(myEastPanel, BorderLayout.CENTER);
-	// //add(myStatusPanel, BorderLayout.SOUTH);
-	// pack();
-	// setLocationRelativeTo(null);
-	// setResizable(false);
-	// setVisible(true);
-	// }
 }

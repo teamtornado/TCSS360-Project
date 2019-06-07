@@ -17,8 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EtchedBorder;
 
-import controller.ProjectEditController;
-import controller.ProjectViewController;
+import controller.ProjectController;
 import controller.SchemaController;
 import model.SchemaField;
 import net.miginfocom.swing.MigLayout;
@@ -38,12 +37,7 @@ public class ItemInputPanel extends JPanel {
 	/**
 	 * 
 	 */
-	private ProjectViewController myViewer;
-
-	/**
-	 * 
-	 */
-	private ProjectEditController myEditor;
+	private ProjectController myProject;
 
 	/**
 	 * 
@@ -60,17 +54,15 @@ public class ItemInputPanel extends JPanel {
 	private JTextArea myCurrentItemViewState;
 
 	private List<FieldInputPanel> myCurrentFields;
-	
+
 	private String selectedItemType;
 
 	/**
 	 * Create the panel.
 	 */
-	public ItemInputPanel(final ProjectViewController theViewer,
-			final ProjectEditController theEditor, SchemaController theRules) {
+	public ItemInputPanel(final ProjectController theProject, SchemaController theRules) {
 		myRules = theRules;
-		myViewer = theViewer;
-		myEditor = theEditor;
+		myProject = theProject;
 		myCurrentFields = new LinkedList<FieldInputPanel>();
 		selectedItemType = null;
 		setLayout(new MigLayout("", "[300.00,grow,left][600.00px,grow,right][-634.00]", "[grow]"));
@@ -112,16 +104,13 @@ public class ItemInputPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (e == null) {
 					// this is the reset button here
-					// Jank stuff here
 					selectedItemType = null;
 					resetClick();
 					return;
 				}
-				// System.out.println("?");
 				JComboBox<String> cb = (JComboBox<String>) e.getSource();
 				String parentName = (String) cb.getSelectedItem();
 				selectedItemType = parentName;
-				System.out.println(parentName);
 				// Get all the child type
 				List<String> childTypes = myRules.getChildTypes(parentName);
 				if (childTypes.size() != 0) {
@@ -151,17 +140,15 @@ public class ItemInputPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent theEvent) {
-				
+
 				if (selectedItemType == null) {
 					return; // agh don't do anything
 				}
 				// Grab the data from the fields and throw it into the project.
-				System.out.println("Adding item: " + selectedItemType);
-				myEditor.addItem(selectedItemType);
+				myProject.addItem(selectedItemType);
 				// Now load in the stuff from the field panels
 				for (FieldInputPanel input : myCurrentFields) {
-					System.out.println("\tAdding field: " + input.getFieldName());
-					myEditor.addFieldToItem(selectedItemType, input.getFieldName(),
+					myProject.addFieldToItem(selectedItemType, input.getFieldName(),
 							input.getDescription(), input.getValueType(), input.getValue());
 				}
 				myDropDownAction.actionPerformed(null);
@@ -170,7 +157,7 @@ public class ItemInputPanel extends JPanel {
 				// on.
 
 				// As last step, we need to update the current item text area
-				myCurrentItemViewState.setText(myViewer.getProjectString());
+				myCurrentItemViewState.setText(myProject.getProjectString());
 				myCurrentItemViewState.removeAll();
 				myCurrentFields.clear();
 			}
@@ -205,11 +192,6 @@ public class ItemInputPanel extends JPanel {
 		myItemFieldPane = new JPanel();
 		fieldScrollPane.setViewportView(myItemFieldPane);
 		myItemFieldPane.setLayout(new BoxLayout(myItemFieldPane, BoxLayout.Y_AXIS));
-
-		// So basically, I think all you have to do is create a special panel type that
-		// can show the info from the schema and allow input from the user. It should
-		// also have getters so we can query each tile for their values and upload them
-		// into items into the project with the edit controller.
 	}
 
 	private void removeDropDownAction() {
@@ -252,21 +234,19 @@ public class ItemInputPanel extends JPanel {
 		// Add in the new field panels.
 		final List<SchemaField> fieldsToAdd = myRules.getInheritedFields(theItemType);
 		for (SchemaField field : fieldsToAdd) {
-//			System.out.println(field.getSchemaFieldName() + " " + field.getDescription() 
-//					   + " " + field.getValueType() + " " + field.isRequired());
 			final FieldInputPanel newField = new FieldInputPanel(field.getSchemaFieldName(),
 					field.getDescription(), field.getValueType());
 			myItemFieldPane.add(newField);
 			this.myCurrentFields.add(newField);
 		}
 	}
-	
+
 	public void clearAllFields() {
 		myCurrentItemViewState.setText("");
-		myEditor.clearAllItems();
+		myProject.clearAllItems();
 	}
-	
+
 	public void updatePanel() {
-		myCurrentItemViewState.setText(myViewer.getProjectString());
+		myCurrentItemViewState.setText(myProject.getProjectString());
 	}
 }

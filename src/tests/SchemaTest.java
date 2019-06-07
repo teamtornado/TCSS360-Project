@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import controller.SchemaController;
 import model.SchemaField;
-import model.SchemaItem;
 import model.schemautil.SchemaTypes;
 
 /**

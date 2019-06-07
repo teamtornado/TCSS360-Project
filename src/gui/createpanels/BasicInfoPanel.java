@@ -100,7 +100,7 @@ public class BasicInfoPanel extends JPanel {
 	 *            Budget of the project as a String.
 	 * @param theProjectDescription
 	 *            Description of the project.
-	 * @author Eric
+	 * @author Eric 
 	 */
 	public void setAllFields(final String theProjectName, final String theProjectLocation,
 			final String theProjectBudget, final String theProjectDescription) {

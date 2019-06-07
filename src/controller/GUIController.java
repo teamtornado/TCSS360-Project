@@ -124,15 +124,7 @@ public class GUIController {
 	/**
 	 * 
 	 */
-	private ProjectEditController myEditor;
-	/**
-	 * 
-	 */
-	private ProjectViewController myViewer;
-	/**
-	 * 
-	 */
-	private ProjectLoadController myLoader;
+	private ProjectController myProject;
 
 	/**
 	 * 
@@ -152,16 +144,14 @@ public class GUIController {
 	 */
 	public GUIController() {
 		myWindow = new JFrame();
-		myLoader = new ProjectLoadController();
-		myEditor = new ProjectEditController(myLoader);
+		myProject = new ProjectController();
 		myRules = new SchemaController(SCHEMA_DATABASE_LOCATION);
-		myViewer = new ProjectViewController(myLoader);
 		myState = FIRST_PANEL;
 		mainPanel = makeMainPanel();
-		myProjectViewer = makeProjectViewer(myViewer, myLoader);
+		myProjectViewer = makeProjectViewer();
 		myBasicInfoPanel = new BasicInfoPanel();
 		myCreatePanel = makeCreatePanel();
-		myItemPanel = new ItemInputPanel(myViewer, myEditor, myRules);
+		myItemPanel = new ItemInputPanel(myProject, myRules);
 		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
 		setupJFrameIcon();
@@ -172,15 +162,10 @@ public class GUIController {
 	 * Creates the ProjectViewer panel and its components. Returns the resulting
 	 * ProjectViewer.
 	 * 
-	 * @param theViewer
-	 *            the view controller for the current project.
-	 * @param theLoader
-	 *            the load controller for the current project.
 	 * @return the resulting ProjectViewer;
 	 * @author Eric
 	 */
-	public ProjectViewer makeProjectViewer(final ProjectViewController theViewer,
-			final ProjectLoadController theLoader) {
+	public ProjectViewer makeProjectViewer() {
 		// Gotta make the back button to pass in so we can get out of the viewer.
 		final JButton backButton = new JButton("Back");
 		backButton.addActionListener(new ActionListener() {
@@ -212,14 +197,14 @@ public class GUIController {
 				myWindow.setContentPane(myCreatePanel);
 
 				// Pre-load the basicInfoPanel
-				myBasicInfoPanel.setAllFields(myViewer.getName(), myViewer.getLocation(),
-						myViewer.getFormattedBudgetAsString(), myViewer.getProjectDescription());
+				myBasicInfoPanel.setAllFields(myProject.getName(), myProject.getLocation(),
+						myProject.getFormattedBudgetAsString(), myProject.getProjectDescription());
 				myWindow.pack();
 			}
 
 		});
 
-		final ProjectViewer projectViewer = new ProjectViewer(theViewer, backButton, editButton);
+		final ProjectViewer projectViewer = new ProjectViewer(myProject, backButton, editButton);
 		return projectViewer;
 	}
 
@@ -241,8 +226,8 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
-				final int returnValue = myLoader.loadProject(myWindow);
-				if (returnValue == ProjectLoadController.SUCCESS) {
+				final int returnValue = myProject.loadProject(myWindow);
+				if (returnValue == ProjectController.SUCCESS) {
 					// If the file loaded correctly, then switch the panels.
 					JPanel tempPanel = new JPanel();
 					JButton backButton = new JButton("Back");
@@ -256,7 +241,7 @@ public class GUIController {
 
 						}
 					});
-					myProjectViewer.addData(myViewer.getProjectString());
+					myProjectViewer.addData(myProject.getProjectString());
 					// myProjectViewer.start();
 					myWindow.setContentPane(myProjectViewer);
 					myWindow.pack();
@@ -275,6 +260,7 @@ public class GUIController {
 			 */
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
+				myProject.createNewProject();
 				myWindow.setContentPane(myCreatePanel);
 				myWindow.pack();
 			}
@@ -328,17 +314,13 @@ public class GUIController {
 							myState = SECOND_PANEL;
 							// Set whatever the user entered into the project.
 							// myEditor.setBasicInformation(myBasicInfoPanel);
-							System.out.println("Name: " + projectName + "\n");
-							System.out.println("Location: " + projectLocation + "\n");
-							System.out.println("Budget: " + projectBudget + "\n");
-							System.out.println("Description: " + projectDescription + "\n");
-							System.out.println(myLoader.myProject);
-							myEditor.setName(projectName);
-							myEditor.setLocation(projectLocation);
-							myEditor.setBudget(projectBudget);
-							myEditor.setDescription(projectDescription);
+							myProject.setName(projectName);
+							myProject.setLocation(projectLocation);
+							myProject.setBudget(projectBudget);
+							myProject.setDescription(projectDescription);
 							myItemPanel.updatePanel();
 							createPanel.remove(myBasicInfoPanel);
+							myItemPanel.updatePanel();
 							createPanel.add(myItemPanel, BorderLayout.CENTER);
 							createPanel.revalidate();
 							createPanel.repaint();
@@ -346,8 +328,8 @@ public class GUIController {
 					}
 
 				} else if (myState == SECOND_PANEL) {
-					final int returnCondition = myLoader.saveProject(myWindow);
-					if (returnCondition == ProjectLoadController.SUCCESS) {
+					final int returnCondition = myProject.saveProject(myWindow);
+					if (returnCondition == ProjectController.SUCCESS) {
 						// If everything saved correctly!
 						myState = FIRST_PANEL; // reset it for the next time around.
 						myWindow.setContentPane(mainPanel); // go back to the main menu.

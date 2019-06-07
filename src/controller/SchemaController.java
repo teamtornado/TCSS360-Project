@@ -4,7 +4,6 @@ import java.util.List;
 
 import model.Schema;
 import model.SchemaField;
-import model.SchemaItem;
 
 /**
  * Allows the front-end to interact with the Schema.
@@ -33,18 +32,6 @@ public class SchemaController {
 	}
 
 	/**
-	 * Testing method! It is likely you do not need to use this and shouldn't.
-	 * Creates a copy of the list of SchemaItems within the internal Schema database
-	 * and returns the copy.
-	 * 
-	 * @return a copy of the internal Schema database.
-	 * @author Eric
-	 */
-	public List<SchemaItem> getSchemaList() {
-		return mySchema.getSchemaList();
-	}
-
-	/**
 	 * Returns the list of item types that have NO parents, meaning they are at the
 	 * TOP of the item-type hierarchy.
 	 * 
@@ -53,17 +40,6 @@ public class SchemaController {
 	 */
 	public List<String> getAllParentTypes() {
 		return mySchema.getAllParentTypes();
-	}
-
-	/**
-	 * Returns a list of all item-types within the Schema database, except for the
-	 * general parent type that defines stuff like user notes.
-	 * 
-	 * @return A list of all item-types within the Schema database.
-	 * @author Eric
-	 */
-	public List<String> getAllTypes() {
-		return mySchema.getAllTypes();
 	}
 
 	/**
@@ -79,21 +55,7 @@ public class SchemaController {
 	public List<String> getChildTypes(final String theParentItemType) {
 		return mySchema.getChildTypes(theParentItemType);
 	}
-
-	/**
-	 * Returns a list of fields offered by the given item.
-	 * 
-	 * @param theItemType
-	 *            the item type to draw fields from.
-	 * @return a list of SchemaFields from the given item-type.
-	 * @throws IllegalArgumentException
-	 *             if there was no match with a SchemaItem
-	 * @author Eric
-	 */
-	public List<SchemaField> getSchemaFieldsFromItem(final String theItemType) {
-		return mySchema.getSchemaFieldsFromItem(theItemType);
-	}
-
+	
 	/**
 	 * Returns the item-type of the child's parent. For instance, if "Stove" is
 	 * given, "Appliance" will be returned.

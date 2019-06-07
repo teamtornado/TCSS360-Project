@@ -32,11 +32,6 @@ public class Schema {
 	private final List<SchemaItem> mySchemaItems;
 
 	/**
-	 * A list of all possible fields within the schema database.
-	 */
-	private final List<SchemaField> myAllFields;
-
-	/**
 	 * Takes the location of a schema database and constructs a Schema object to
 	 * describe it.
 	 * 
@@ -56,25 +51,6 @@ public class Schema {
 			System.out.println("Error: could not find the SchemaData text file.");
 			theException.printStackTrace();
 		}
-
-		myAllFields = SchemaDataParser.parseFields(schemaScan);
-	}
-
-	/**
-	 * Testing method! It is likely you do not need to use this and shouldn't.
-	 * Creates a copy of the list of SchemaItems within the internal Schema database
-	 * and returns the copy.
-	 * 
-	 * @return a copy of the internal Schema database.
-	 * @author Eric
-	 */
-	public List<SchemaItem> getSchemaList() {
-		final List<SchemaItem> newSchemaList = new LinkedList<>();
-
-		for (SchemaItem item : mySchemaItems) {
-			newSchemaList.add(item);
-		}
-		return newSchemaList;
 	}
 
 	/**
@@ -94,23 +70,6 @@ public class Schema {
 			}
 		}
 		return parentItemTypes;
-	}
-
-	/**
-	 * Returns a list of all item-types within the Schema database, except for the
-	 * general parent type that defines stuff like user notes.
-	 * 
-	 * @return A list of all item-types within the Schema database.
-	 * @author Eric
-	 */
-	public List<String> getAllTypes() {
-		final List<String> allItemTypes = new LinkedList<>();
-
-		for (SchemaItem item : mySchemaItems) {
-			allItemTypes.add(item.getItemType());
-		}
-
-		return allItemTypes;
 	}
 
 	/**
@@ -155,64 +114,6 @@ public class Schema {
 
 		// Oh no! The item type wasn't in the database!
 		throw new IllegalArgumentException("Itemtype not found inside Schema database.");
-	}
-
-	/**
-	 * Returns a list of fields offered by the given item.
-	 * 
-	 * @param theItemType
-	 *            the item type to draw fields from.
-	 * @return a list of SchemaFields from the given item-type.
-	 * @throws IllegalArgumentException
-	 *             if there was no match with a SchemaItem
-	 * @author Eric
-	 */
-	public List<SchemaField> getSchemaFieldsFromItem(final String theItemType) {
-		final List<SchemaField> fieldsFromItemType = new LinkedList<>();
-
-		// Get all the fields from the matching item-type
-		for (SchemaItem item : mySchemaItems) {
-			if (item.getItemType().equals(theItemType)) {
-				// Found a match!
-				for (SchemaField field : item.getFields()) {
-					fieldsFromItemType.add(field);
-				}
-
-				// Should only ever be one match, so stop searching
-				break;
-			}
-		}
-
-		// Error checking. Has to at least have something in the list.
-		if (fieldsFromItemType.isEmpty()) {
-			throw new IllegalArgumentException(
-					"Error: there was no match with itemType within the" + " list of SchemaItems");
-		}
-
-		return fieldsFromItemType;
-	}
-
-	/**
-	 * Returns the matching SchemaField with the schemaFieldName.
-	 * 
-	 * @param theSchemaFieldName
-	 *            the name of the matching SchemaField.
-	 * @throws IllegalArgumentException
-	 *             if there was no match with a SchemaItem
-	 * @return the SchemaField that had a matching schemaFieldName.
-	 * @author Eric
-	 */
-	public SchemaField getSchemaField(final String theSchemaFieldName) {
-		for (SchemaField field : myAllFields) {
-			if (field.getSchemaFieldName().equals(theSchemaFieldName)) {
-				return field;
-			}
-		}
-
-		// Ah! Schema field not found within internal database!
-		throw new IllegalArgumentException(
-				"Error: given schemaFieldName does not have a match with any"
-						+ "known SchemaField within Schema");
 	}
 
 	/**

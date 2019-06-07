@@ -119,7 +119,6 @@ public class SchemaDataParser {
 		// Parse away!
 		boolean keepGoing = true;
 		do {
-			System.out.println(line);
 			final String[] tokens = line.split(",");
 			final String[] idTokens = tokens[0].split(":");
 			final int id = Integer.parseInt(idTokens[1]);
