@@ -34,6 +34,9 @@ public class Application {
 			theException.printStackTrace();
 		}
 
+		// First open, show email panel, then set JLabel.
+		// make a jframe here to get email input!
+		
 		final GUIController applicationGuiController = new GUIController();
 		applicationGuiController.start();
 	}

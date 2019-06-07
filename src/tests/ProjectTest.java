@@ -68,16 +68,6 @@ class ProjectTest {
 
 		// Now onto some viewer stuff
 
-		// I want to see all the different item-types in this
-		final List<String> allItems = myViewer.getAllItemTypes();
-		assertTrue(allItems.get(0).equals(SchemaTypes.APPLIANCE));
-
-		// I want a specific field from a specific item now
-		final ItemField field = myViewer.getFieldFromItem(SchemaTypes.APPLIANCE,
-				powerUsageFieldName);
-		final String fieldName = field.getFieldName();
-		assertTrue(fieldName.equals(powerUsageFieldName));
-
 		// What is the name of this project?
 		final String projectName = myViewer.getName();
 
@@ -100,7 +90,7 @@ class ProjectTest {
 		myLoader.saveProject(null);
 		myLoader.loadProject(null);
 
-		assertTrue(myViewer.getAllItemTypes().get(0).equals(SchemaTypes.APPLIANCE));
+		// Agh! need a new test to make sure the serial save works!
 	}
 
 }
