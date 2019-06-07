@@ -21,3 +21,4 @@ ID:5,Type:Furnace,isA:4,Fields:{Brand}
 ID:6,Type:Insulation,isA:4,Fields:{Item count}
 ID:7,Type:My little sweater,isA:4,Fields:{Item count-Brand}
 ID:8,Type:Fireplace,isA:4,Fields:{Material}
+ID:9,Type:Lighting,isA:0,Fields:{Lumens}

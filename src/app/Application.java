@@ -18,12 +18,6 @@ import controller.GUIController;
  * 
  */
 public class Application {
-
-	/**
-	 * The location for the rules of the database.
-	 */
-	public static final String SCHEMA_DATABASE_LOCATION = "SchemaData.txt";
-
 	/**
 	 * Runs the application - currently does mostly simple setup.
 	 * 
@@ -40,7 +34,6 @@ public class Application {
 			theException.printStackTrace();
 		}
 
-		// Controllers need to be pre-loaded with a dummy project before they can run.
 		final GUIController applicationGuiController = new GUIController();
 		applicationGuiController.start();
 	}
