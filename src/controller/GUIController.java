@@ -210,7 +210,7 @@ public class GUIController {
 			@Override
 			public void actionPerformed(ActionEvent theEvent) {
 				myWindow.setContentPane(myCreatePanel);
-				
+
 				// Pre-load the basicInfoPanel
 				myBasicInfoPanel.setAllFields(myViewer.getName(), myViewer.getLocation(),
 						myViewer.getFormattedBudgetAsString(), myViewer.getProjectDescription());
@@ -219,8 +219,7 @@ public class GUIController {
 
 		});
 
-		final ProjectViewer projectViewer = new ProjectViewer(theViewer, theLoader, backButton,
-				editButton);
+		final ProjectViewer projectViewer = new ProjectViewer(theViewer, backButton, editButton);
 		return projectViewer;
 	}
 
@@ -258,7 +257,7 @@ public class GUIController {
 						}
 					});
 					myProjectViewer.addData(myViewer.getProjectString());
-					//myProjectViewer.start();
+					// myProjectViewer.start();
 					myWindow.setContentPane(myProjectViewer);
 					myWindow.pack();
 				}
@@ -328,7 +327,7 @@ public class GUIController {
 						} else {
 							myState = SECOND_PANEL;
 							// Set whatever the user entered into the project.
-//							myEditor.setBasicInformation(myBasicInfoPanel);
+							// myEditor.setBasicInformation(myBasicInfoPanel);
 							System.out.println("Name: " + projectName + "\n");
 							System.out.println("Location: " + projectLocation + "\n");
 							System.out.println("Budget: " + projectBudget + "\n");
