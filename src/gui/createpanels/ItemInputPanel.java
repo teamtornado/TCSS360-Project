@@ -60,6 +60,8 @@ public class ItemInputPanel extends JPanel {
 	private JTextArea myCurrentItemViewState;
 
 	private List<FieldInputPanel> myCurrentFields;
+	
+	private String selectedItemType;
 
 	/**
 	 * Create the panel.
@@ -70,6 +72,7 @@ public class ItemInputPanel extends JPanel {
 		myViewer = theViewer;
 		myEditor = theEditor;
 		myCurrentFields = new LinkedList<FieldInputPanel>();
+		selectedItemType = null;
 		setLayout(new MigLayout("", "[300.00,grow,left][600.00px,grow,right][-634.00]", "[grow]"));
 
 		JPanel currentItemsViewer = new JPanel();
@@ -110,12 +113,14 @@ public class ItemInputPanel extends JPanel {
 				if (e == null) {
 					// this is the reset button here
 					// Jank stuff here
+					selectedItemType = null;
 					resetClick();
 					return;
 				}
 				// System.out.println("?");
 				JComboBox<String> cb = (JComboBox<String>) e.getSource();
 				String parentName = (String) cb.getSelectedItem();
+				selectedItemType = parentName;
 				System.out.println(parentName);
 				// Get all the child type
 				List<String> childTypes = myRules.getChildTypes(parentName);
@@ -146,14 +151,17 @@ public class ItemInputPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent theEvent) {
+				
+				if (selectedItemType == null) {
+					return; // agh don't do anything
+				}
 				// Grab the data from the fields and throw it into the project.
-				final String selectedItem = (String) myItemtypeDropDown.getSelectedItem();
-				System.out.println("Adding item: " + selectedItem);
-				myEditor.addItem(selectedItem);
+				System.out.println("Adding item: " + selectedItemType);
+				myEditor.addItem(selectedItemType);
 				// Now load in the stuff from the field panels
 				for (FieldInputPanel input : myCurrentFields) {
 					System.out.println("\tAdding field: " + input.getFieldName());
-					myEditor.addFieldToItem(selectedItem, input.getFieldName(),
+					myEditor.addFieldToItem(selectedItemType, input.getFieldName(),
 							input.getDescription(), input.getValueType(), input.getValue());
 				}
 				myDropDownAction.actionPerformed(null);
@@ -163,6 +171,8 @@ public class ItemInputPanel extends JPanel {
 
 				// As last step, we need to update the current item text area
 				myCurrentItemViewState.setText(myViewer.getProjectString());
+				myCurrentItemViewState.removeAll();
+				myCurrentFields.clear();
 			}
 
 		};
@@ -177,10 +187,10 @@ public class ItemInputPanel extends JPanel {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent theEvent) {
-				myItemFieldPane.removeAll();
-				myCurrentFields.clear();
 				// null to tell the dropDownAction that this event is coming elsewhere.
 				myDropDownAction.actionPerformed(null);
+				myItemFieldPane.removeAll();
+				myCurrentFields.clear();
 			}
 
 		};
