@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +17,12 @@ import java.util.List;
  * @author Eric
  *
  */
-public class Item {
+public class Item implements Serializable {
+
+	/**
+	 * Serialized id.
+	 */
+	private static final long serialVersionUID = -1886109609838625431L;
 
 	/**
 	 * The kind of item. Could be a 'Stove', 'Appliance', or 'Insulation'.
