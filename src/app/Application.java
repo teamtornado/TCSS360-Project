@@ -13,16 +13,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import controller.GUIController;
-import controller.ProjectEditController;
-import controller.ProjectLoadController;
-import controller.ProjectViewController;
-import controller.SchemaController;
-import model.Project;
-
 /**
- * Entry point for the UI. Sets up the controllers and starts the app.
+ * Entry point for the UI. Sets up the controllers and starts the application.
  * 
- * @author Everyone, including Unkown
  */
 public class Application {
 

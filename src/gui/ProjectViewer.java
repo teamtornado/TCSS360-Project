@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
-import controller.ProjectLoadController;
 import controller.ProjectViewController;
 import gui.createpanels.ScrollablePane;
 
