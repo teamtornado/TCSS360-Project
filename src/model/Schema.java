@@ -288,46 +288,33 @@ public class Schema {
 		final List<SchemaField> listOfInheritedFields = new LinkedList<>();
 
 		// find the itemType
-//		for (SchemaItem item : mySchemaItems) {
-//			if (item.getItemType().equals(theItemType)) {
-//				// Grab this item's fields.
-//				for (SchemaField field : item.getFields()) {
-//					listOfInheritedFields.add(field);
-//				}
-//
-//				if (item.getIsA() == Schema.GLOBAL_PARENT_ID) {
-//					return item.getFields(); // This is already a parent global, so stop.
-//				}
-//				// Grab the parent of the item
-//				SchemaItem currentItem = getSchemaItem(getParentOfChild(item.getItemType()));
-//				// Found, now grab all the inherited stuff
-//				while (currentItem.getIsA() != Schema.GLOBAL_PARENT_ID) {
-//					for (SchemaField field : currentItem.getFields()) {
-//						listOfInheritedFields.add(field);
-//					}
-//					// Find the next parent
-//					currentItem = getSchemaItem(getParentOfChild(currentItem.getItemType()));
-//				}
-//
-//				// Should be at the global parent at this point. So add those.
-//				for (SchemaField field : currentItem.getFields()) {
-//					listOfInheritedFields.add(field);
-//				}
-//				return listOfInheritedFields;
-//			}
-//		}
-		
 		for (SchemaItem item : mySchemaItems) {
 			if (item.getItemType().equals(theItemType)) {
-				SchemaItem currentItem = getSchemaItem(item.getItemType());
-				do {
+				// Grab this item's fields.
+				for (SchemaField field : item.getFields()) {
+					listOfInheritedFields.add(field);
+				}
+
+				if (item.getIsA() == Schema.GLOBAL_PARENT_ID) {
+					return item.getFields(); // This is already a parent global, so stop.
+				}
+				// Grab the parent of the item
+				SchemaItem currentItem = getSchemaItem(getParentOfChild(item.getItemType()));
+				// Found, now grab all the inherited stuff
+				while (currentItem.getIsA() != Schema.GLOBAL_PARENT_ID) {
 					for (SchemaField field : currentItem.getFields()) {
 						listOfInheritedFields.add(field);
 					}
+					// Find the next parent
 					currentItem = getSchemaItem(getParentOfChild(currentItem.getItemType()));
-				} while (currentItem.getIsA() != Schema.GLOBAL_PARENT_ID);
+				}
+
+				// Should be at the global parent at this point. So add those.
+				for (SchemaField field : currentItem.getFields()) {
+					listOfInheritedFields.add(field);
+				}
+				return listOfInheritedFields;
 			}
-			return listOfInheritedFields;
 		}
 
 		// Oh no! Couldn't find the schema item~

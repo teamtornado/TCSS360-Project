@@ -99,7 +99,7 @@ public class GUIController {
 	/**
 	 * A magical panel that does something.
 	 */
-	private JPanel myItemPanel;
+	private ItemInputPanel myItemPanel;
 
 	/**
 	 * The main menu panel for the application.
@@ -338,7 +338,7 @@ public class GUIController {
 							myEditor.setLocation(projectLocation);
 							myEditor.setBudget(projectBudget);
 							myEditor.setDescription(projectDescription);
-							myViewer.printToConsole();
+							myItemPanel.updatePanel();
 							createPanel.remove(myBasicInfoPanel);
 							createPanel.add(myItemPanel, BorderLayout.CENTER);
 							createPanel.revalidate();

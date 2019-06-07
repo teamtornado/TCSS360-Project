@@ -80,8 +80,8 @@ public class ItemInputPanel extends JPanel {
 		currentItemsViewer.setLayout(new BorderLayout(0, 0));
 
 		myCurrentItemViewState = new JTextArea();
+		myCurrentItemViewState.setEditable(false);
 		myCurrentItemViewState.setText(myViewer.getProjectString());
-		myViewer.printToConsole();
 		currentItemsViewer.add(myCurrentItemViewState, BorderLayout.CENTER);
 
 		JPanel itemAdder = new JPanel();
@@ -100,7 +100,7 @@ public class ItemInputPanel extends JPanel {
 		itemTypeChooserPanel.add(myItemtypeDropDown);
 
 		// Need a pointer to the parent panel.
-//		final ItemInputPanel thisPanel = this;
+		final ItemInputPanel thisPanel = this;
 
 		myDropDownAction = new ActionListener() {
 
@@ -127,17 +127,17 @@ public class ItemInputPanel extends JPanel {
 						myItemtypeDropDown.addItem(child);
 					}
 					// Update the field lists
-//					fillFieldPane(parentName);
+					fillFieldPane(parentName);
 					addActionToDropDown();
 				} else {
 					// Still need to update the field list though
 					fillFieldPane(parentName);
-//					JOptionPane.showMessageDialog(thisPanel, "There are no more child type");
+					JOptionPane.showMessageDialog(thisPanel, "There are no more child type");
+					thisPanel.revalidate();
+					thisPanel.repaint();
 				}
 			}
-
 		};
-
 		addActionToDropDown();
 
 		JButton addItemButton = new JButton("Add Item");
@@ -177,7 +177,8 @@ public class ItemInputPanel extends JPanel {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent theEvent) {
-
+				myItemFieldPane.removeAll();
+				myCurrentFields.clear();
 				// null to tell the dropDownAction that this event is coming elsewhere.
 				myDropDownAction.actionPerformed(null);
 			}
@@ -241,12 +242,16 @@ public class ItemInputPanel extends JPanel {
 		// Add in the new field panels.
 		final List<SchemaField> fieldsToAdd = myRules.getInheritedFields(theItemType);
 		for (SchemaField field : fieldsToAdd) {
-			System.out.println(field.getSchemaFieldName() + " " + field.getDescription() 
-					   + " " + field.getValueType() + " " + field.isRequired());
-//			final FieldInputPanel newField = new FieldInputPanel(field.getSchemaFieldName(),
-//					field.getDescription(), field.getValueType());
-//			myItemFieldPane.add(newField);
-//			this.myCurrentFields.add(newField);
+//			System.out.println(field.getSchemaFieldName() + " " + field.getDescription() 
+//					   + " " + field.getValueType() + " " + field.isRequired());
+			final FieldInputPanel newField = new FieldInputPanel(field.getSchemaFieldName(),
+					field.getDescription(), field.getValueType());
+			myItemFieldPane.add(newField);
+			this.myCurrentFields.add(newField);
 		}
+	}
+	
+	public void updatePanel() {
+		myCurrentItemViewState.setText(myViewer.getProjectString());
 	}
 }

@@ -467,7 +467,9 @@ public class Project implements Serializable {
 				stringBuilder.append(item.getItemType());
 				stringBuilder.append(NEWLINE);
 				for (ItemField field : item.getFields()) {
-					stringBuilder.append("\t");
+					stringBuilder.append("         ");
+					stringBuilder.append(field.getFieldName());
+					stringBuilder.append(": ");
 					stringBuilder.append(field.getValue());
 					stringBuilder.append(NEWLINE);
 				}

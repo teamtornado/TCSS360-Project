@@ -2,7 +2,6 @@ package gui.createpanels;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -14,6 +13,11 @@ import javax.swing.JTextField;
  */
 public class FieldInputPanel extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private final String myFieldName;
 
 	private final String myFieldDescription;
@@ -21,8 +25,6 @@ public class FieldInputPanel extends JPanel {
 	private final String myFieldValueType;
 
 	private final JTextField myInputField;
-
-	private static final Random myRandom = new Random();
 
 	public FieldInputPanel(final String theFieldName, final String theFieldDescription,
 			final String theFieldValueType) {
