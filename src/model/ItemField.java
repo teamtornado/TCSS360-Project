@@ -1,12 +1,19 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Immutable. This class will hold a single piece of information within an Item.
  * 
  * @author Eric
  *
  */
-public class ItemField {
+public class ItemField implements Serializable {
+
+	/**
+	 * Serialize id
+	 */
+	private static final long serialVersionUID = -6409818913791891425L;
 
 	/**
 	 * The field name is the type of information in which a particular instance will
@@ -43,9 +50,8 @@ public class ItemField {
 	 *            The data itself.
 	 * @author Eric
 	 */
-	public ItemField(final String theFieldName,
-			final String theDescription, final String theValueType,
-			final String theValue) {
+	public ItemField(final String theFieldName, final String theDescription,
+			final String theValueType, final String theValue) {
 		this.myfieldName = theFieldName;
 		this.myDescription = theDescription;
 		this.myValue = theValue;

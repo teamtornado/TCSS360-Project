@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -73,7 +74,7 @@ public class Project implements Serializable {
 		this.myProjectLocation = "Woof Location";
 		this.myProjectBudget = 0.00;
 		this.myProjectDescription = "This is a woof project";
-		this.myItems = new LinkedList<Item>();
+		this.myItems = new ArrayList<Item>();
 	}
 
 	/**
