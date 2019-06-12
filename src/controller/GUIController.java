@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -105,6 +107,16 @@ public class GUIController {
 	 * The main menu panel for the application.
 	 */
 	private JPanel mainPanel;
+	
+	/**
+	 * String representing the user email.
+	 */
+	private String myEmail;
+	
+	/**
+	 * String representing either "Sign In" or "Sign Out".
+	 */
+	private String signInStatus;
 
 	/**
 	 * The Frame of the application.
@@ -122,12 +134,12 @@ public class GUIController {
 	private BasicInfoPanel myBasicInfoPanel;
 
 	/**
-	 * 
+	 * The current project of the application.
 	 */
 	private ProjectController myProject;
 
 	/**
-	 * 
+	 * Rules representing the hierarchy of item types.
 	 */
 	private SchemaController myRules;
 
@@ -152,6 +164,7 @@ public class GUIController {
 		myBasicInfoPanel = new BasicInfoPanel();
 		myCreatePanel = makeCreatePanel();
 		myItemPanel = new ItemInputPanel(myProject, myRules);
+		signInStatus = "Sign In";
 		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
 		setupJFrameIcon();
@@ -212,10 +225,14 @@ public class GUIController {
 	 * Creates the main menu for the opening of the application.
 	 * 
 	 * @return the main menu panel for the application.
-	 * @author Minh Pham
+	 * @author Minh Pham, Curran
 	 */
 	private JPanel makeMainPanel() {
-		JPanel contentPanel = new JPanel();
+		JPanel centerPanel = new JPanel(new BorderLayout());
+		JPanel northPanel = new JPanel();
+		JLabel emailLabel = new JLabel(myEmail);
+		northPanel.add(emailLabel);
+		JPanel contentPanel = new JPanel(new FlowLayout());
 		JButton openButton = new JButton("Open Project");
 		openButton.addActionListener(new ActionListener() {
 
@@ -242,11 +259,9 @@ public class GUIController {
 						}
 					});
 					myProjectViewer.addData(myProject.getProjectString());
-					// myProjectViewer.start();
 					myWindow.setContentPane(myProjectViewer);
 					myWindow.pack();
 				}
-				// Something went weird, so leave us on the main menu.
 			}
 		});
 		contentPanel.add(openButton);
@@ -256,7 +271,7 @@ public class GUIController {
 			/**
 			 * Opens the basic information panel and creates a new project.
 			 * 
-			 * @author Eric, Minh
+			 * @author Eric, Minh, Curran
 			 */
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
@@ -266,7 +281,9 @@ public class GUIController {
 			}
 		});
 		contentPanel.add(createButton);
-		return contentPanel;
+		centerPanel.add(northPanel, BorderLayout.NORTH);
+		centerPanel.add(contentPanel, BorderLayout.CENTER);
+		return centerPanel;
 	}
 
 	/**
@@ -417,11 +434,13 @@ public class GUIController {
 		final JMenuItem aboutPage = createAboutPageItem();
 		final JMenuItem changeSize = createChangeSizeItem();
 		final JMenuItem export = createExportItem();
+		final JMenuItem changeEmail = createEmailItem();
 
 		// Hook the menus together
 		helpMenu.add(aboutPage);
 		settingMenu.add(changeSize);
 		settingMenu.add(export);
+		settingMenu.add(changeEmail);
 		menuBar.add(helpMenu);
 		menuBar.add(settingMenu);
 		myWindow.setJMenuBar(menuBar);
@@ -473,6 +492,40 @@ public class GUIController {
 
 		return changeSize;
 	}
+	
+	/**
+	 * Creates the change size item for the menu bar
+	 * 
+	 * @return the change size item for the menu bar
+	 * 
+	 * @author Minh, Curran, Sharanjit
+	 */
+	private JMenuItem createEmailItem() {
+		final JMenuItem emailItem = new JMenuItem();
+		emailItem.setText("Sign In");
+		emailItem.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent theException) {
+				if (signInStatus == "Sign In") { 
+					myEmail = JOptionPane.showInputDialog("Enter Email");
+					if (myEmail == null) {
+						return;
+					}
+					final String passwordInput = JOptionPane.showInputDialog("Enter Password");
+					if (passwordInput == null) {
+						return;
+					}
+					emailItem.setText("Sign Out");
+					signInStatus = "Sign Out";
+				} else {
+					JOptionPane.showMessageDialog(myWindow, "Successfully signed out of\n" + myEmail);
+					signInStatus = "Sign In";
+					emailItem.setText("Sign In");
+				}			
+			}
+		});
+
+		return emailItem;
+	}
 
 	/**
 	 * Creates the about page item to access about dialog
@@ -508,8 +561,7 @@ public class GUIController {
 		String message = new About().getAbout();
 
 		aboutMessage.setText(message);
-		aboutMessage.setEditable(false); // Don't want anyone changing the text
-											// field!
+		aboutMessage.setEditable(false); // Don't want anyone changing the text field!
 		aboutMessage.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
 		aboutMessage.setAlignmentY(JTextArea.CENTER_ALIGNMENT);
 		theAboutMessage.add(aboutMessage);
@@ -560,6 +612,15 @@ public class GUIController {
 		myWindow.setIconImage(img.getImage());
 	}
 
+	/**
+	 * Examines whether or not the given String contains illegal characters or not.
+	 * Returns true if it does, false otherwise.
+	 * 
+	 * @param toExamine the String to check for illegal characters.
+	 * @return boolean for if the string contains illegal characters or not.
+	 * 
+	 * @author Curran, Eric, Sharanjit, Minh
+	 */
 	private boolean containsIllegals(String toExamine) {
 		Pattern pattern = Pattern.compile("[~#@*+%{}<>\\[\\]|\"\'\\_^]");
 		Matcher matcher = pattern.matcher(toExamine);
