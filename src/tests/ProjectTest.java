@@ -1,10 +1,7 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
-
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -70,27 +67,28 @@ class ProjectTest {
 //		myProject.printToConsole();
 //	}
 //
-//	@Test
-//	void correctSerialSave() {
-//		myProject.createNewProject();
-//		myProject.setName("woof");
-//		myProject.setDescription("wof");
-//		myProject.setBudget(100);
-//		myProject.setLocation("washington");
-//		myProject.addItem(SchemaTypes.APPLIANCE);
-//
-//		myProject.saveProject(null);
-//		myProject.loadProject(null);
-//
-//		// Agh! need a new test to make sure the serial save works!
-//	}
+	
+	@Test
+	void correctSerialSave() {
+		myProject.createNewProject();
+		myProject.setName("woof");
+		myProject.setDescription("woof");
+		myProject.setBudget(100);
+		myProject.setLocation("washington");
+		myProject.addItem(SchemaTypes.APPLIANCE);
+
+		myProject.saveProject(null);
+		myProject.loadProject(null);
+
+		// Agh! need a new test to make sure the serial save works!
+	}
 	
 	//Sharnjit
 	
 	@Test 
-	final void testsetName() {
+	void testsetName() {
 		myProject.setName("NewProject");
-		assertEquals("NewProject", myProject.getName());
+		assertTrue(myProject.getName().equals("NewProject"));
 		
 		
 	}
@@ -114,8 +112,8 @@ class ProjectTest {
 	
 	@Test
 	void testclearAll() {
+		// the clearAllItems method has a void return, thats what this error is telling you.
 		assertEquals("",myProject.clearAllItems());
-	
 		
 	}
 	

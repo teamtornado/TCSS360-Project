@@ -86,7 +86,7 @@ class SchemaTest {
 		final String furnace = mySchemaController.getChildTypes(SchemaTypes.HEATING).get(0);
 		assertTrue(furnace.equals(SchemaTypes.FURNACE));
 
-		List<String> shouldBeEmptyList = mySchemaController.getAllParentTypes()(SchemaTypes.WOK_STOVE);
+		List<String> shouldBeEmptyList = mySchemaController.getAllParentTypes();
 		assertTrue(shouldBeEmptyList.isEmpty());
 	}
 	
