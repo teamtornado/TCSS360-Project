@@ -494,11 +494,11 @@ public class GUIController {
 	}
 	
 	/**
-	 * Creates the change size item for the menu bar
+	 * Creates the email item for the menu bar
 	 * 
-	 * @return the change size item for the menu bar
+	 * @return the email item for the menu bar
 	 * 
-	 * @author Minh, Curran, Sharanjit
+	 * @author Curran
 	 */
 	private JMenuItem createEmailItem() {
 		final JMenuItem emailItem = new JMenuItem();
