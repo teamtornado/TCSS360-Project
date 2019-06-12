@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -105,6 +108,11 @@ public class GUIController {
 	 * The main menu panel for the application.
 	 */
 	private JPanel mainPanel;
+	
+	/**
+	 * String representing the email.
+	 */
+	private String myEmail;
 
 	/**
 	 * The Frame of the application.
@@ -152,7 +160,8 @@ public class GUIController {
 		myBasicInfoPanel = new BasicInfoPanel();
 		myCreatePanel = makeCreatePanel();
 		myItemPanel = new ItemInputPanel(myProject, myRules);
-		myWindow.setContentPane(mainPanel);
+		myEmail = "Not Signed In."
+;		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
 		setupJFrameIcon();
 		setupMenuBar();
@@ -212,11 +221,17 @@ public class GUIController {
 	 * Creates the main menu for the opening of the application.
 	 * 
 	 * @return the main menu panel for the application.
-	 * @author Minh Pham
+	 * @author Minh Pham, Curran
 	 */
 	private JPanel makeMainPanel() {
-		JPanel contentPanel = new JPanel();
+		JPanel centerPanel = new JPanel(new BorderLayout());
+		JPanel northPanel = new JPanel();
+		JLabel emailLabel = new JLabel(myEmail);
+		northPanel.add(emailLabel);
+		JPanel contentPanel = new JPanel(new FlowLayout());
+		//contentPanel.setPreferredSize(new Dimension(50, 50));
 		JButton openButton = new JButton("Open Project");
+		//openButton.setPreferredSize(new Dimension(10, 10));
 		openButton.addActionListener(new ActionListener() {
 
 			/**
@@ -251,12 +266,13 @@ public class GUIController {
 		});
 		contentPanel.add(openButton);
 		JButton createButton = new JButton("Create Project");
+		//createButton.setPreferredSize(new Dimension(10, 10));
 		createButton.addActionListener(new ActionListener() {
 
 			/**
 			 * Opens the basic information panel and creates a new project.
 			 * 
-			 * @author Eric, Minh
+			 * @author Eric, Minh, Curran
 			 */
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
@@ -266,7 +282,9 @@ public class GUIController {
 			}
 		});
 		contentPanel.add(createButton);
-		return contentPanel;
+		centerPanel.add(northPanel, BorderLayout.NORTH);
+		centerPanel.add(contentPanel, BorderLayout.CENTER);
+		return centerPanel;
 	}
 
 	/**
@@ -417,11 +435,13 @@ public class GUIController {
 		final JMenuItem aboutPage = createAboutPageItem();
 		final JMenuItem changeSize = createChangeSizeItem();
 		final JMenuItem export = createExportItem();
+		final JMenuItem changeEmail = createEmailItem();
 
 		// Hook the menus together
 		helpMenu.add(aboutPage);
 		settingMenu.add(changeSize);
 		settingMenu.add(export);
+		settingMenu.add(changeEmail);
 		menuBar.add(helpMenu);
 		menuBar.add(settingMenu);
 		myWindow.setJMenuBar(menuBar);
@@ -472,6 +492,48 @@ public class GUIController {
 		});
 
 		return changeSize;
+	}
+	
+	/**
+	 * Creates the change size item for the menu bar
+	 * 
+	 * @return the change size item for the menu bar
+	 * 
+	 * @author Minh, Curran, Sharanjit
+	 */
+	private JMenuItem createEmailItem() {
+		final JMenuItem emailItem = new JMenuItem();
+		emailItem.setText("Change Email");
+		emailItem.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent theException) {
+				final String emailInput = JOptionPane.showInputDialog("Enter Email");
+				if (emailInput == null) {
+					return;
+				}
+				final String passwordInput = JOptionPane.showInputDialog("Enter Password");
+				if (passwordInput == null) {
+					return;
+				}				
+				//myWindow.setSize(new Dimension(width, height));
+				final JLabel emailLabel = new JLabel(emailInput);
+				
+			}
+		});
+
+		return emailItem;
+	}
+	
+	public void changeEmail() {
+		final String emailInput = JOptionPane.showInputDialog("Enter Email");
+		if (emailInput == null) {
+			return;
+		}
+		final String passwordInput = JOptionPane.showInputDialog("Enter Password");
+		if (passwordInput == null) {
+			return;
+		}				
+		//myWindow.setSize(new Dimension(width, height));
+		final JLabel emailLabel = new JLabel(emailInput);
 	}
 
 	/**
