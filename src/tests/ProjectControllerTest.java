@@ -1,3 +1,59 @@
+/**
+ * 
+ */
+package tests;
+
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+
+//import static org.junit.Assert.assertTrue;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import controller.ProjectController;
+import model.schemautil.SchemaTypes;
+//import org.junit.jupiter.api.Test;
+
+
+//import org.junit.Test;
+//import org.junit.jupiter.api.BeforeEach;
+//
+//import controller.ProjectController;
+//import model.schemautil.SchemaTypes;
+/**
+ * @author sharanjitsingh
+ *
+ */
+class ProjectControllerTest {
+
+	/**
+	 * @throws java.lang.Exception
+	 */
+//	@BeforeEach
+//	void setUp() throws Exception {
+//	}
+
+//	@Test
+//	void test() {
+//		fail("Not yet implemented");
+//	}
+	
+	
+//private static final String SCHEMA_FILE_TEST_LOCATION = "SchemaDataTest.txt";
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+	}
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+	}
+	
+
+
 //package tests;
 //
 //import static org.junit.Assert.assertEquals;
@@ -8,16 +64,16 @@
 //
 //import controller.ProjectController;
 //import model.schemautil.SchemaTypes;
-//
-//class ProjectTest {
-//
-//	private ProjectController myProject;
-//
-//	@BeforeEach
-//	void setup() {
-//		myProject = new ProjectController();
-//	}
-//
+
+
+
+	private ProjectController myProject;
+
+	@BeforeEach
+	public void setup() {
+		myProject = new ProjectController();
+	}
+
 //	@Test
 //	void createProjectTest() {
 //		// Add some items
@@ -82,51 +138,62 @@
 //
 //		// Agh! need a new test to make sure the serial save works!
 //	}
-//	
-//	//Sharnjit
-//	
-//	@Test 
-//	void testsetName() {
-//		myProject.setName("NewProject");
-//		assertTrue(myProject.getName().equals("NewProject"));
-//		
-//		
-//	}
-//	
+	
+	//Sharnjit
+	
+	@Test
+	public void testsetName() {
+		myProject.setName("NewProject");
+		assertTrue(myProject.getName().equals("NewProject"));
+		
+		
+	}
+	
+	@Test
+	public void testProjectDescription() { 
+		
+		myProject.setDescription("This is new project");
+		assertEquals("This is new project",myProject.getProjectDescription());
+		
+	}
+	
+	
+	//author:
+	@Test
+	public void testgetFormattedBudget() {
+		myProject.setBudget(100);
+		assertTrue(myProject.getFormattedBudgetAsString().equals(myProject));
+		
+	}
+	
+	
+	@Test
+	public void testgetLocation() {
+		
+		myProject.setLocation("W.A");
+		assertEquals("W.A", myProject.getLocation());
+		
+	}
+	
+	
 //	@Test
-//	void testProjectDescription() { 
-//		
-//		myProject.setDescription("This is new project");
-//		assertEquals("This is new project",myProject.getProjectDescription());
+//	public void PrintToConsole() {
+//		myProject.setDescription("My Project");
+//		assertTrue("My Project", myProject.getProjectDescription());
 //		
 //	}
-//	
-//	
-//	//author:
+	
 //	@Test
-//	void testgetFormattedBudget() {
-//		myProject.setBudget(100);
-//		assertTrue(myProject.getFormattedBudgetAsString().equals(myProject));
+//	void testclearAll() {
+//		// the clearAllItems method has a void return, thats what this error is telling you.
+//		assertEquals("",myProject.clearAllItems());
 //		
 //	}
-//	
-//	
-//	@Test
-//	void testgetLocation() {
-//		
-//		myProject.setLocation("W.A");
-//		assertEquals("W.A", myProject.getLocation());
-//		
-//	}
-//	
-////	@Test
-////	void testclearAll() {
-////		// the clearAllItems method has a void return, thats what this error is telling you.
-////		assertEquals("",myProject.clearAllItems());
-////		
-////	}
-//	
-//	
-//	
-//
-//}
+	
+	
+	
+	
+	
+
+}
+

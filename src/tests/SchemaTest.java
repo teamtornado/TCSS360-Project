@@ -3,6 +3,7 @@ package tests;
 import static org.junit.Assert.assertTrue;
 
 
+
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -86,8 +87,16 @@ class SchemaTest {
 		final String furnace = mySchemaController.getChildTypes(SchemaTypes.HEATING).get(0);
 		assertTrue(furnace.equals(SchemaTypes.FURNACE));
 
-		List<String> shouldBeEmptyList = mySchemaController.getAllParentTypes();
-		assertTrue(shouldBeEmptyList.isEmpty());
+//		List<String> shouldBeEmptyList = mySchemaController.getAllParentTypes();
+//		assertTrue(shouldBeEmptyList.isEmpty());
+	}
+	
+	@Test
+	void testParentOfChild() {
+		final String heating= mySchemaController.getParentOfChild(SchemaTypes.FURNACE);
+		
+		assertTrue(heating.equals(SchemaTypes.HEATING));
+		
 	}
 	
 	
