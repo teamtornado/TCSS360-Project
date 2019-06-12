@@ -8,6 +8,9 @@ package tests;
 
 
 import static org.junit.Assert.assertTrue;
+
+import java.sql.SQLException;
+
 import static org.junit.Assert.assertEquals;
 
 //import static org.junit.Assert.assertTrue;
@@ -17,6 +20,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import controller.ProjectController;
+import gui.createpanels.BasicInfoPanel;
 import model.schemautil.SchemaTypes;
 //import org.junit.jupiter.api.Test;
 
@@ -31,45 +35,6 @@ import model.schemautil.SchemaTypes;
  *
  */
 public class ProjectControllerTest {
-
-//	/**
-//	 * @throws java.lang.Exception
-//	 */
-//	@BeforeEach
-//	void setUp() throws Exception {
-//	}
-
-//	@Test
-//	void test() {
-//		fail("Not yet implemented");
-//	}
-	
-	
-//private static final String SCHEMA_FILE_TEST_LOCATION = "SchemaDataTest.txt";
-	
-//	@BeforeClass
-//	public static void setUpBeforeClass() throws Exception {
-//	}
-//
-//	@AfterClass
-//	public static void tearDownAfterClass() throws Exception {
-//	}
-	
-
-
-//package tests;
-//
-//import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertTrue;
-//
-//import org.junit.Test;
-//import org.junit.jupiter.api.BeforeEach;
-//
-//import controller.ProjectController;
-//import model.schemautil.SchemaTypes;
-
-
-
 
 	private ProjectController myProject;
 
@@ -143,7 +108,48 @@ public class ProjectControllerTest {
 //		// Agh! need a new test to make sure the serial save works!
 //	}
 	
-	//Sharnjit
+	
+//	@Test
+//	public void testCreatNewProject() {
+//		myProject  = new ProjectController();
+//		myProject.addItem("");
+//	
+//		myProject.clearAllItems();
+//		myProject.addItem(null);
+//		
+//		myProject.clearBasicInformation();
+//		
+//		
+//		
+//		
+//		
+//		
+//
+//	}
+	
+	@Test
+	public void testsetBasicInfo() {
+		
+ 		myProject  = new ProjectController();    
+        myProject.setName("New Project");
+        
+		myProject.setLocation("WA");
+		
+		myProject.setBudget(200);
+		myProject.setDescription("This is new pro");
+		assertTrue(myProject.getName().equals("New Project"));
+		
+	
+		}
+	
+
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * author Sharanjit Singh
 	 * This method testing the setName Methd.
@@ -186,7 +192,7 @@ public class ProjectControllerTest {
 	 * This method testing the setLocation Method.
 	 */
 	@Test
-	public void testgetLocation() {
+	public void testgetLocation() throws ClassNotFoundException, SQLException{
 		myProject  = new ProjectController();
 		myProject.setLocation("W.A");
 		assertEquals("W.A", myProject.getLocation());
@@ -204,10 +210,16 @@ public class ProjectControllerTest {
 		myProject.setDescription("This is fun");
 		System.out.print(myProject.getProjectDescription());
 		
+		
+		
+		
 //		myProject.addItem("This is fun");
-		assertEquals("This is fun", myProject.getLocation());
+//		assertEquals(myProject.printToConsole(),outContent.toString());
 		
 	}
+	
+	
+	
 	
 //	@Test
 //	
@@ -241,13 +253,36 @@ public class ProjectControllerTest {
 		myProject  = new ProjectController();
 		myProject.addItem("");
 		myProject.clearAllItems();
+			
+	}
+	
+//	@Test
+//	public void testFormattedBudgetAsString() {
+//		
+//		myProject.setBudget(100);
+//		equals(myProject.getFormattedBudgetAsString().equals(100));
+//	}
+	
+	
+	@Test
+	public void testremoveItem() {
 		
+		ProjectController myPr1 = new ProjectController();
+		myPr1.addItem("FURNANCE");
+		myPr1.removeItem("FURNANCE");
+
+		assertEquals(0,myPr1.myProject.myItems.size());	
 		
 	}
 	
 	
-	
-	
+	@Test (expected = IllegalArgumentException.class)
+	public void testremoveItemNull() {
+		ProjectController myPr1 = new ProjectController();
+		
+		myPr1.removeItem(null);
+		
+	}
 	
 	
 	

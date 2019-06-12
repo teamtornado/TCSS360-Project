@@ -66,7 +66,7 @@ public class Project implements Serializable {
 	/**
 	 * A list of items holding fields which carry user entered data.
 	 */
-	private List<Item> myItems; // No getter and setter for this
+	public List<Item> myItems; // No getter and setter for this
 
 	public Project() {
 		this.myProjectName = "Dog Name";
@@ -240,23 +240,48 @@ public class Project implements Serializable {
 	 *             if item-type has no match within the project.
 	 * @author Eric
 	 */
-	public void removeItem(final String theItemType) {
-		if (theItemType == null) {
+	public void removeItem(String theItemType){
+		
+	
+			if (theItemType ==null) {
 			throw new IllegalArgumentException("Error: item-type cannot be null");
+			
+			} 
+		
+			final Iterator<Item> itemIter = myItems.iterator();
+			while (itemIter.hasNext()) {
+				final Item nextItem = itemIter.next();
+				if (nextItem.getItemType().equals(theItemType)) {
+					itemIter.remove();
+					return; // Doesn't have to search since item-types are unique.
+				}
+			
+		
+		
+			
+			
+			
+			
+			
 		}
-
-		// Find and remove the matching item.
-		final Iterator<Item> itemIter = myItems.iterator();
-		while (itemIter.hasNext()) {
-			final Item nextItem = itemIter.next();
-			if (nextItem.getItemType().equals(theItemType)) {
-				itemIter.remove();
-				return; // Doesn't have to search since item-types are unique.
-			}
-		}
+		
+//		if (theItemType == null) {
+//			throw new IllegalArgumentException("Error: item-type cannot be null");
+//		}
+//
+//		// Find and remove the matching item.
+//		final Iterator<Item> itemIter = myItems.iterator();
+//		while (itemIter.hasNext()) {
+//			final Item nextItem = itemIter.next();
+//			if (nextItem.getItemType().equals(theItemType)) {
+//				itemIter.remove();
+//				return; // Doesn't have to search since item-types are unique.
+//			}
+//		}
+//	
 
 		// Oh no! There was no match!
-		throw new IllegalArgumentException("Error: given item-type did not have a match");
+//		throw new IllegalArgumentException("Error: given item-type did not have a match");
 	}
 
 	/**
@@ -377,6 +402,7 @@ public class Project implements Serializable {
 		return stringBuilder.toString();
 	}
 
+	
 	/**
 	 * Clears all items from list.
 	 * 

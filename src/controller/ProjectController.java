@@ -61,7 +61,7 @@ public class ProjectController {
 	/**
 	 * Holds the user entered information. Basic and Item list info.
 	 */
-	private Project myProject;
+	public Project myProject;
 
 	/**
 	 * Dialogue to prompt user to input a file location.
@@ -311,6 +311,8 @@ public class ProjectController {
 		myProject.setBudget(projectBudget);
 		myProject.setProjectDescription(projectDescription);
 	}
+	
+	
 
 	/**
 	 * Returns the user entered name of this project.
