@@ -16,7 +16,7 @@ import model.schemautil.SchemaTypes;
 /**
  * Tests the Schema controller and database.
  * 
- * @author Eric
+ * @author Eric Sharanjit 
  *
  */
 class SchemaTest {
@@ -60,11 +60,12 @@ class SchemaTest {
 		assertTrue(applianceType.equals(SchemaTypes.APPLIANCE));
 		assertTrue(heatingType.equals(SchemaTypes.HEATING));
 	}
-
+	//author eric, Sharanjit
+    //	This test method testing if the all parent types works fine.
 	@Test
 	void correctGetChildAndGetParent() {
 
-		// This test doesn't check enought!
+	
 
 		final String furnace = mySchemaController.getChildTypes(SchemaTypes.HEATING).get(0);
 		assertTrue(furnace.equals(SchemaTypes.FURNACE));
@@ -72,6 +73,7 @@ class SchemaTest {
 		List<String> shouldBeEmptyList = mySchemaController.getChildTypes(SchemaTypes.WOK_STOVE);
 		assertTrue(shouldBeEmptyList.isEmpty());
 	}
+ 
 
 	@Test
 	void correctInheritedFields() {
@@ -80,7 +82,8 @@ class SchemaTest {
 	}
 	
 	
-	
+	//author Sharanjit
+    //	This test method testing if the all parent types works fine.
 	
 	@Test
 	void testAllParentType() {
@@ -91,6 +94,9 @@ class SchemaTest {
 //		assertTrue(shouldBeEmptyList.isEmpty());
 	}
 	
+	
+	//author Sharanjit
+    //	This test method testing the child of parent.
 	@Test
 	void testParentOfChild() {
 		final String heating= mySchemaController.getParentOfChild(SchemaTypes.FURNACE);

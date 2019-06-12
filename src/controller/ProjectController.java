@@ -230,6 +230,7 @@ public class ProjectController {
 		myProject.addItem(theItemType);
 	}
 
+
 	/**
 	 * Finds the item that has a matching item-type and adds the following
 	 * information to a new field within.
@@ -340,6 +341,7 @@ public class ProjectController {
 	public String getFormattedBudgetAsString() {
 		return myProject.getFormattedBudgetAsString();
 	}
+	
 
 	/**
 	 * Returns the location of this project.

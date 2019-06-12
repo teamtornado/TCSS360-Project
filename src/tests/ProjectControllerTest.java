@@ -1,6 +1,9 @@
 /**
  * 
+ * 
+ * @author sharanjitsingh
  */
+
 package tests;
 
 
@@ -27,11 +30,11 @@ import model.schemautil.SchemaTypes;
  * @author sharanjitsingh
  *
  */
-class ProjectControllerTest {
+public class ProjectControllerTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+//	/**
+//	 * @throws java.lang.Exception
+//	 */
 //	@BeforeEach
 //	void setUp() throws Exception {
 //	}
@@ -44,13 +47,13 @@ class ProjectControllerTest {
 	
 //private static final String SCHEMA_FILE_TEST_LOCATION = "SchemaDataTest.txt";
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+//	@BeforeClass
+//	public static void setUpBeforeClass() throws Exception {
+//	}
+//
+//	@AfterClass
+//	public static void tearDownAfterClass() throws Exception {
+//	}
 	
 
 
@@ -64,6 +67,7 @@ class ProjectControllerTest {
 //
 //import controller.ProjectController;
 //import model.schemautil.SchemaTypes;
+
 
 
 
@@ -140,18 +144,28 @@ class ProjectControllerTest {
 //	}
 	
 	//Sharnjit
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the setName Methd.
+	 */
 	
 	@Test
 	public void testsetName() {
+	myProject  = new ProjectController();
 		myProject.setName("NewProject");
 		assertTrue(myProject.getName().equals("NewProject"));
 		
 		
 	}
 	
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the setDescription Method.
+	 */
+	
 	@Test
 	public void testProjectDescription() { 
-		
+		myProject  = new ProjectController();
 		myProject.setDescription("This is new project");
 		assertEquals("This is new project",myProject.getProjectDescription());
 		
@@ -159,36 +173,79 @@ class ProjectControllerTest {
 	
 	
 	//author:
-	@Test
-	public void testgetFormattedBudget() {
-		myProject.setBudget(100);
-		assertTrue(myProject.getFormattedBudgetAsString().equals(myProject));
-		
-	}
+//	@Test
+//	public void testgetFormattedBudget() {
+//		myProject  = new ProjectController();
+//		myProject.setBudget(100);
+//		assertTrue(myProject.getFormattedBudgetAsString().equals(myProject));
+//		
+//	}
 	
-	
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the setLocation Method.
+	 */
 	@Test
 	public void testgetLocation() {
-		
+		myProject  = new ProjectController();
 		myProject.setLocation("W.A");
 		assertEquals("W.A", myProject.getLocation());
 		
 	}
 	
 	
-//	@Test
-//	public void PrintToConsole() {
-//		myProject.setDescription("My Project");
-//		assertTrue("My Project", myProject.getProjectDescription());
-//		
-//	}
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the printToConsole Method.
+	 */
+	@Test
+	public void PrintToConsole() {
+		myProject  = new ProjectController();
+		myProject.setDescription("This is fun");
+		System.out.print(myProject.getProjectDescription());
+		
+//		myProject.addItem("This is fun");
+		assertEquals("This is fun", myProject.getLocation());
+		
+	}
 	
 //	@Test
-//	void testclearAll() {
-//		// the clearAllItems method has a void return, thats what this error is telling you.
-//		assertEquals("",myProject.clearAllItems());
-//		
+//	
+//	public void testsetBugdet() {
+//		myProject  = new ProjectController();
+//		myProject.setBudget(200);
+//		assertTrue( myProject.setBudget().equals(200));
 //	}
+	
+	
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the projectString Method.
+	 */
+	@Test
+	public void testProjectString() {
+		myProject  = new ProjectController();
+//		myProject.set("MyPro");
+		assertTrue(myProject.getProjectString().equals("MyPro"));
+		
+	}
+	
+	
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the clearAll Method.
+	 */
+	
+	@Test
+	public void testclearAll() {
+		myProject  = new ProjectController();
+		myProject.addItem("");
+		myProject.clearAllItems();
+		
+		
+	}
+	
+	
 	
 	
 	
