@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.Assert.assertTrue;
 
+
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -43,6 +44,8 @@ class SchemaTest {
 	@Test
 	void correctChildren() {
 		// Need a new test for this!
+		
+		
 	}
 
 	/**
@@ -74,5 +77,27 @@ class SchemaTest {
 		final List<SchemaField> inheritedFields = mySchemaController
 				.getInheritedFields(SchemaTypes.WOK_STOVE);
 	}
+	
+	
+	
+	
+	@Test
+	void testAllParentType() {
+		final String furnace = mySchemaController.getChildTypes(SchemaTypes.HEATING).get(0);
+		assertTrue(furnace.equals(SchemaTypes.FURNACE));
+
+		List<String> shouldBeEmptyList = mySchemaController.getAllParentTypes()(SchemaTypes.WOK_STOVE);
+		assertTrue(shouldBeEmptyList.isEmpty());
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
