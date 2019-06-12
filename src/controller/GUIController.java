@@ -3,7 +3,6 @@ package controller;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -110,9 +109,14 @@ public class GUIController {
 	private JPanel mainPanel;
 	
 	/**
-	 * String representing the email.
+	 * String representing the user email.
 	 */
 	private String myEmail;
+	
+	/**
+	 * String representing either "Sign In" or "Sign Out".
+	 */
+	private String signInStatus;
 
 	/**
 	 * The Frame of the application.
@@ -130,12 +134,12 @@ public class GUIController {
 	private BasicInfoPanel myBasicInfoPanel;
 
 	/**
-	 * 
+	 * The current project of the application.
 	 */
 	private ProjectController myProject;
 
 	/**
-	 * 
+	 * Rules representing the hierarchy of item types.
 	 */
 	private SchemaController myRules;
 
@@ -160,8 +164,8 @@ public class GUIController {
 		myBasicInfoPanel = new BasicInfoPanel();
 		myCreatePanel = makeCreatePanel();
 		myItemPanel = new ItemInputPanel(myProject, myRules);
-		myEmail = "Not Signed In."
-;		myWindow.setContentPane(mainPanel);
+		signInStatus = "Sign In";
+		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
 		setupJFrameIcon();
 		setupMenuBar();
@@ -229,9 +233,7 @@ public class GUIController {
 		JLabel emailLabel = new JLabel(myEmail);
 		northPanel.add(emailLabel);
 		JPanel contentPanel = new JPanel(new FlowLayout());
-		//contentPanel.setPreferredSize(new Dimension(50, 50));
 		JButton openButton = new JButton("Open Project");
-		//openButton.setPreferredSize(new Dimension(10, 10));
 		openButton.addActionListener(new ActionListener() {
 
 			/**
@@ -257,16 +259,13 @@ public class GUIController {
 						}
 					});
 					myProjectViewer.addData(myProject.getProjectString());
-					// myProjectViewer.start();
 					myWindow.setContentPane(myProjectViewer);
 					myWindow.pack();
 				}
-				// Something went weird, so leave us on the main menu.
 			}
 		});
 		contentPanel.add(openButton);
 		JButton createButton = new JButton("Create Project");
-		//createButton.setPreferredSize(new Dimension(10, 10));
 		createButton.addActionListener(new ActionListener() {
 
 			/**
@@ -503,37 +502,29 @@ public class GUIController {
 	 */
 	private JMenuItem createEmailItem() {
 		final JMenuItem emailItem = new JMenuItem();
-		emailItem.setText("Change Email");
+		emailItem.setText("Sign In");
 		emailItem.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent theException) {
-				final String emailInput = JOptionPane.showInputDialog("Enter Email");
-				if (emailInput == null) {
-					return;
-				}
-				final String passwordInput = JOptionPane.showInputDialog("Enter Password");
-				if (passwordInput == null) {
-					return;
-				}				
-				//myWindow.setSize(new Dimension(width, height));
-				final JLabel emailLabel = new JLabel(emailInput);
-				
+				if (signInStatus == "Sign In") { 
+					myEmail = JOptionPane.showInputDialog("Enter Email");
+					if (myEmail == null) {
+						return;
+					}
+					final String passwordInput = JOptionPane.showInputDialog("Enter Password");
+					if (passwordInput == null) {
+						return;
+					}
+					emailItem.setText("Sign Out");
+					signInStatus = "Sign Out";
+				} else {
+					JOptionPane.showMessageDialog(myWindow, "Successfully signed out of\n" + myEmail);
+					signInStatus = "Sign In";
+					emailItem.setText("Sign In");
+				}			
 			}
 		});
 
 		return emailItem;
-	}
-	
-	public void changeEmail() {
-		final String emailInput = JOptionPane.showInputDialog("Enter Email");
-		if (emailInput == null) {
-			return;
-		}
-		final String passwordInput = JOptionPane.showInputDialog("Enter Password");
-		if (passwordInput == null) {
-			return;
-		}				
-		//myWindow.setSize(new Dimension(width, height));
-		final JLabel emailLabel = new JLabel(emailInput);
 	}
 
 	/**
@@ -570,8 +561,7 @@ public class GUIController {
 		String message = new About().getAbout();
 
 		aboutMessage.setText(message);
-		aboutMessage.setEditable(false); // Don't want anyone changing the text
-											// field!
+		aboutMessage.setEditable(false); // Don't want anyone changing the text field!
 		aboutMessage.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
 		aboutMessage.setAlignmentY(JTextArea.CENTER_ALIGNMENT);
 		theAboutMessage.add(aboutMessage);
@@ -622,6 +612,15 @@ public class GUIController {
 		myWindow.setIconImage(img.getImage());
 	}
 
+	/**
+	 * Examines whether or not the given String contains illegal characters or not.
+	 * Returns true if it does, false otherwise.
+	 * 
+	 * @param toExamine the String to check for illegal characters.
+	 * @return boolean for if the string contains illegal characters or not.
+	 * 
+	 * @author Curran, Eric, Sharanjit, Minh
+	 */
 	private boolean containsIllegals(String toExamine) {
 		Pattern pattern = Pattern.compile("[~#@*+%{}<>\\[\\]|\"\'\\_^]");
 		Matcher matcher = pattern.matcher(toExamine);

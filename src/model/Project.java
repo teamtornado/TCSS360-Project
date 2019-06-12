@@ -68,6 +68,11 @@ public class Project implements Serializable {
 	 */
 	private List<Item> myItems; // No getter and setter for this
 
+	/**
+	 * Default Constructor for a Project.
+	 * 
+	 * @author Curran, Minh, Sharanjit, Eric
+	 */
 	public Project() {
 		this.myProjectName = "Dog Name";
 		this.myProjectLocation = "Woof Location";

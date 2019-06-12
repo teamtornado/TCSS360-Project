@@ -45,13 +45,9 @@ public class ProjectViewer extends JPanel {
 	 */
 	private ScrollablePane myProjectSummary;
 
-	// private JPanel myCenterPanel;
-
 	public ProjectViewer(final ProjectController theLoader, final JButton theBackButton,
 			final JButton theEditButton) {
 		this.myLoader = theLoader;
-		// myCenterPanel = new JPanel(new BorderLayout());
-		// myCenterPanel.setPreferredSize(new Dimension(600, 400));
 		this.setLayout(new BorderLayout());
 
 		final JPanel buttonPanel = new JPanel();
@@ -91,8 +87,10 @@ public class ProjectViewer extends JPanel {
 	}
 
 	/**
+	 * Sets the given String to the project summary.
+	 * 
 	 * @author Curran
-	 * @param theString
+	 * @param theString String to be sent to the project summary.
 	 */
 	public void addData(final String theString) {
 		myProjectSummary.setText(theString);
