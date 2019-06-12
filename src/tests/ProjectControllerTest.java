@@ -9,6 +9,8 @@ package tests;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
@@ -206,9 +208,29 @@ public class ProjectControllerTest {
 	 */
 	@Test
 	public void PrintToConsole() {
-		myProject  = new ProjectController();
-		myProject.setDescription("This is fun");
-		System.out.print(myProject.getProjectDescription());
+//		myProject  = new ProjectController();
+//		myProject.setDescription("This is fun");
+//		System.out.print(myProject.getProjectDescription());
+		ProjectController pr1 = new ProjectController();
+		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(outContent));
+		
+		// After this all System.out.println() statements will come to outContent stream.
+		
+		// So, you can normally call,
+		pr1.printToConsole(); // I will assume items is already initialized properly.
+		
+		//Now you have to validate the output. Let's say items had 1 element.
+		// With name as FirstElement and number as 1.
+		String expectedOutput  = "Project Name: Dog Name\n" + 
+                "Project Description: This is a woof project\n" + 
+                "Project Budget: $0.00\n" + 
+                "Project Location: Woof Location\n" + 
+                "----------------------------\n" + 
+                "No items currently."; // Notice the \n for new line.
+				
+		// Do the actual assertion.
+		assertEquals(expectedOutput, outContent.toString());
 		
 		
 		
