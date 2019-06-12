@@ -312,7 +312,7 @@ public class ProjectController {
 		myProject.setProjectDescription(projectDescription);
 	}
 	
-	
+
 
 	/**
 	 * Returns the user entered name of this project.

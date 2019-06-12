@@ -43,90 +43,11 @@ public class ProjectControllerTest {
 		myProject = new ProjectController();
 	}
 
-//	@Test
-//	void createProjectTest() {
-//		// Add some items
-//		myProject.addItem(SchemaTypes.APPLIANCE);
-//		myProject.addItem(SchemaTypes.LIGHTING);
-//
-//		// Add fields to the appliance item
-//		final String powerUsageFieldName = "Power usage";
-//		final String userNotesFieldName = "User notes";
-//		myProject.addFieldToItem(SchemaTypes.APPLIANCE, powerUsageFieldName,
-//				"How much power the appliance uses", "Number", "1000");
-//		myProject.addFieldToItem(SchemaTypes.APPLIANCE, userNotesFieldName, "User created notes",
-//				"String", "I think I might change my mind about this appliance");
-//
-//		// Actually, I changed my mind. I won't want a lighting item anymore
-//		myProject.removeItem(SchemaTypes.LIGHTING);
-//
-//		// I also don't want user notes in my appliance item
-//		myProject.removeFieldFromItem(SchemaTypes.APPLIANCE, userNotesFieldName);
-//	}
-//
-//	@Test
-//	void viewProjectTest() {
-//		// Just setting this up from previous method.
-//		myProject.addItem(SchemaTypes.APPLIANCE);
-//		myProject.addItem(SchemaTypes.LIGHTING);
-//
-//		final String powerUsageFieldName = "Power usage";
-//		final String userNotesFieldName = "User notes";
-//		myProject.addFieldToItem(SchemaTypes.APPLIANCE, powerUsageFieldName,
-//				"How much power the appliance uses", "Number", "1000");
-//		myProject.addFieldToItem(SchemaTypes.APPLIANCE, userNotesFieldName, "User created notes",
-//				"String", "I think I might change my mind about this appliance");
-//
-//		myProject.removeItem(SchemaTypes.LIGHTING);
-//		myProject.removeFieldFromItem(SchemaTypes.APPLIANCE, userNotesFieldName);
-//
-//		// Now onto some viewer stuff
-//
-//		// What is the name of this project?
-//		final String projectName = myProject.getName();
-//
-//		// What is the location?
-//		final String projectLocation = myProject.getLocation();
-//
-//		// Now I'm just debugging, show me the whole project in the console
-//		myProject.printToConsole();
-//	}
-//
-//	
-//	@Test
-//	void correctSerialSave() {
-//		myProject.createNewProject();
-//		myProject.setName("woof");
-//		myProject.setDescription("woof");
-//		myProject.setBudget(100);
-//		myProject.setLocation("washington");
-//		myProject.addItem(SchemaTypes.APPLIANCE);
-//
-//		myProject.saveProject(null);
-//		myProject.loadProject(null);
-//
-//		// Agh! need a new test to make sure the serial save works!
-//	}
-	
-	
-//	@Test
-//	public void testCreatNewProject() {
-//		myProject  = new ProjectController();
-//		myProject.addItem("");
-//	
-//		myProject.clearAllItems();
-//		myProject.addItem(null);
-//		
-//		myProject.clearBasicInformation();
-//		
-//		
-//		
-//		
-//		
-//		
-//
-//	}
-	
+
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the setBasicInfo method.
+	 */
 	@Test
 	public void testsetBasicInfo() {
 		
@@ -166,6 +87,20 @@ public class ProjectControllerTest {
 	
 	/**
 	 * author Sharanjit Singh
+	 * This method testing the setName method.
+	 * Checking null point exception.
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void testsetNamenull(){
+		ProjectController myPr1 = new ProjectController();
+		myPr1.setName(null);
+	
+	}
+	
+	
+	
+	/**
+	 * author Sharanjit Singh
 	 * This method testing the setDescription Method.
 	 */
 	
@@ -174,6 +109,13 @@ public class ProjectControllerTest {
 		myProject  = new ProjectController();
 		myProject.setDescription("This is new project");
 		assertEquals("This is new project",myProject.getProjectDescription());
+		
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testProjectDescriptionnull() { 
+		ProjectController myPr1 = new ProjectController();
+		myPr1.setDescription(null);
 		
 	}
 	
@@ -192,12 +134,26 @@ public class ProjectControllerTest {
 	 * This method testing the setLocation Method.
 	 */
 	@Test
-	public void testgetLocation() throws ClassNotFoundException, SQLException{
+	public void testgetLocation(){
 		myProject  = new ProjectController();
 		myProject.setLocation("W.A");
 		assertEquals("W.A", myProject.getLocation());
 		
 	}
+	
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the setLocation Method when there is nothing .
+	 * Checking null point exception.
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void testgetLocationnull(){
+		ProjectController myPr1 = new ProjectController();
+		myPr1.setLocation(null);
+	
+	}
+	
+	
 	
 	
 	/**
@@ -236,11 +192,31 @@ public class ProjectControllerTest {
 	 */
 	@Test
 	public void testProjectString() {
-		myProject  = new ProjectController();
-//		myProject.set("MyPro");
-		assertTrue(myProject.getProjectString().equals("MyPro"));
+		//myProject.setName("MyPro");
+
+		ProjectController myPr1 = new ProjectController();
+		assertEquals("Project Name: Dog Name\n" + 
+				"Project Description: This is a woof project\n" + 
+				"Project Budget: $0.00\n" + 
+				"Project Location: Woof Location\n" + 
+				"----------------------------\n" + 
+				"No items currently.", myPr1.getProjectString());
 		
 	}
+	
+	
+	@Test
+	public void testProjectStringNull() {
+		ProjectController myPr1 = new ProjectController();
+
+		
+		assertEquals(null, myPr1.getProjectString());
+		
+		
+	}
+	
+	
+	
 	
 	
 	/**
@@ -263,7 +239,10 @@ public class ProjectControllerTest {
 //		equals(myProject.getFormattedBudgetAsString().equals(100));
 //	}
 	
-	
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the removeItem method.
+	 */
 	@Test
 	public void testremoveItem() {
 		
@@ -275,7 +254,11 @@ public class ProjectControllerTest {
 		
 	}
 	
-	
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the removeItem method.
+	 * Checking the null point exception.
+	 */
 	@Test (expected = IllegalArgumentException.class)
 	public void testremoveItemNull() {
 		ProjectController myPr1 = new ProjectController();
@@ -284,6 +267,54 @@ public class ProjectControllerTest {
 		
 	}
 	
+	
+	@Test
+	public void testremoveFieldFromItem() {
+		ProjectController myPr1 = new ProjectController();
+		//myPr1.addFieldToItem(theItemDestination, theFieldName, theDescription, theValueType, theValue);
+		
+		
+		
+		
+	}
+	
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the addItem method.
+	 * checking the null point exception.
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void testaddItemnull() {
+		
+		ProjectController myPr1 = new ProjectController();
+		myPr1.addItem(null);
+		
+	}
+	
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the addItem method.
+	 * checking the null point exception when there is same item.
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void testaddItemnull1() {
+		
+		ProjectController myPr1 = new ProjectController();
+		myPr1.addItem("Furnance");
+		myPr1.addItem("Furnance");
+		
+		
+	}
+	
+	
+	
+	@Test 
+	public void testclearBasicInfo() {
+		ProjectController myPr1 = new ProjectController();
+		myPr1.clearAllItems();
+	//	assertEquals(" ", myPr1.clearAllItems());
+		
+	}
 	
 	
 
