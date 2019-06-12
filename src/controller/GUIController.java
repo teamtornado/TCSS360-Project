@@ -116,7 +116,7 @@ public class GUIController {
 	/**
 	 * String representing either "Sign In" or "Sign Out".
 	 */
-	private String signInStatus;
+	private String mySignInStatus;
 
 	/**
 	 * The Frame of the application.
@@ -164,7 +164,7 @@ public class GUIController {
 		myBasicInfoPanel = new BasicInfoPanel();
 		myCreatePanel = makeCreatePanel();
 		myItemPanel = new ItemInputPanel(myProject, myRules);
-		signInStatus = "Sign In";
+		mySignInStatus = "Sign In";
 		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
 		setupJFrameIcon();
@@ -505,7 +505,7 @@ public class GUIController {
 		emailItem.setText("Sign In");
 		emailItem.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent theException) {
-				if (signInStatus == "Sign In") { 
+				if (mySignInStatus == "Sign In") { 
 					myEmail = JOptionPane.showInputDialog("Enter Email");
 					if (myEmail == null) {
 						return;
@@ -515,10 +515,10 @@ public class GUIController {
 						return;
 					}
 					emailItem.setText("Sign Out");
-					signInStatus = "Sign Out";
+					mySignInStatus = "Sign Out";
 				} else {
 					JOptionPane.showMessageDialog(myWindow, "Successfully signed out of\n" + myEmail);
-					signInStatus = "Sign In";
+					mySignInStatus = "Sign In";
 					emailItem.setText("Sign In");
 				}			
 			}

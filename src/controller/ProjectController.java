@@ -365,6 +365,8 @@ public class ProjectController {
 	}
 
 	/**
+	 * Returns a String representation of the Project.
+	 * 
 	 * @author Curran
 	 */
 	public String getProjectString() {
