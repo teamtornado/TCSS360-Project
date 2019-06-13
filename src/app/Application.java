@@ -26,6 +26,7 @@ public class Application {
 	 * @throws FileNotFoundException
 	 *             if the schema database is not found.
 	 * @author Also everyone
+	 * @since 05/15/19
 	 */
 	public static void main(String[] theArgs) throws FileNotFoundException {
 		try {
