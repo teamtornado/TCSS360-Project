@@ -61,7 +61,7 @@ public class ProjectController {
 	/**
 	 * Holds the user entered information. Basic and Item list info.
 	 */
-	public Project myProject;
+	private Project myProject;
 
 	/**
 	 * Dialogue to prompt user to input a file location.

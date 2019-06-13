@@ -248,7 +248,7 @@ public class Project implements Serializable {
 	public void removeItem(String theItemType){
 		
 	
-			if (theItemType ==null) {
+			if (theItemType == null) {
 			throw new IllegalArgumentException("Error: item-type cannot be null");
 			
 			} 
@@ -286,7 +286,7 @@ public class Project implements Serializable {
 //	
 
 		// Oh no! There was no match!
-//		throw new IllegalArgumentException("Error: given item-type did not have a match");
+		throw new IllegalArgumentException("Error: given item-type did not have a match");
 	}
 
 	/**
