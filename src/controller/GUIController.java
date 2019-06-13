@@ -33,7 +33,7 @@ import utilities.FileParser;
 /**
  * Controls the flow of the application.
  * 
- * @author Minh Pham, Curran, Sharanjit, Eric
+ * @author Minh Pham, Curran Seam, Sharanjit Singh, Eric Hoover
  */
 
 public class GUIController {
@@ -176,7 +176,7 @@ public class GUIController {
 	 * ProjectViewer.
 	 * 
 	 * @return the resulting ProjectViewer;
-	 * @author Eric
+	 * @author Eric, Curran
 	 */
 	public ProjectViewer makeProjectViewer() {
 		// Gotta make the back button to pass in so we can get out of the viewer.

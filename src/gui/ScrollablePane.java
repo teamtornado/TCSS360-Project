@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
  * Can set the text of the data.
  * 
  * @author Curran
+ * DATE:06/4/2019
  */
 public class ScrollablePane extends JScrollPane {
 	
@@ -30,6 +31,9 @@ public class ScrollablePane extends JScrollPane {
 	 * @param isEditable a boolean whether the text area can be edited.
 	 * @param data a JTextArea the data to be put into the scroll pane.
 	 * @param fontSize afloat for font size.
+	 * 
+	 * @author Curran
+	 * DATE:06/4/2019
 	 */
 	public ScrollablePane(final Dimension dimension, final boolean isEditable, 
 			final JTextArea data, final float fontSize) {	
@@ -44,6 +48,9 @@ public class ScrollablePane extends JScrollPane {
 	/**
 	 * Sets the given String to the data.
 	 * @param theString String to set the data to.
+	 * 
+	 * @author Curran
+	 * DATE:06/4/2019
 	 */
 	public void setText(final String theString) {
 		myData.setText(theString);
