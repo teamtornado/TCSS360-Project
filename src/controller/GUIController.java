@@ -27,6 +27,7 @@ import javax.swing.WindowConstants;
 import gui.ProjectViewer;
 import gui.createpanels.BasicInfoPanel;
 import gui.createpanels.ItemInputPanel;
+import model.UserSettings;
 import utilities.About;
 import utilities.FileParser;
 
@@ -84,12 +85,12 @@ public class GUIController {
 	private static final float FRACTION_OF_MAIN_WINDOW = 0.5f;
 
 	/**
-	 * 
+	 * The state of the program in the first panel
 	 */
 	private static final int FIRST_PANEL = 1;
 
 	/**
-	 * 
+	 * The state of the program in the second panel
 	 */
 	private static final int SECOND_PANEL = 2;
 
@@ -99,7 +100,7 @@ public class GUIController {
 	private JPanel myCreatePanel;
 
 	/**
-	 * A magical panel that does something.
+	 * A panel for the user to add items into their project
 	 */
 	private ItemInputPanel myItemPanel;
 
@@ -114,7 +115,7 @@ public class GUIController {
 	private String myEmail;
 	
 	/**
-	 * String representing either "Sign In" or "Sign Out".
+	 * String representing the sign in status
 	 */
 	private String mySignInStatus;
 
@@ -153,6 +154,7 @@ public class GUIController {
 	 * maintains flow of UI.
 	 * 
 	 * @author Eric, Minh, Curran, Sharanjit
+	 * @since 06/03/19
 	 */
 	public GUIController() {
 		myWindow = new JFrame();
@@ -165,6 +167,7 @@ public class GUIController {
 		myCreatePanel = makeCreatePanel();
 		myItemPanel = new ItemInputPanel(myProject, myRules);
 		mySignInStatus = "Sign In";
+		myEmail = "";
 		myWindow.setContentPane(mainPanel);
 		setupFrameDimensions();
 		setupJFrameIcon();
@@ -177,6 +180,7 @@ public class GUIController {
 	 * 
 	 * @return the resulting ProjectViewer;
 	 * @author Eric, Curran
+	 * @since 06/03/19
 	 */
 	public ProjectViewer makeProjectViewer() {
 		// Gotta make the back button to pass in so we can get out of the viewer.
@@ -226,6 +230,7 @@ public class GUIController {
 	 * 
 	 * @return the main menu panel for the application.
 	 * @author Minh Pham, Curran
+	 * @since 06/04/19
 	 */
 	private JPanel makeMainPanel() {
 		JPanel centerPanel = new JPanel(new BorderLayout());
@@ -291,6 +296,7 @@ public class GUIController {
 	 * 
 	 * @return the project creation panel.
 	 * @author Minh, Curran, Sharanjit
+	 * @since 06/01/19
 	 */
 	private JPanel makeCreatePanel() {
 		JPanel createPanel = new JPanel();
@@ -408,6 +414,7 @@ public class GUIController {
 	 * Final setup including packing and setting the frame to visible.
 	 * 
 	 * @author Minh Pham, Curran
+	 * @since 05/28/19
 	 */
 	public void start() {
 		myWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -422,6 +429,7 @@ public class GUIController {
 	 * settings options.
 	 * 
 	 * @author Minh, Curran, Sharanjit
+	 * @since 06/03/19
 	 */
 	private void setupMenuBar() {
 		// Setup the JMenu
@@ -451,25 +459,32 @@ public class GUIController {
 	 * take user preference for window size.
 	 * 
 	 * @author Minh, Curran
+	 * @since 06/03/19
 	 */
 	private void setupFrameDimensions() {
 		myWindow.setMinimumSize(new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
-		Dimension savedDimensions = null;
+		UserSettings userSettings = null;
 		try {
-			savedDimensions = FileParser.parse(new File("USER_SETTINGS.txt"));
+			userSettings = FileParser.parse(new File("USER_SETTINGS.txt"));
+			myEmail = userSettings.getEmail();
+			if (myEmail.equals("")) {
+				mySignInStatus = "Sign In";
+			} else {
+				mySignInStatus = "Sign Out";
+			}
 		} catch (final FileNotFoundException theException) {
 			System.out.println("File Parser: could not find settings file");
 			theException.printStackTrace();
 		}
-		myWindow.setPreferredSize(savedDimensions);
+		myWindow.setPreferredSize(userSettings.getDimension());
 	}
 
 	/**
 	 * Creates the change size item for the menu bar
 	 * 
 	 * @return the change size item for the menu bar
-	 * 
 	 * @author Minh, Curran, Sharanjit
+	 * @since 06/04/19
 	 */
 	private JMenuItem createChangeSizeItem() {
 		final JMenuItem changeSize = new JMenuItem();
@@ -497,12 +512,13 @@ public class GUIController {
 	 * Creates the email item for the menu bar
 	 * 
 	 * @return the email item for the menu bar
-	 * 
 	 * @author Curran
+	 * @since 06/12/19
 	 */
 	private JMenuItem createEmailItem() {
 		final JMenuItem emailItem = new JMenuItem();
-		emailItem.setText("Sign In");
+		emailItem.setText("Sign In/Out");
+		
 		emailItem.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent theException) {
 				if (mySignInStatus == "Sign In") { 
@@ -510,17 +526,15 @@ public class GUIController {
 					if (myEmail == null) {
 						return;
 					}
-					final String passwordInput = JOptionPane.showInputDialog("Enter Password");
-					if (passwordInput == null) {
-						return;
-					}
-					emailItem.setText("Sign Out");
+					emailItem.setText("Sign In/Out");
 					mySignInStatus = "Sign Out";
 				} else {
 					JOptionPane.showMessageDialog(myWindow, "Successfully signed out of\n" + myEmail);
 					mySignInStatus = "Sign In";
-					emailItem.setText("Sign In");
-				}			
+					myEmail = "";
+					emailItem.setText("Sign In/Out");
+				}
+				
 			}
 		});
 
@@ -531,8 +545,8 @@ public class GUIController {
 	 * Creates the about page item to access about dialog
 	 * 
 	 * @return the about page item
-	 * 
 	 * @author Minh, Curran, Sharanjit
+	 * @since 05/28/19
 	 */
 	private JMenuItem createAboutPageItem() {
 		final JMenuItem aboutPage = new JMenuItem();
@@ -554,6 +568,7 @@ public class GUIController {
 	 * @param theAboutMessage
 	 *            The dialog panel itself to be setup.
 	 * @author Curran, Sharanjit
+	 * @since 05/29/19
 	 */
 	private void setupDialogPanel(final JDialog theAboutMessage) {
 		// theAboutMessage.setLocationRelativeTo(this);
@@ -580,18 +595,19 @@ public class GUIController {
 	 * size.
 	 * 
 	 * @return the export menu bar item
-	 * 
 	 * @author Curran, Sharanjit
+	 * @since 05/29/19
 	 */
 	private JMenuItem createExportItem() {
 		final JMenuItem export = new JMenuItem();
-		export.setText("Export Frame Size");
+		export.setText("Export User Settings");
 		export.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent theEvent) {
 				try {
 					PrintStream output = new PrintStream("USER_SETTINGS.txt");
 					output.println("Width: " + myWindow.getWidth());
 					output.println("Height: " + myWindow.getHeight());
+					output.println("User password: " + myEmail);
 					output.close();
 					JOptionPane.showMessageDialog(myWindow, "Settings exported");
 				} catch (FileNotFoundException e1) {
@@ -606,6 +622,7 @@ public class GUIController {
 	 * Setup the icon for the JFrame.
 	 * 
 	 * @author Eric
+	 * @since 05/25/19
 	 */
 	private void setupJFrameIcon() {
 		final ImageIcon img = new ImageIcon("tornadoIcon.png");
@@ -618,8 +635,8 @@ public class GUIController {
 	 * 
 	 * @param toExamine the String to check for illegal characters.
 	 * @return boolean for if the string contains illegal characters or not.
-	 * 
 	 * @author Curran, Eric, Sharanjit, Minh
+	 * @since 06/05/19
 	 */
 	private boolean containsIllegals(String toExamine) {
 		Pattern pattern = Pattern.compile("[~#@*+%{}<>\\[\\]|\"\'\\_^]");
