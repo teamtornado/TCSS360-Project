@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -490,6 +491,7 @@ public class GUIController {
 		final JMenuItem changeSize = new JMenuItem();
 		changeSize.setText("Set Frame Size");
 		changeSize.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(final ActionEvent theException) {
 				final String widthInput = JOptionPane.showInputDialog("Input new width");
 				if (widthInput == null) {
@@ -520,6 +522,7 @@ public class GUIController {
 		emailItem.setText("Sign In/Out");
 		
 		emailItem.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(final ActionEvent theException) {
 				if (mySignInStatus == "Sign In") { 
 					myEmail = JOptionPane.showInputDialog("Enter Email");
@@ -553,6 +556,7 @@ public class GUIController {
 
 		aboutPage.setText(ABOUT_MENU_TEXT);
 		aboutPage.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				final JDialog aboutDialog = new JDialog(myWindow, DIALOG_PANEL_NAME, true);
 				setupDialogPanel(aboutDialog);
@@ -577,8 +581,8 @@ public class GUIController {
 
 		aboutMessage.setText(message);
 		aboutMessage.setEditable(false); // Don't want anyone changing the text field!
-		aboutMessage.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
-		aboutMessage.setAlignmentY(JTextArea.CENTER_ALIGNMENT);
+		aboutMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		aboutMessage.setAlignmentY(Component.CENTER_ALIGNMENT);
 		theAboutMessage.add(aboutMessage);
 
 		// Make the dialog a fraction of the size of the main window.
@@ -602,6 +606,7 @@ public class GUIController {
 		final JMenuItem export = new JMenuItem();
 		export.setText("Export User Settings");
 		export.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
 				try {
 					PrintStream output = new PrintStream("USER_SETTINGS.txt");

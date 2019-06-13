@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * Scrollable pane that can scroll when the data extends past the height dimension.
@@ -39,8 +40,8 @@ public class ScrollablePane extends JScrollPane {
 			final JTextArea data, final float fontSize) {	
 		super(data);
 		myData = data;
-        this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        this.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         myData.setEditable(isEditable);
         myData.setFont(myData.getFont().deriveFont(fontSize));
 	}

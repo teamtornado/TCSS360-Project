@@ -1,10 +1,10 @@
 package model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+//import java.io.File;
+//import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import model.schemautil.SchemaDataParser;
 
@@ -43,14 +43,14 @@ public class Schema {
 		mySchemaItems = SchemaDataParser.parseSchemaDatabase(theSchemaDatabaseLocation);
 
 		// Get the SchemaScanner
-		final File schemaDatabaseFile = new File(theSchemaDatabaseLocation);
-		Scanner schemaScan = null;
-		try {
-			schemaScan = new Scanner(schemaDatabaseFile);
-		} catch (final FileNotFoundException theException) {
-			System.out.println("Error: could not find the SchemaData text file.");
-			theException.printStackTrace();
-		}
+//		final File schemaDatabaseFile = new File(theSchemaDatabaseLocation);
+//		Scanner schemaScan = null;
+//		try {
+//			schemaScan = new Scanner(schemaDatabaseFile);
+//		} catch (final FileNotFoundException theException) {
+//			System.out.println("Error: could not find the SchemaData text file.");
+//			theException.printStackTrace();
+//		}
 	}
 
 	/**
