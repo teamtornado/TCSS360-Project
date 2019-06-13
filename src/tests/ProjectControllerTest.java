@@ -157,7 +157,7 @@ public class ProjectControllerTest {
 	
 	
 	/**
-	 * author Sharanjit Singh
+	 * author Curran Seam, Sharanjit Singh
 	 * This method testing the printToConsole Method.
 	 *  DATE:06/10/2019
 	 */
@@ -288,7 +288,7 @@ public class ProjectControllerTest {
 	}
 	
 	/**
-	 * author Sharanjit Singh
+	 * author Sharanjit Singh, Curran Seam
 	 * This method testing the removeItem method.
 	 * Checking the null point exception.
 	 * DATE:06/8/2019
@@ -304,7 +304,7 @@ public class ProjectControllerTest {
 	
 	
 	/**
-	 * author Sharanjit Singh
+	 * author Sharanjit Singh, Curran Seam
 	 * This method testing the addItem method.
 	 * checking the null point exception.
 	 * DATE:06/4/2019
@@ -352,7 +352,7 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh
+	 * author Sharanjit Singh, Curran Seam
 	 * This method testing the removeField fromItem method.
 	 * 
 	 * DATE:06/4/2019
@@ -361,8 +361,10 @@ public class ProjectControllerTest {
 	public void testremoveFieldFromItem() {
 		ProjectController myPr1 = new ProjectController();
 		myPr1.addItem("FURNANCE");
+		myPr1.addFieldToItem("FURNANCE", "BTU", 
+				"How much thermal energy is emitted", "int", "15000");
 		
-		myPr1.removeFieldFromItem("FURNANCE", "FURNANCE");
+		myPr1.removeFieldFromItem("FURNANCE", "BTU");
 	
 		
 	}
