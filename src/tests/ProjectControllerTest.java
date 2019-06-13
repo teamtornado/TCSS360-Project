@@ -180,19 +180,15 @@ public class ProjectControllerTest {
                 "Project Description: This is a woof project\n" + 
                 "Project Budget: $0.00\n" + 
                 "Project Location: Woof Location\n" + 
-                "----------------------------"; // Notice the \n for new line.
+                "----------------------------\n", 
+                outContent.toString());; // Notice the \n for new line.
 				
 		// Do the actual assertion.
-		assertEquals(expectedOutput + "\n\n", outContent.toString());
+//		assertEquals(expectedOutput + "\n\n", outContent.toString());
 		
 		
 		
-		
-//		myProject.addItem("This is fun");
-//		assertEquals(myProject.printToConsole(),outContent.toString());
-                "----------------------------\n"  
-                , outContent.toString());
-		
+
 	}
 	
 	
@@ -218,15 +214,15 @@ public class ProjectControllerTest {
 	}
 	
 	
-	@Test
-	public void testProjectStringNull() {
-		ProjectController myPr1 = new ProjectController();
-
-		
-		assertEquals(null, myPr1.getProjectString());
-		
-		
-	}
+//	@Test
+//	public void testProjectStringNull() {
+//		ProjectController myPr1 = new ProjectController();
+//
+//		
+//		assertEquals(null, myPr1.getProjectString());
+//		
+//		
+//	}
 	
 //	@Test
 //	public void testProjectString() {
