@@ -1,5 +1,5 @@
 /**
- * 
+ * 	This class is used to test ProjectCintroller class which is our backed.
  * 
  * @author sharanjitsingh
  */
@@ -52,19 +52,46 @@ public class ProjectControllerTest {
 	 */
 	@Test
 	public void testsetBasicInfo() {
+		ProjectController myPr1 = new ProjectController();
 		
- 		myProject  = new ProjectController();    
-        myProject.setName("New Project");
-        
-		myProject.setLocation("WA");
+		myPr1.setName("New Project");
 		
-		myProject.setBudget(200);
-		myProject.setDescription("This is new pro");
-		assertTrue(myProject.getName().equals("New Project"));
+		myPr1.setLocation("WA");
 		
+		myPr1.setBudget(200);
+		
+		myPr1.setDescription("This is new pro");
+   
+		
+		
+		assertEquals("New Project",myPr1.getName());
+		assertEquals("WA",myPr1.getLocation());
+		assertEquals(200,200);
+		assertEquals("This is new pro",myPr1.getProjectDescription());
+		
+		
+		
+		
+		
+//		assertEquals("Project Name: Dog Name\n" + 
+//				"Project Description: This is a woof project\n" + 
+//				"Project Budget: $0.00\n" + 
+//				"Project Location: Woof Location\n" + 
+//				"----------------------------\n" + 
+//				"No items currently.", myPr1.myProject);
+//		
 	
+		
 		}
-	
+//	@Test
+//	public void testsaveProject() {
+//		ProjectController myPr1 = new ProjectController();
+//		saveProject()
+//		myPr1.saveProject("New Project");
+//		
+//		
+//		
+//	}
 
 	
 	
@@ -122,6 +149,9 @@ public class ProjectControllerTest {
 	}
 	
 	
+	
+	
+	
 	//author:
 //	@Test
 //	public void testgetFormattedBudget() {
@@ -164,9 +194,6 @@ public class ProjectControllerTest {
 	 */
 	@Test
 	public void PrintToConsole() {
-//		myProject  = new ProjectController();
-//		myProject.setDescription("This is fun");
-//		System.out.print(myProject.getProjectDescription());
 		ProjectController pr1 = new ProjectController();
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
@@ -186,15 +213,15 @@ public class ProjectControllerTest {
                 "No items currently."; // Notice the \n for new line.
 				
 		// Do the actual assertion.
-		assertEquals(expectedOutput, outContent.toString());
-		
-		
-		
-		
-//		myProject.addItem("This is fun");
-//		assertEquals(myProject.printToConsole(),outContent.toString());
+		assertEquals("Project Name: Dog Name\n" + 
+                "Project Description: This is a woof project\n" + 
+                "Project Budget: $0.00\n" + 
+                "Project Location: Woof Location\n" + 
+                "----------------------------\n"  
+                , outContent.toString());
 		
 	}
+	
 	
 	
 	
@@ -212,7 +239,7 @@ public class ProjectControllerTest {
 	 * author Sharanjit Singh
 	 * This method testing the projectString Method.
 	 */
-<<<<<<< HEAD
+
 	@Test
 	public void testProjectString() {
 		//myProject.setName("MyPro");
@@ -229,16 +256,33 @@ public class ProjectControllerTest {
 	
 	
 	@Test
-	public void testProjectStringNull() {
+	public void testProjectString1l() {
+		
+		
 		ProjectController myPr1 = new ProjectController();
-
-		
-		assertEquals(null, myPr1.getProjectString());
-		
-		
+		myPr1.addItem("FURNANCE");
+		assertEquals("FURNANCE",myPr1.getProjectString());
 	}
+		
+//		myPr1.setName("New One");
+//		myPr1.setLocation("WA");
+//		myPr1.setBudget(100.00);
+//		myPr1.setDescription("new");
+//		assertEquals("Project Name: New One\n" + 
+//				"Project Description: new\n" + 
+//				"Project Budget: $100.00\n" + 
+//				"Project Location: WA\n" + 
+//				"----------------------------\n" + 
+//				"No items currently.", myPr1.getProjectString());
+		
+//		assertEquals("New ",myPr1.getName());
+//		assertEquals("WA",myPr1.getLocation());
+//		assertEquals(200,200);
+//		assertEquals("This is new pro",myPr1.getProjectString());
+		
+		
 	
-=======
+	
 //	@Test
 //	public void testProjectString() {
 //		myProject  = new ProjectController();
@@ -247,7 +291,7 @@ public class ProjectControllerTest {
 //		
 //	}
 //	
->>>>>>> 114ec7b15f0155168b060342ffe5ceef4a8c1e6c
+
 	
 	
 	
@@ -265,12 +309,20 @@ public class ProjectControllerTest {
 			
 	}
 	
-//	@Test
-//	public void testFormattedBudgetAsString() {
-//		
-//		myProject.setBudget(100);
-//		equals(myProject.getFormattedBudgetAsString().equals(100));
-//	}
+	
+	
+	@Test
+	public void testFormattedBudgetAsString() {
+		
+		myProject.setBudget(100);
+       String s1 =  String.valueOf(100);
+		assertEquals("100",myProject.getFormattedBudgetAsString());
+	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * author Sharanjit Singh
@@ -344,10 +396,29 @@ public class ProjectControllerTest {
 	@Test 
 	public void testclearBasicInfo() {
 		ProjectController myPr1 = new ProjectController();
-		myPr1.clearAllItems();
+		myPr1.setName("Dog Name\n");
+		myPr1.setBudget(0.00);
+		myPr1.setLocation("Woof Location\n");
+		myPr1.setDescription("This is a woof project\n");
+		
+
+		
 	//	assertEquals(" ", myPr1.clearAllItems());
 		
 	}
+//	"Project Name: Dog Name\n" + 
+//	"Project Description: This is a woof project\n" + 
+//	"Project Budget: $0.00\n" + 
+//	"Project Location: Woof Location\n" + 
+//	"----------------------------\n" + 
+//	"No items currently."
+//	
+
+	
+	
+	
+	
+	
 	
 	
 
