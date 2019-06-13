@@ -34,7 +34,7 @@ import model.schemautil.SchemaTypes;
 //import model.schemautil.SchemaTypes;
 /**
  * @author sharanjitsingh
- *
+ * DATE:06/10/2019
  */
 public class ProjectControllerTest {
 
@@ -49,6 +49,8 @@ public class ProjectControllerTest {
 	/**
 	 * author Sharanjit Singh
 	 * This method testing the setBasicInfo method.
+	 *  DATE:06/11/2019
+	 * 
 	 */
 	@Test
 	public void testsetBasicInfo() {
@@ -69,7 +71,7 @@ public class ProjectControllerTest {
 		assertEquals(200,200);
 		assertEquals("This is new pro",myPr1.getProjectDescription());
 		
-		
+	}
 		
 		
 		
@@ -82,7 +84,7 @@ public class ProjectControllerTest {
 //		
 	
 		
-		}
+		
 //	@Test
 //	public void testsaveProject() {
 //		ProjectController myPr1 = new ProjectController();
@@ -102,7 +104,8 @@ public class ProjectControllerTest {
 	
 	/**
 	 * author Sharanjit Singh
-	 * This method testing the setName Methd.
+	 * This method testing the setName Method.
+	 *  DATE:06/10/2019
 	 */
 	
 	@Test
@@ -118,6 +121,7 @@ public class ProjectControllerTest {
 	 * author Sharanjit Singh
 	 * This method testing the setName method.
 	 * Checking null point exception.
+	 *  DATE:06/10/2019
 	 */
 	@Test (expected = IllegalArgumentException.class)
 	public void testsetNamenull(){
@@ -131,6 +135,7 @@ public class ProjectControllerTest {
 	/**
 	 * author Sharanjit Singh
 	 * This method testing the setDescription Method.
+	 *  DATE:06/10/2019
 	 */
 	
 	@Test
@@ -164,6 +169,7 @@ public class ProjectControllerTest {
 	/**
 	 * author Sharanjit Singh
 	 * This method testing the setLocation Method.
+	 *  DATE:06/10/2019
 	 */
 	@Test
 	public void testgetLocation(){
@@ -177,6 +183,7 @@ public class ProjectControllerTest {
 	 * author Sharanjit Singh
 	 * This method testing the setLocation Method when there is nothing .
 	 * Checking null point exception.
+	 *  DATE:06/10/2019
 	 */
 	@Test (expected = IllegalArgumentException.class)
 	public void testgetLocationnull(){
@@ -191,6 +198,7 @@ public class ProjectControllerTest {
 	/**
 	 * author Sharanjit Singh
 	 * This method testing the printToConsole Method.
+	 *  DATE:06/10/2019
 	 */
 	@Test
 	public void PrintToConsole() {
@@ -205,12 +213,6 @@ public class ProjectControllerTest {
 		
 		//Now you have to validate the output. Let's say items had 1 element.
 		// With name as FirstElement and number as 1.
-		String expectedOutput  = "Project Name: Dog Name\n" + 
-                "Project Description: This is a woof project\n" + 
-                "Project Budget: $0.00\n" + 
-                "Project Location: Woof Location\n" + 
-                "----------------------------\n" + 
-                "No items currently."; // Notice the \n for new line.
 				
 		// Do the actual assertion.
 		assertEquals("Project Name: Dog Name\n" + 
@@ -238,6 +240,7 @@ public class ProjectControllerTest {
 	/**
 	 * author Sharanjit Singh
 	 * This method testing the projectString Method.
+	 *  DATE:06/10/2019
 	 */
 
 	@Test
@@ -255,14 +258,14 @@ public class ProjectControllerTest {
 	}
 	
 	
-	@Test
-	public void testProjectString1l() {
-		
-		
-		ProjectController myPr1 = new ProjectController();
-		myPr1.addItem("FURNANCE");
-		assertEquals("FURNANCE",myPr1.getProjectString());
-	}
+//	@Test
+//	public void testProjectString1l() {
+//		
+//		
+//		ProjectController myPr1 = new ProjectController();
+//		myPr1.addItem("FURNANCE");
+//		assertEquals("FURNANCE",myPr1.getProjectString());
+//	}
 		
 //		myPr1.setName("New One");
 //		myPr1.setLocation("WA");
@@ -299,6 +302,7 @@ public class ProjectControllerTest {
 	/**
 	 * author Sharanjit Singh
 	 * This method testing the clearAll Method.
+	 *  DATE:06/10/2019
 	 */
 	
 	@Test
@@ -313,10 +317,11 @@ public class ProjectControllerTest {
 	
 	@Test
 	public void testFormattedBudgetAsString() {
-		
-		myProject.setBudget(100);
-       String s1 =  String.valueOf(100);
-		assertEquals("100",myProject.getFormattedBudgetAsString());
+		ProjectController myPr1 = new ProjectController();
+		myPr1.setBudget(1.38);
+
+       
+		assertEquals("1.38",myPr1.getFormattedBudgetAsString());
 	}
 	
 	
@@ -353,15 +358,6 @@ public class ProjectControllerTest {
 	}
 	
 	
-	@Test
-	public void testremoveFieldFromItem() {
-		ProjectController myPr1 = new ProjectController();
-		//myPr1.addFieldToItem(theItemDestination, theFieldName, theDescription, theValueType, theValue);
-		
-		
-		
-		
-	}
 	
 	/**
 	 * author Sharanjit Singh
@@ -415,7 +411,50 @@ public class ProjectControllerTest {
 //	
 
 	
+	@Test
+	public void testremoveFieldFromItem() {
+		ProjectController myPr1 = new ProjectController();
+		myPr1.addItem("Fur");
+		
+		myPr1.removeFieldFromItem("Fur", "Fur");
+		
+		
+		
+		
+		
+	}
 	
+	@Test (expected = IllegalArgumentException.class)
+	public void testremoveFieldFromItemnull() {
+		ProjectController myPr1 = new ProjectController();
+		
+		myPr1.removeFieldFromItem(null, null);
+		
+		
+		
+		
+	}
+	@Test
+	public void testaddToField() {
+		ProjectController myPr1 = new ProjectController();
+		myPr1.addItem("a");
+		myPr1.addFieldToItem("a", "a", "a", "a", "a");
+		
+		
+	}
+	
+	
+	
+	
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testaddFieldFromItemnull() {
+		ProjectController myPr1 = new ProjectController();
+		
+		myPr1.addFieldToItem(null, null, null, null, null);
+		
+	
+	}
 	
 	
 	

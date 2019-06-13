@@ -16,7 +16,8 @@ import model.schemautil.SchemaTypes;
 /**
  * Tests the Schema controller and database.
  * 
- * @author Eric Sharanjit 
+ * @author Eric ,Sharanjit 
+ * 06/12/2019
  *
  */
 class SchemaTest {
@@ -50,7 +51,9 @@ class SchemaTest {
 	}
 
 	/**
-	 * Checks that the correct global parents are given.
+	 * author eric,Sharanjit Singh
+	 * This method testing the correctGlobalParents method.
+	 *  DATE:05/21/2019
 	 */
 	@Test
 	void correctGlobalParents() {
@@ -60,8 +63,11 @@ class SchemaTest {
 		assertTrue(applianceType.equals(SchemaTypes.APPLIANCE));
 		assertTrue(heatingType.equals(SchemaTypes.HEATING));
 	}
-	//author eric, Sharanjit
-    //	This test method testing if the all parent types works fine.
+	/**
+	 * author eric,Sharanjit Singh
+	 * This method testing the correctGetChildAndGetParent method.
+	 *  DATE:05/21/2019
+	 */
 	@Test
 	void correctGetChildAndGetParent() {
 
@@ -74,29 +80,38 @@ class SchemaTest {
 		assertTrue(shouldBeEmptyList.isEmpty());
 	}
  
-
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the correctInheritedField method.
+	 *  DATE:05/27/2019
+	 */
 	@Test
 	void correctInheritedFields() {
 		final List<SchemaField> inheritedFields = mySchemaController
 				.getInheritedFields(SchemaTypes.WOK_STOVE);
 	}
 	
-	
-	//author Sharanjit
-    //	This test method testing if the all parent types works fine.
-	
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the AllParentType method.
+	 *  DATE:05/27/2019
+	 */
+
 	@Test
 	void testAllParentType() {
 		final String furnace = mySchemaController.getChildTypes(SchemaTypes.HEATING).get(0);
 		assertTrue(furnace.equals(SchemaTypes.FURNACE));
 
-//		List<String> shouldBeEmptyList = mySchemaController.getAllParentTypes();
-//		assertTrue(shouldBeEmptyList.isEmpty());
+
 	}
 	
 	
-	//author Sharanjit
-    //	This test method testing the child of parent.
+	/**
+	 * author Sharanjit Singh
+	 * This method testing the ParentofChild method.
+	 *  DATE:05/27/2019
+	 */
+
 	@Test
 	void testParentOfChild() {
 		final String heating= mySchemaController.getParentOfChild(SchemaTypes.FURNACE);
