@@ -182,11 +182,10 @@ public class ProjectControllerTest {
                 "Project Description: This is a woof project\n" + 
                 "Project Budget: $0.00\n" + 
                 "Project Location: Woof Location\n" + 
-                "----------------------------\n" + 
-                "No items currently."; // Notice the \n for new line.
+                "----------------------------"; // Notice the \n for new line.
 				
 		// Do the actual assertion.
-		assertEquals(expectedOutput, outContent.toString());
+		assertEquals(expectedOutput + "\n\n", outContent.toString());
 		
 		
 		
@@ -212,7 +211,6 @@ public class ProjectControllerTest {
 	 * author Sharanjit Singh
 	 * This method testing the projectString Method.
 	 */
-<<<<<<< HEAD
 	@Test
 	public void testProjectString() {
 		//myProject.setName("MyPro");
@@ -238,7 +236,6 @@ public class ProjectControllerTest {
 		
 	}
 	
-=======
 //	@Test
 //	public void testProjectString() {
 //		myProject  = new ProjectController();
@@ -247,7 +244,6 @@ public class ProjectControllerTest {
 //		
 //	}
 //	
->>>>>>> 114ec7b15f0155168b060342ffe5ceef4a8c1e6c
 	
 	
 	
