@@ -2,8 +2,6 @@ package tests;
 
 import static org.junit.Assert.assertTrue;
 
-
-
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -16,9 +14,8 @@ import model.schemautil.SchemaTypes;
 /**
  * Tests the Schema controller and database.
  * 
- * @author Eric ,Sharanjit 
- * 06/12/2019
- *
+ * @author Eric, Sharanjit
+ * @since 06/12/2019
  */
 class SchemaTest {
 
@@ -34,6 +31,9 @@ class SchemaTest {
 
 	/**
 	 * Creates a new test schema database for each test run.
+	 * 
+	 * @author Eric
+	 * @since 6/1/19
 	 */
 	@BeforeEach
 	public void setup() {
@@ -41,19 +41,11 @@ class SchemaTest {
 	}
 
 	/**
-	 * Checks that the hierarchy of parent to child is working correctly.
-	 */
-	@Test
-	void correctChildren() {
-		// Need a new test for this!
-		
-		
-	}
-
-	/**
-	 * author eric,Sharanjit Singh
-	 * This method testing the correctGlobalParents method.
-	 *  DATE:05/21/2019
+	 * This method tests that the correct global parents are generated from the
+	 * Schema.
+	 * 
+	 * @author Eric
+	 * @since 6/4/19
 	 */
 	@Test
 	void correctGlobalParents() {
@@ -63,15 +55,13 @@ class SchemaTest {
 		assertTrue(applianceType.equals(SchemaTypes.APPLIANCE));
 		assertTrue(heatingType.equals(SchemaTypes.HEATING));
 	}
+
 	/**
-	 * author eric,Sharanjit Singh
-	 * This method testing the correctGetChildAndGetParent method.
-	 *  DATE:05/21/2019
+	 * author Eric This method testing the correctGetChildAndGetParent method.
+	 * DATE:05/21/2019
 	 */
 	@Test
 	void correctGetChildAndGetParent() {
-
-	
 
 		final String furnace = mySchemaController.getChildTypes(SchemaTypes.HEATING).get(0);
 		assertTrue(furnace.equals(SchemaTypes.FURNACE));
@@ -79,55 +69,34 @@ class SchemaTest {
 		List<String> shouldBeEmptyList = mySchemaController.getChildTypes(SchemaTypes.WOK_STOVE);
 		assertTrue(shouldBeEmptyList.isEmpty());
 	}
- 
+
 	/**
-	 * author Sharanjit Singh
-	 * This method testing the correctInheritedField method.
-	 *  DATE:05/27/2019
+	 * author Sharanjit Singh This method testing the correctInheritedField method.
+	 * DATE:05/27/2019
 	 */
 	@Test
 	void correctInheritedFields() {
 		final List<SchemaField> inheritedFields = mySchemaController
 				.getInheritedFields(SchemaTypes.WOK_STOVE);
 	}
-	
-	/**
-	 * author Sharanjit Singh
-	 * This method testing the AllParentType method.
-	 *  DATE:05/27/2019
-	 */
 
+	/**
+	 * author Eric This method testing the AllParentType method. DATE:05/27/2019
+	 */
 	@Test
 	void testAllParentType() {
 		final String furnace = mySchemaController.getChildTypes(SchemaTypes.HEATING).get(0);
 		assertTrue(furnace.equals(SchemaTypes.FURNACE));
 
-
 	}
-	
-	
-	/**
-	 * author Sharanjit Singh
-	 * This method testing the ParentofChild method.
-	 *  DATE:05/27/2019
-	 */
 
+	/**
+	 * author Eric This method testing the ParentOfChild method. DATE:05/27/2019
+	 */
 	@Test
 	void testParentOfChild() {
-		final String heating= mySchemaController.getParentOfChild(SchemaTypes.FURNACE);
-		
+		final String heating = mySchemaController.getParentOfChild(SchemaTypes.FURNACE);
 		assertTrue(heating.equals(SchemaTypes.HEATING));
-		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

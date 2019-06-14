@@ -13,7 +13,7 @@ import model.SchemaItem;
  * Parses a given schema database and returns a list of SchemaItem.
  * 
  * @author Eric
- *
+ * @since 6/1/19
  */
 public class SchemaDataParser {
 
@@ -24,25 +24,23 @@ public class SchemaDataParser {
 	 *            The name of the schema database file name.
 	 * @return a list of SchemaItems from the schema database.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
-	public static List<SchemaItem> parseSchemaDatabase(
-			final String theSchemaDataFileName) {
+	public static List<SchemaItem> parseSchemaDatabase(final String theSchemaDataFileName) {
 		final File schemaDatabaseFile = new File(theSchemaDataFileName);
 		Scanner schemaScan = null;
 		try {
 			schemaScan = new Scanner(schemaDatabaseFile);
 		} catch (final FileNotFoundException theException) {
-			System.out.println(
-					"Error: could not find the SchemaData text file.");
+			System.out.println("Error: could not find the SchemaData text file.");
 			theException.printStackTrace();
 		}
-		
+
 		// Have to get all fields first
 		final List<SchemaField> allFields = parseFields(schemaScan);
 
 		// Now you can compile the items from this list of fields.
-		final List<SchemaItem> schemaItemList = parseItems(schemaScan,
-				allFields);
+		final List<SchemaItem> schemaItemList = parseItems(schemaScan, allFields);
 
 		schemaScan.close();
 		return schemaItemList;
@@ -59,9 +57,9 @@ public class SchemaDataParser {
 	 *            the scanner of the schema database.
 	 * @return all the fields used within the schema database.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
-	public static List<SchemaField> parseFields(
-			final Scanner theSchemaScan) {
+	public static List<SchemaField> parseFields(final Scanner theSchemaScan) {
 
 		// Create the list
 		final List<SchemaField> allSchemaFields = new LinkedList<>();
@@ -85,8 +83,8 @@ public class SchemaDataParser {
 			final String valueType = valueTypeTokens[1];
 
 			// Create the SchemaField
-			final SchemaField schemaField = new SchemaField(schemaName,
-					description, valueType, false); // false as default value
+			final SchemaField schemaField = new SchemaField(schemaName, description, valueType,
+					false); // false as default value
 			allSchemaFields.add(schemaField);
 
 			line = theSchemaScan.nextLine();
@@ -105,6 +103,7 @@ public class SchemaDataParser {
 	 *            All the possible fields that may show up in the database.
 	 * @return A list of all the items and their fields from the database.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	private static List<SchemaItem> parseItems(final Scanner theSchemaScan,
 			final List<SchemaField> theSchemaFields) {
@@ -141,8 +140,7 @@ public class SchemaDataParser {
 			for (String fieldNameFromItem : fieldNames) {
 				// Find the field and add
 				for (SchemaField templateField : theSchemaFields) {
-					String templateFieldName = templateField
-							.getSchemaFieldName();
+					String templateFieldName = templateField.getSchemaFieldName();
 
 					// Check for required flag.
 					boolean isRequired = templateFieldName.startsWith("*");
@@ -152,8 +150,7 @@ public class SchemaDataParser {
 
 					if (templateFieldName.equals(fieldNameFromItem)) {
 						final SchemaField newSchemaField = new SchemaField(
-								templateField.getSchemaFieldName(),
-								templateField.getDescription(),
+								templateField.getSchemaFieldName(), templateField.getDescription(),
 								templateField.getValueType(), isRequired);
 
 						// Add this new field to the item.
@@ -164,8 +161,7 @@ public class SchemaDataParser {
 			}
 
 			// Compile the new item
-			final SchemaItem item = new SchemaItem(id, isA, schemaType,
-					fieldsOfItem);
+			final SchemaItem item = new SchemaItem(id, isA, schemaType, fieldsOfItem);
 
 			// Add this new Item to the full list of items for the database.
 			schemaItemList.add(item);

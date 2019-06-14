@@ -1,5 +1,12 @@
 package model.schemautil;
 
+/**
+ * Class is mostly for testing. Hold some general references to item-types and
+ * fields used within the test version of the schema database.
+ * 
+ * @author Eric
+ * @since 6/1/19
+ */
 public class SchemaTypes {
 
 	// Macro types
@@ -16,7 +23,7 @@ public class SchemaTypes {
 	public static final String WOK_STOVE = "Wok stove";
 
 	// ----
-	
+
 	// Field names
 	public static final String BTU = "BTU";
 	public static final String BRAND = "Brand";
