@@ -191,6 +191,23 @@ public class ItemInputPanel extends JPanel {
 		resetButton.addActionListener(resetAction);
 		itemTypeChooserPanel.add(resetButton);
 
+		final JButton deleteItemButton = new JButton("Delete Item");
+		deleteItemButton.addActionListener(new ActionListener() {
+
+			/**
+			 * Prompts the user to delete items from the project.
+			 * 
+			 * @author Eric
+			 * @since 6/13/19
+			 */
+			@Override
+			public void actionPerformed(final ActionEvent theEvent) {
+				final DeleteItemFrame deleteFrame = new DeleteItemFrame(myProject, thisPanel,
+						myProject.getAllItemTypes());
+			}
+		});
+		itemTypeChooserPanel.add(deleteItemButton);
+
 		final JScrollPane fieldScrollPane = new JScrollPane();
 		final int lessShittyIncrement = 15;
 		fieldScrollPane.getVerticalScrollBar().setUnitIncrement(lessShittyIncrement);
@@ -213,6 +230,7 @@ public class ItemInputPanel extends JPanel {
 	 * Removed the items in the current drop down and loads the global parents.
 	 * 
 	 * @author Eric
+	 * @since 6/5/19
 	 */
 	private void resetClick() {
 		removeDropDownAction();

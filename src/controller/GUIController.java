@@ -73,12 +73,12 @@ public class GUIController {
 	/**
 	 * Minimum width of the main window
 	 */
-	private static final int MIN_FRAME_WIDTH = 300;
+	private static final int MIN_FRAME_WIDTH = 900;
 
 	/**
 	 * Minimum height of the main window
 	 */
-	private static final int MIN_FRAME_HEIGHT = 200;
+	private static final int MIN_FRAME_HEIGHT = 500;
 
 	/**
 	 * The fraction constant to provide relative calculations to the main window.

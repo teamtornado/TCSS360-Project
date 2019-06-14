@@ -66,7 +66,7 @@ public class Project implements Serializable {
 	/**
 	 * A list of items holding fields which carry user entered data.
 	 */
-	public List<Item> myItems; // No getter and setter for this
+	public List<Item> myItems;
 
 	/**
 	 * Default Constructor for a Project.
@@ -349,6 +349,22 @@ public class Project implements Serializable {
 			}
 		}
 		return false; // no duplicate found!
+	}
+
+	/**
+	 * Returns a list of all item-types currently held by the project.
+	 * 
+	 * @return a list of all item-types currently held by the project.
+	 * @author Eric
+	 * @since 6/13/19
+	 */
+	public List<String> getAllItemTypes() {
+		final List<String> allItems = new LinkedList<String>();
+		for (Item item : myItems) {
+			allItems.add(item.getItemType());
+		}
+
+		return allItems;
 	}
 
 	/**

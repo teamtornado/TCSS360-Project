@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -382,6 +383,17 @@ public class ProjectController {
 	 */
 	public boolean isDuplicateItem(final String theItemType) {
 		return myProject.isDuplicateItem(theItemType);
+	}
+
+	/**
+	 * Returns a list of all item-types currently held by the project.
+	 * 
+	 * @return a list of all item-types currently held by the project.
+	 * @author Eric
+	 * @since 6/13/19
+	 */
+	public List<String> getAllItemTypes() {
+		return myProject.getAllItemTypes();
 	}
 
 	/**
