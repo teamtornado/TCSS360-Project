@@ -22,6 +22,12 @@ import controller.SchemaController;
 import model.SchemaField;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * This class allows users to input items with their fields into the project.
+ * 
+ * @author Eric
+ * @since 6/5/19
+ */
 public class ItemInputPanel extends JPanel {
 
 	/**
@@ -29,19 +35,10 @@ public class ItemInputPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
 	private SchemaController myRules;
 
-	/**
-	 * 
-	 */
 	private ProjectController myProject;
 
-	/**
-	 * 
-	 */
 	private JComboBox<String> myItemtypeDropDown;
 
 	/**
@@ -146,6 +143,13 @@ public class ItemInputPanel extends JPanel {
 
 				if (selectedItemType == null) {
 					return; // agh don't do anything
+				}
+
+				// Prevent users from throwing loads of duplicate item-type exceptions. Kind've
+				// a band-aid sort of fix.
+				if (myProject.isDuplicateItem(selectedItemType)) {
+					JOptionPane.showMessageDialog(null, "Cannot add duplicate item-types.");
+					return;
 				}
 				// Grab the data from the fields and throw it into the project.
 				myProject.addItem(selectedItemType);

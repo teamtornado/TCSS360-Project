@@ -334,6 +334,24 @@ public class Project implements Serializable {
 	}
 
 	/**
+	 * Returns true if a duplicate item-type is found.
+	 * 
+	 * @param theItemType
+	 *            the item-type to check for.
+	 * @return true if the duplicate item-type is found. False otherwise.
+	 * @author Eric
+	 * @since 6/13/19
+	 */
+	public boolean isDuplicateItem(final String theItemType) {
+		for (Item item : myItems) {
+			if (item.getItemType().equals(theItemType)) {
+				return true;
+			}
+		}
+		return false; // no duplicate found!
+	}
+
+	/**
 	 * For testing purposes. Print the contents of this project to the console.
 	 * 
 	 * @author Eric
