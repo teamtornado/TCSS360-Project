@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +21,11 @@ import controller.ProjectController;
  * @since 6/13/19
  */
 public class DeleteItemFrame extends JFrame {
+
+	/**
+	 * Auto generated serial.
+	 */
+	private static final long serialVersionUID = 5187955853021407589L;
 
 	private final ProjectController myProject;
 
@@ -45,25 +49,25 @@ public class DeleteItemFrame extends JFrame {
 		final JScrollPane scrollPane = new JScrollPane();
 		final JPanel scrollContent = new JPanel();
 		scrollContent.setLayout(new BorderLayout());
-		
+
 		final JPanel directionsHolder = new JPanel();
 		scrollContent.add(directionsHolder, BorderLayout.NORTH);
 		final JLabel directions = new JLabel("Select the item-type to delete.");
 		directionsHolder.add(directions);
-		
+
 		final JPanel buttonHolder = new JPanel();
 		scrollContent.add(buttonHolder, BorderLayout.CENTER);
 
 		// Set the viewport scrollPane.
 		scrollPane.setViewportView(scrollContent);
-		
+
 		for (String itemType : theItemTypes) {
 			// Create each delete button
 			final JButton itemDeleteButton = new JButton(itemType);
 			addDeleteAction(itemDeleteButton, theItemInputPanel, itemType);
 			buttonHolder.add(itemDeleteButton);
 		}
-		
+
 		this.setLocationRelativeTo(null);
 		this.setMinimumSize(new Dimension(400, 200));
 		this.add(scrollPane);

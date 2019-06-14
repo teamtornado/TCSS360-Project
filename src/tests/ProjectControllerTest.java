@@ -9,8 +9,6 @@ package tests;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
