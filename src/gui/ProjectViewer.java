@@ -74,7 +74,7 @@ public class ProjectViewer extends JPanel {
 		final JTabbedPane projectPane = new JTabbedPane();
 		projectPane.setBorder(BorderFactory.createEmptyBorder(TABPANE_PADDING, TABPANE_PADDING,
 				TABPANE_PADDING, TABPANE_PADDING));
-		projectPane.addTab("Project Name", myProjectSummary);
+		projectPane.addTab("Project", myProjectSummary);
 
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		this.add(projectPane, BorderLayout.CENTER);
