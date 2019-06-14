@@ -18,7 +18,8 @@ import org.junit.jupiter.api.BeforeEach;
 import controller.ProjectController;
 
 /**
- * @author Sharanjit Singh DATE:06/10/2019
+ * @author Sharanjit Singh 
+ * @since DATE:06/10/2019
  */
 public class ProjectControllerTest {
 
@@ -30,9 +31,11 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the setBasicInfo method.
-	 * DATE:06/11/2019
+	 * author Sharanjit Singh
 	 * 
+	 * This method testing the setBasicInfo method.
+	 * 
+	 * DATE:06/11/2019
 	 */
 	@Test
 	public void testsetBasicInfo() {
@@ -54,7 +57,10 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the setName Method.
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the setName Method.
+	 * 
 	 * DATE:06/10/2019
 	 */
 
@@ -67,7 +73,10 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the setName method. Checking null
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the setName method. Checking null
+	 * 
 	 * point exception. DATE:06/10/2019
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -78,7 +87,10 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the setDescription Method.
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the setDescription Method.
+	 * 
 	 * DATE:06/10/2019
 	 */
 	@Test
@@ -90,7 +102,10 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh Tests to see if the description can be set to null.
+	 * author Sharanjit Singh
+	 * 
+	 * Tests to see if the description can be set to null.
+	 * 
 	 * DATE:06/10/2019
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -101,7 +116,10 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the setLocation Method.
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the setLocation Method.
+	 * 
 	 * DATE:06/10/2019
 	 */
 	@Test
@@ -113,8 +131,12 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the setLocation Method when there
-	 * is nothing . Checking null point exception. DATE:06/10/2019
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the setLocation Method when there
+	 * is nothing . Checking null point exception.
+	 * 
+	 * DATE:06/10/2019
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testgetLocationnull() {
@@ -124,7 +146,10 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the projectString Method.
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the projectString Method.
+	 * 
 	 * DATE:06/10/2019
 	 */
 
@@ -140,7 +165,10 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the clearAll Method.
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the clearAll Method.
+	 * 
 	 * DATE:06/10/2019
 	 */
 
@@ -153,7 +181,10 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the budget as string method.
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the budget as string method.
+	 * 
 	 * DATE:06/10/2019
 	 */
 	@Test
@@ -165,7 +196,10 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the removeItem method.
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the removeItem method.
+	 * 
 	 * DATE:06/10/2019
 	 */
 	@Test
@@ -177,8 +211,12 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh, Curran Seam This method testing the removeItem
-	 * method. Checking the null point exception. DATE:06/8/2019
+	 * author Sharanjit Singh, Curran Seam
+	 * 
+	 * This method testing the removeItem
+	 * method. Checking the null point exception.
+	 * 
+	 * DATE:06/8/2019
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testremoveItemNull() {
@@ -189,7 +227,9 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh, Curran Seam This method testing the addItem method.
+	 * author Sharanjit Singh, Curran Seam 
+	 * 
+	 * This method testing the addItem method.
 	 * checking the null point exception. DATE:06/4/2019
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -201,7 +241,9 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the addItem method. checking the
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the addItem method. checking the
 	 * null point exception when there is same item. DATE:06/4/2019
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -214,7 +256,9 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the clear basic info.
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the clear basic info.
 	 * 
 	 * DATE:06/4/2019
 	 */
@@ -229,7 +273,9 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh, Curran Seam This method testing the removeField
+	 * author Sharanjit Singh, Curran Seam
+	 * 
+	 * This method testing the removeField
 	 * fromItem method.
 	 * 
 	 * DATE:06/4/2019
@@ -246,8 +292,12 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the removeFieldFromItem method.
-	 * checking the null point exception when there is same item. DATE:06/1/2019
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the removeFieldFromItem method.
+	 * checking the null point exception when there is same item.
+	 * 
+	 * DATE:06/1/2019
 	 */
 
 	@Test(expected = IllegalArgumentException.class)
@@ -259,7 +309,9 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the addtofield method.
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the addtofield method.
 	 * 
 	 * DATE:06/1/2019
 	 */
@@ -273,8 +325,12 @@ public class ProjectControllerTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the addtoFieldFromItem method.
-	 * checking the null point exception when there is same item. DATE:06/1/2019
+	 * author Sharanjit Singh
+	 * 
+	 * This method testing the addtoFieldFromItem method.
+	 * checking the null point exception when there is same item.
+	 * 
+	 * DATE:06/1/2019
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testaddFieldFromItemnull() {

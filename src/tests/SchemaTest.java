@@ -57,7 +57,8 @@ class SchemaTest {
 	}
 
 	/**
-	 * author Eric This method testing the correctGetChildAndGetParent method.
+	 * author Eric
+	 * This method testing the correctGetChildAndGetParent method.
 	 * DATE:05/21/2019
 	 */
 	@Test
@@ -71,7 +72,8 @@ class SchemaTest {
 	}
 
 	/**
-	 * author Sharanjit Singh This method testing the correctInheritedField method.
+	 * author Sharanjit Singh
+	 * This method testing the correctInheritedField method.
 	 * DATE:05/27/2019
 	 */
 	@Test
@@ -81,7 +83,9 @@ class SchemaTest {
 	}
 
 	/**
-	 * author Eric This method testing the AllParentType method. DATE:05/27/2019
+	 * author Eric
+	 * This method testing the AllParentType method.
+	 * DATE:05/27/2019
 	 */
 	@Test
 	void testAllParentType() {
@@ -91,7 +95,9 @@ class SchemaTest {
 	}
 
 	/**
-	 * author Eric This method testing the ParentOfChild method. DATE:05/27/2019
+	 * author Eric
+	 * This method testing the ParentOfChild method.
+	 * DATE:05/27/2019
 	 */
 	@Test
 	void testParentOfChild() {
