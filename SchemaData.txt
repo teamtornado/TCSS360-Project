@@ -10,6 +10,9 @@ Name:User notes,Description:User written field,Value:String
 Name:Gas inlet size,Description:Size for the injection of gas into the stove,Value:Number
 Name:Item count,Description:The amount of items needed for the project,Value:Number
 Name:Material,Description:The kind of materials for the project,Value:String
+Name:Number of Items,Description:The number of items for this item-type,Value:Number
+Name:Style points,Description:The number of style points for the given item-type,Value:Number
+Name:Roof tile type,Description:The type of roof tiling,Value:String
 // '*' is a required flag
 // isA of 0 means global parent item - all children items have access to parent items
 Items:
@@ -21,4 +24,11 @@ ID:5,Type:Furnace,isA:4,Fields:{Brand}
 ID:6,Type:Insulation,isA:4,Fields:{Item count}
 ID:7,Type:My little sweater,isA:4,Fields:{Item count-Brand}
 ID:8,Type:Fireplace,isA:4,Fields:{Material}
-ID:9,Type:Lighting,isA:0,Fields:{Lumens}
+ID:9,Type:Lighting,isA:0,Fields:{Lumens-Number of Items}
+ID:10,Type:LED,isA:9,Fields:{Brand}
+ID:11,Type:Glow Stick,isA:9,Fields:{Brand-Style points}
+ID:12,Type:Microwave,isA:1,Fields:{Voltage-Volume capacity}
+ID:13,Type:Renovation,isA:0,Fields:{User notes}
+ID:14,Type:Flooring,isA:13,Fields:{Material-Number of Items-Style points}
+ID:15,Type:Dry Walling,isA:13,Fields:{Material-Number of Items-Brand}
+ID:16,Type:Roof Tiling,isA:13,Fields:{Roof tile type-Number of Items-Brand}

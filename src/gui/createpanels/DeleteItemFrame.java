@@ -64,6 +64,7 @@ public class DeleteItemFrame extends JFrame {
 			buttonHolder.add(itemDeleteButton);
 		}
 		
+		this.setLocationRelativeTo(null);
 		this.setMinimumSize(new Dimension(400, 200));
 		this.add(scrollPane);
 		this.pack();
