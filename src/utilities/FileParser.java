@@ -11,11 +11,22 @@ import model.UserSettings;
  * Parses a file for window dimensions.
  * 
  * @author Curran, Eric, Sharanjit, Minh
- *
+ * @since 6/5/19
  */
-
 public class FileParser {
 
+	/**
+	 * Parses the user settings file and imports the information into the project.
+	 * 
+	 * @param file
+	 *            the file containing the user settings.
+	 * @return a UserSettings object containing the information parsed from the user
+	 *         settings file.
+	 * @throws FileNotFoundException
+	 *             If the file is not found, will throw this exception.
+	 * @author Curran, Minh, Eric
+	 * @since 6/5/19
+	 */
 	public static UserSettings parse(final File file) throws FileNotFoundException {
 		final Scanner input = new Scanner(file);
 		int width = 0;
@@ -35,7 +46,7 @@ public class FileParser {
 				throw new IllegalArgumentException();
 			}
 		}
-		
+
 		input.close();
 
 		return new UserSettings(new Dimension(width, height), email);

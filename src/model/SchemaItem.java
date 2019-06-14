@@ -8,7 +8,7 @@ import java.util.List;
  * describe a particular item.
  * 
  * @author Eric
- *
+ * @since 6/1/19
  */
 public class SchemaItem {
 	/**
@@ -43,9 +43,9 @@ public class SchemaItem {
 	 * @param theFields
 	 *            the list of fields (data) this type of item can have.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
-	public SchemaItem(int theID, int theIsA, String theItemType,
-			List<SchemaField> theFields) {
+	public SchemaItem(int theID, int theIsA, String theItemType, List<SchemaField> theFields) {
 		this.myID = theID;
 		this.myIsA = theIsA;
 		this.myItemType = theItemType;
@@ -57,6 +57,7 @@ public class SchemaItem {
 	 * 
 	 * @return the ID of this item
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public int getID() {
 		return myID;
@@ -67,6 +68,7 @@ public class SchemaItem {
 	 * 
 	 * @return the parent ID of this item.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public int getIsA() {
 		return myIsA;
@@ -77,6 +79,7 @@ public class SchemaItem {
 	 * 
 	 * @return the type of item.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getItemType() {
 		return myItemType;
@@ -88,6 +91,7 @@ public class SchemaItem {
 	 * @return a NEW list of SchemaFields. The SchemaFields describe the kind of
 	 *         data that can be held in an ItemField.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public List<SchemaField> getFields() {
 		final List<SchemaField> newListOfFields = new LinkedList<>();
@@ -100,6 +104,9 @@ public class SchemaItem {
 	/**
 	 * Returns a string representation of this SchemaItem. Does not output the
 	 * contents of the fields list, only the number of fields contained.
+	 * 
+	 * @author Eric
+	 * @since 6/1/19
 	 */
 	@Override
 	public String toString() {
@@ -113,5 +120,4 @@ public class SchemaItem {
 		builder.append(myFields.size());
 		return builder.toString();
 	}
-
 }

@@ -9,7 +9,7 @@ import java.util.List;
  * The main class for holding user entered information.
  * 
  * @author Eric
- *
+ * @since 6/1/19
  */
 public class Project implements Serializable {
 
@@ -72,6 +72,7 @@ public class Project implements Serializable {
 	 * Default Constructor for a Project.
 	 * 
 	 * @author Curran, Minh, Sharanjit, Eric
+	 * @since 6/1/19
 	 */
 	public Project() {
 		this.myProjectName = "Dog Name";
@@ -86,6 +87,7 @@ public class Project implements Serializable {
 	 * 
 	 * @return the user entered name of this project.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getName() {
 		return myProjectName;
@@ -99,6 +101,7 @@ public class Project implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if theName is null.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public void setName(final String theName) {
 		if (theName == null) {
@@ -112,6 +115,7 @@ public class Project implements Serializable {
 	 * 
 	 * @return the user entered project description.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getProjectDescription() {
 		return myProjectDescription;
@@ -125,6 +129,7 @@ public class Project implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if theProjectDescription is null.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public void setProjectDescription(String theProjectDescription) {
 		if (theProjectDescription == null) {
@@ -138,6 +143,7 @@ public class Project implements Serializable {
 	 * 
 	 * @return the formatted budget of the project.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public double getBudget() {
 		// Just keeping only two decimal places.
@@ -152,6 +158,7 @@ public class Project implements Serializable {
 	 * 
 	 * @return return a formatted budget String.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getFormattedBudgetAsString() {
 		final double formattedBudget = getBudget();
@@ -172,6 +179,7 @@ public class Project implements Serializable {
 	 * @param theBudget
 	 *            the budget to set for this project.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public void setBudget(final double theBudget) {
 		this.myProjectBudget = theBudget;
@@ -182,6 +190,7 @@ public class Project implements Serializable {
 	 * 
 	 * @return the location of this project.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getLocation() {
 		return myProjectLocation;
@@ -195,6 +204,7 @@ public class Project implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if theLocation is null.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public void setLocation(final String theLocation) {
 		if (theLocation == null) {
@@ -216,6 +226,7 @@ public class Project implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if the itemType is a duplicate.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public void addItem(final String theItemType) {
 		if (theItemType == null) {
@@ -244,46 +255,23 @@ public class Project implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if item-type has no match within the project.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
-	public void removeItem(String theItemType){
-		
-	
-			if (theItemType == null) {
+	public void removeItem(String theItemType) {
+		if (theItemType == null) {
 			throw new IllegalArgumentException("Error: item-type cannot be null");
-			
-			} 
-		
-			final Iterator<Item> itemIter = myItems.iterator();
-			while (itemIter.hasNext()) {
-				final Item nextItem = itemIter.next();
-				if (nextItem.getItemType().equals(theItemType)) {
-					itemIter.remove();
-					return; // Doesn't have to search since item-types are unique.
-				}
-			
-		
-		
-			
-			
-			
-			
-			
+
 		}
-		
-//		if (theItemType == null) {
-//			throw new IllegalArgumentException("Error: item-type cannot be null");
-//		}
-//
-//		// Find and remove the matching item.
-//		final Iterator<Item> itemIter = myItems.iterator();
-//		while (itemIter.hasNext()) {
-//			final Item nextItem = itemIter.next();
-//			if (nextItem.getItemType().equals(theItemType)) {
-//				itemIter.remove();
-//				return; // Doesn't have to search since item-types are unique.
-//			}
-//		}
-//	
+
+		final Iterator<Item> itemIter = myItems.iterator();
+		while (itemIter.hasNext()) {
+			final Item nextItem = itemIter.next();
+			if (nextItem.getItemType().equals(theItemType)) {
+				itemIter.remove();
+				return; // Doesn't have to search since item-types are unique.
+			}
+
+		}
 
 		// Oh no! There was no match!
 		throw new IllegalArgumentException("Error: given item-type did not have a match");
@@ -306,6 +294,7 @@ public class Project implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if the given item-type did not have a match.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public void addFieldToItem(final String theItemDestination, final String theFieldName,
 			final String theDescription, final String theValueType, final String theValue) {
@@ -330,6 +319,7 @@ public class Project implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if the item-type could not be found.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public void removeFieldFromItem(final String theItemType, final String theFieldName) {
 		for (Item item : myItems) {
@@ -347,6 +337,7 @@ public class Project implements Serializable {
 	 * For testing purposes. Print the contents of this project to the console.
 	 * 
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public void printToConsole() {
 		System.out.println("Project Name: " + myProjectName);
@@ -367,8 +358,9 @@ public class Project implements Serializable {
 	 * 
 	 * All items currently within the project are included.
 	 * 
-	 * @author Curran, Eric
 	 * @return a String representation of the project.
+	 * @author Curran, Eric
+	 * @since 6/1/19
 	 */
 	public String getProjectString() {
 		final StringBuilder stringBuilder = new StringBuilder();
@@ -407,11 +399,11 @@ public class Project implements Serializable {
 		return stringBuilder.toString();
 	}
 
-	
 	/**
 	 * Clears all items from list.
 	 * 
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public void clearAllItems() {
 		this.myItems.clear();
@@ -421,6 +413,7 @@ public class Project implements Serializable {
 	 * Resets the basic information back to their default values.
 	 * 
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public void clearBasicInformation() {
 		setName(DEFAULT_PROJECT_NAME);

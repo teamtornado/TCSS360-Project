@@ -9,7 +9,7 @@ import model.SchemaField;
  * Allows the front-end to interact with the Schema.
  * 
  * @author Eric
- *
+ * @since 6/2/19
  */
 public class SchemaController {
 
@@ -26,6 +26,7 @@ public class SchemaController {
 	 * @param theSchemaDatabaseLocation
 	 *            the location of the schema database.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public SchemaController(final String theSchemaDatabaseLocation) {
 		mySchema = new Schema(theSchemaDatabaseLocation);
@@ -37,6 +38,7 @@ public class SchemaController {
 	 * 
 	 * @return the item types at the top of the item-type hierarchy.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public List<String> getAllParentTypes() {
 		return mySchema.getAllParentTypes();
@@ -51,11 +53,12 @@ public class SchemaController {
 	 *            the parent item-type.
 	 * @return a list of children who have the given item-type as a parent.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public List<String> getChildTypes(final String theParentItemType) {
 		return mySchema.getChildTypes(theParentItemType);
 	}
-	
+
 	/**
 	 * Returns the item-type of the child's parent. For instance, if "Stove" is
 	 * given, "Appliance" will be returned.
@@ -67,14 +70,15 @@ public class SchemaController {
 	 * @return A String representing the parent's item-type, or null if its a global
 	 *         parent. Global parent means that the given item-type has NO parent.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public String getParentOfChild(final String theChildItemType) {
 		return mySchema.getParentOfChild(theChildItemType);
 	}
 
 	/**
-	 * Returns the list of fields that are inherited by the give item. Includes
-	 * the fields at the give item-types level.
+	 * Returns the list of fields that are inherited by the give item. Includes the
+	 * fields at the give item-types level.
 	 * 
 	 * @param theItemType
 	 *            The item type to find inherited field for.
@@ -82,6 +86,7 @@ public class SchemaController {
 	 * @throws IllegalArgumentException
 	 *             if the item-type has no match in the Schema.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public List<SchemaField> getInheritedFields(final String theItemType) {
 		return mySchema.getInheritedFields(theItemType);

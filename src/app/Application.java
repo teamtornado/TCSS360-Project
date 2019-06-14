@@ -19,7 +19,7 @@ import controller.GUIController;
  */
 public class Application {
 	/**
-	 * Runs the application - currently does mostly simple setup.
+	 * Runs the application - currently does simple setup.
 	 * 
 	 * @param theArgs
 	 *            The console arguments. These are not used within the code.

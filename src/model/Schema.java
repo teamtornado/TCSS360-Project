@@ -38,19 +38,10 @@ public class Schema {
 	 * @param theSchemaDatabaseLocation
 	 *            the location of the schema database.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public Schema(final String theSchemaDatabaseLocation) {
 		mySchemaItems = SchemaDataParser.parseSchemaDatabase(theSchemaDatabaseLocation);
-
-		// Get the SchemaScanner
-//		final File schemaDatabaseFile = new File(theSchemaDatabaseLocation);
-//		Scanner schemaScan = null;
-//		try {
-//			schemaScan = new Scanner(schemaDatabaseFile);
-//		} catch (final FileNotFoundException theException) {
-//			System.out.println("Error: could not find the SchemaData text file.");
-//			theException.printStackTrace();
-//		}
 	}
 
 	/**
@@ -59,6 +50,7 @@ public class Schema {
 	 * 
 	 * @return the item types at the top of the item-type hierarchy.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public List<String> getAllParentTypes() {
 		final List<String> parentItemTypes = new LinkedList<>();
@@ -81,6 +73,7 @@ public class Schema {
 	 *            the parent item-type.
 	 * @return a list of children who have the given item-type as a parent.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public List<String> getChildTypes(final String theParentItemType) {
 		final List<String> childItemTypes = new LinkedList<>();
@@ -104,6 +97,7 @@ public class Schema {
 	 *            the SchemaItem's item-type.
 	 * @return the SchemaItem's ID which matched the given theItemType.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	private int getID(final String theItemType) {
 		for (SchemaItem item : mySchemaItems) {
@@ -123,6 +117,7 @@ public class Schema {
 	 *            an item-type that has a match within the schema database.
 	 * @return the matching SchemaItem with the same SchemItemType given.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	private SchemaItem getSchemaItem(final String theSchemaItemType) {
 		for (SchemaItem item : mySchemaItems) {
@@ -150,6 +145,7 @@ public class Schema {
 	 * @return A String representing the parent's item-type, or null if its a global
 	 *         parent. Global parent means that the given item-type has NO parent.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getParentOfChild(final String theChildItemType) {
 		// Find the parent ID through child's isA field.
@@ -183,6 +179,7 @@ public class Schema {
 	 * @throws IllegalArgumentException
 	 *             if the item-type has no match in the Schema.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public List<SchemaField> getInheritedFields(final String theItemType) {
 		final List<SchemaField> listOfInheritedFields = new LinkedList<>();

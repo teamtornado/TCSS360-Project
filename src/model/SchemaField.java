@@ -5,7 +5,7 @@ package model;
  * ItemField.
  * 
  * @author Eric
- *
+ * @since 6/1/19
  */
 public class SchemaField {
 	/**
@@ -41,10 +41,10 @@ public class SchemaField {
 	 *            The type of data that can be stored in this kind of field. Can be
 	 *            'String' or 'Number'.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
-	public SchemaField(final String theSchemaFieldName,
-			final String theDescription, final String theValueType,
-			final boolean theRequired) {
+	public SchemaField(final String theSchemaFieldName, final String theDescription,
+			final String theValueType, final boolean theRequired) {
 		super();
 		this.mySchemaFieldName = theSchemaFieldName;
 		this.myDescription = theDescription;
@@ -57,6 +57,7 @@ public class SchemaField {
 	 * 
 	 * @return the field name of this field.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getSchemaFieldName() {
 		return mySchemaFieldName;
@@ -67,6 +68,7 @@ public class SchemaField {
 	 * 
 	 * @return a description about the kind of information held in this field.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getDescription() {
 		return myDescription;
@@ -79,6 +81,7 @@ public class SchemaField {
 	 * @return the type of value that can be stored in this kind of field. Can be
 	 *         'String' or 'Number'.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getValueType() {
 		return myValueType;
@@ -90,6 +93,7 @@ public class SchemaField {
 	 * 
 	 * @return True if the field is required during the project creation process.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public boolean isRequired() {
 		return this.myRequired;

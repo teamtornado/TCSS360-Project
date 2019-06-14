@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Immutable. This class will hold a single piece of information within an Item.
  * 
  * @author Eric
- *
+ * @since 6/1/19
  */
 public class ItemField implements Serializable {
 
@@ -49,6 +49,7 @@ public class ItemField implements Serializable {
 	 * @param theValue
 	 *            The data itself.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public ItemField(final String theFieldName, final String theDescription,
 			final String theValueType, final String theValue) {
@@ -62,6 +63,7 @@ public class ItemField implements Serializable {
 	 * 
 	 * @return the name of the information held.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getFieldName() {
 		return myfieldName;
@@ -72,6 +74,7 @@ public class ItemField implements Serializable {
 	 * 
 	 * @return a description about the information being held.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getDescription() {
 		return myDescription;
@@ -82,6 +85,7 @@ public class ItemField implements Serializable {
 	 * 
 	 * @return the type of value that is stored.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getValueType() {
 		return myValueType;
@@ -92,6 +96,7 @@ public class ItemField implements Serializable {
 	 * 
 	 * @return the data.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getValue() {
 		return myValue;
@@ -102,6 +107,7 @@ public class ItemField implements Serializable {
 	 * 
 	 * @return a string representing the data held within this field.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	@Override
 	public String toString() {

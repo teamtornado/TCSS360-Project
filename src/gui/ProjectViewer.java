@@ -21,7 +21,7 @@ import controller.ProjectController;
  * the project.
  * 
  * @author Curran, Sharanjit, Eric
- *
+ * @since 6/5/19
  */
 public class ProjectViewer extends JPanel {
 
@@ -38,16 +38,32 @@ public class ProjectViewer extends JPanel {
 	/**
 	 * Allows for viewing the user's project contents.
 	 */
-	private ProjectController myLoader;
+	private ProjectController myProject;
 
 	/**
 	 * The project summary
 	 */
 	private ScrollablePane myProjectSummary;
 
-	public ProjectViewer(final ProjectController theLoader, final JButton theBackButton,
+	/**
+	 * Constructs a ProjectViewer, the GUI element that allows users to view
+	 * projects that they've already created.
+	 * 
+	 * @param theProject
+	 *            The project controller, allows for manipulation of the currently
+	 *            loaded project data structure.
+	 * @param theBackButton
+	 *            Button with functionality to move the user back to the main menu
+	 *            when clicked.
+	 * @param theEditButton
+	 *            Button that allows the user to jump to the project creation screen
+	 *            with the currently loaded project so they can edit it.
+	 * @author Sharanjit, Curran, Eric
+	 * @since 6/5/19
+	 */
+	public ProjectViewer(final ProjectController theProject, final JButton theBackButton,
 			final JButton theEditButton) {
-		this.myLoader = theLoader;
+		this.myProject = theProject;
 		this.setLayout(new BorderLayout());
 
 		final JPanel buttonPanel = new JPanel();
@@ -71,8 +87,8 @@ public class ProjectViewer extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				PrintStream output;
 				try {
-					output = new PrintStream(myLoader.getName() + "_EXPORTED.txt");
-					output.print(myLoader.getProjectString());
+					output = new PrintStream(myProject.getName() + "_EXPORTED.txt");
+					output.print(myProject.getProjectString());
 					JOptionPane.showMessageDialog(myProjectSummary, "Project exported.");
 				} catch (FileNotFoundException e1) {
 					JOptionPane.showMessageDialog(myProjectSummary, "Error occured.");
@@ -89,8 +105,10 @@ public class ProjectViewer extends JPanel {
 	/**
 	 * Sets the given String to the project summary.
 	 * 
+	 * @param theString
+	 *            String to be sent to the project summary.
 	 * @author Curran
-	 * @param theString String to be sent to the project summary.
+	 * @since 6/5/19
 	 */
 	public void addData(final String theString) {
 		myProjectSummary.setText(theString);

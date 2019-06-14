@@ -19,7 +19,7 @@ import model.Project;
  * functionality required by the application for each project.
  * 
  * @author Eric
- *
+ * @since 6/2/19
  */
 public class ProjectController {
 
@@ -75,6 +75,7 @@ public class ProjectController {
 	 * @param theProject
 	 *            the project to manage.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public ProjectController() {
 		this.myProject = new Project();
@@ -88,6 +89,7 @@ public class ProjectController {
 	 * @return ProjectLoadController.SUCCESS or ProjectLoadController.ERROR integer.
 	 *         Will return SUCESS if file saved, ERROR otherwise.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public int loadProject(final Component theParentComponent) {
 		// filechooser, find serialized instance, load.
@@ -123,6 +125,7 @@ public class ProjectController {
 	 *         Will return SUCCESS if file saved, ERROR otherwise.
 	 * 
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public int saveProject(final Component theParentComponent) {
 		// export file as serialized to path
@@ -152,6 +155,7 @@ public class ProjectController {
 	 * Creates a new project. WILL RESET THE CURRENT PROJECT WITHOUT ALERTING USER.
 	 * 
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public void createNewProject() {
 		if (myProject != null) {
@@ -170,6 +174,7 @@ public class ProjectController {
 	 * @throws IllegalArgumentException
 	 *             if theName is null.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public void setName(final String theName) {
 		myProject.setName(theName);
@@ -183,6 +188,7 @@ public class ProjectController {
 	 * @throws IllegalArgumentException
 	 *             if theProjectDescription is null.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public void setDescription(String theProjectDescription) {
 		myProject.setProjectDescription(theProjectDescription);
@@ -196,6 +202,7 @@ public class ProjectController {
 	 * @throws IllegalArgumentException
 	 *             if theBudget is null.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public void setBudget(final double theBudget) {
 		myProject.setBudget(theBudget);
@@ -209,6 +216,7 @@ public class ProjectController {
 	 * @throws IllegalArgumentException
 	 *             if theLocation is null.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public void setLocation(final String theLocation) {
 		myProject.setLocation(theLocation);
@@ -225,11 +233,11 @@ public class ProjectController {
 	 * @throws IllegalArgumentException
 	 *             if the itemType is a duplicate.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public void addItem(final String theItemType) {
 		myProject.addItem(theItemType);
 	}
-
 
 	/**
 	 * Finds the item that has a matching item-type and adds the following
@@ -248,6 +256,7 @@ public class ProjectController {
 	 * @throws IllegalArgumentException
 	 *             if the given item-type did not have a match.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public void addFieldToItem(final String theItemDestination, final String theFieldName,
 			final String theDescription, final String theValueType, final String theValue) {
@@ -265,6 +274,7 @@ public class ProjectController {
 	 * @throws IllegalArgumentException
 	 *             if item-type has no match within the project.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public void removeItem(final String theItemType) {
 		myProject.removeItem(theItemType);
@@ -280,6 +290,7 @@ public class ProjectController {
 	 * @throws IllegalArgumentException
 	 *             if the item-type could not be found.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public void removeFieldFromItem(final String theItemType, final String theFieldName) {
 		myProject.removeFieldFromItem(theItemType, theFieldName);
@@ -289,6 +300,7 @@ public class ProjectController {
 	 * Clears all items from list.
 	 * 
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public void clearAllItems() {
 		myProject.clearAllItems();
@@ -300,6 +312,9 @@ public class ProjectController {
 	 * 
 	 * @param basicInfoPanel
 	 *            the panel to query from.
+	 * 
+	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public void setBasicInformation(final BasicInfoPanel basicInfoPanel) {
 		String projectName = basicInfoPanel.getProjectName();
@@ -311,14 +326,13 @@ public class ProjectController {
 		myProject.setBudget(projectBudget);
 		myProject.setProjectDescription(projectDescription);
 	}
-	
-
 
 	/**
 	 * Returns the user entered name of this project.
 	 * 
 	 * @return the user entered name of this project.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public String getName() {
 		return myProject.getName();
@@ -329,6 +343,7 @@ public class ProjectController {
 	 * 
 	 * @return the user entered project description.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public String getProjectDescription() {
 		return myProject.getProjectDescription();
@@ -339,17 +354,18 @@ public class ProjectController {
 	 * 
 	 * @return return a formatted budget String.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public String getFormattedBudgetAsString() {
 		return myProject.getFormattedBudgetAsString();
 	}
-	
 
 	/**
 	 * Returns the location of this project.
 	 * 
 	 * @return the location of this project.
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public String getLocation() {
 		return myProject.getLocation();
@@ -359,6 +375,7 @@ public class ProjectController {
 	 * For testing purposes. Print the contents of this project to the console.
 	 * 
 	 * @author Eric
+	 * @since 6/2/19
 	 */
 	public void printToConsole() {
 		myProject.printToConsole();
@@ -368,6 +385,7 @@ public class ProjectController {
 	 * Returns a String representation of the Project.
 	 * 
 	 * @author Curran
+	 * @since 6/12/19
 	 */
 	public String getProjectString() {
 		return myProject.getProjectString();

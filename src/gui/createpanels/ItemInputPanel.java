@@ -58,7 +58,10 @@ public class ItemInputPanel extends JPanel {
 	private String selectedItemType;
 
 	/**
-	 * Create the panel.
+	 * Create the panel. I am so sorry, this is a monster of a method...
+	 * 
+	 * @author Mostly Minh, Eric wouldn't have written something as messy as this.
+	 * @since 6/6/19
 	 */
 	public ItemInputPanel(final ProjectController theProject, SchemaController theRules) {
 		myRules = theRules;
@@ -225,6 +228,8 @@ public class ItemInputPanel extends JPanel {
 	 * 
 	 * @param theItemType
 	 *            the item-type from which the fields will be derived.
+	 * @author Eric, Minh
+	 * @since 6/6/19
 	 */
 	private void fillFieldPane(final String theItemType) {
 		// Clear out the old stuff
@@ -241,11 +246,24 @@ public class ItemInputPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Clears all the fields from the item selection panel and removes all items
+	 * from the list.
+	 * 
+	 * @author Eric
+	 * @since 6/6/19
+	 */
 	public void clearAllFields() {
 		myCurrentItemViewState.setText("");
 		myProject.clearAllItems();
 	}
 
+	/**
+	 * Updates the current Item viewer panel with the most recent information.
+	 * 
+	 * @author Eric, Minh
+	 * @since 6/5/19
+	 */
 	public void updatePanel() {
 		myCurrentItemViewState.setText(myProject.getProjectString());
 	}

@@ -4,6 +4,7 @@ package utilities;
  * Holds information for the about dialog menu.
  * 
  * @author Minh Pham
+ * @since 5/15/19
  */
 public class About {
 	private String teamName;
@@ -12,6 +13,9 @@ public class About {
 
 	/**
 	 * Creates the about dialog menu information.
+	 * 
+	 * @author Minh
+	 * @since 5/15/19
 	 */
 	public About() {
 		teamName = "Team Tornado";
@@ -24,6 +28,7 @@ public class About {
 	 * 
 	 * @return the printout for the dialog menu.
 	 * @author Minh
+	 * @since 5/15/19
 	 */
 	public String getAbout() {
 		StringBuilder result = new StringBuilder();

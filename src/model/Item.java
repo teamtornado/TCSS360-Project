@@ -15,7 +15,7 @@ import java.util.List;
  * burners.
  * 
  * @author Eric
- *
+ * @since 6/1/19
  */
 public class Item implements Serializable {
 
@@ -41,6 +41,7 @@ public class Item implements Serializable {
 	 * @param myItemType
 	 *            The kind of item. Could be 'Stove', 'Appliance', or 'Insulation'
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public Item(String myItemType) {
 		this.myItemType = myItemType;
@@ -52,6 +53,7 @@ public class Item implements Serializable {
 	 * 
 	 * @return the kind of item.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public String getItemType() {
 		return myItemType;
@@ -62,6 +64,7 @@ public class Item implements Serializable {
 	 * 
 	 * @return a new list of this items parts of data (ItemField)s.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public List<ItemField> getFields() {
 		final List<ItemField> newListOfItemFields = new LinkedList<>();
@@ -77,6 +80,7 @@ public class Item implements Serializable {
 	 * @param theFieldName
 	 *            the name of the field to remove.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
 	public void removeField(final String theFieldName) {
 		final Iterator<ItemField> fieldsIter = myFields.iterator();
@@ -105,10 +109,10 @@ public class Item implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if the fieldName matches another field within the field list.
 	 * @author Eric
+	 * @since 6/1/19
 	 */
-	public void addField(final String theFieldName,
-			final String theDescription, final String theValueType,
-			final String theValue) {
+	public void addField(final String theFieldName, final String theDescription,
+			final String theValueType, final String theValue) {
 		// Check that the field name is unqiue.
 		for (ItemField field : myFields) {
 			if (field.getFieldName().equals(theFieldName)) {
@@ -118,8 +122,8 @@ public class Item implements Serializable {
 		}
 
 		// Good to go, add to the field list.
-		final ItemField newField = new ItemField(theFieldName,
-				theDescription, theValueType, theValue);
+		final ItemField newField = new ItemField(theFieldName, theDescription, theValueType,
+				theValue);
 		this.myFields.add(newField);
 	}
 }
